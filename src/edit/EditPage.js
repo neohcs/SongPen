@@ -22,11 +22,8 @@ export default function EditPage({ onSubmit, editNoteData }) {
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
     const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
     let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    // data = {...data, newDate} brauch ich das auch?
+    data = { ...data, date }
     onSubmit(editNoteData.id, data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
-    //   form.reset() //dies leert die Felder der Form automatisch
-    //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
-    //
   }
 
   function updateDate() {
@@ -35,7 +32,6 @@ export default function EditPage({ onSubmit, editNoteData }) {
     const currentYear = new Date().getFullYear()
     const currentHours = new Date().getHours()
     const currentMinutes = new Date().getMinutes()
-    console.log(editNoteData)
     const currentDate =
       currentDay +
       '/' +
@@ -46,7 +42,7 @@ export default function EditPage({ onSubmit, editNoteData }) {
       currentHours +
       ':' +
       currentMinutes
-    setDate(currentDate)
+    return setDate(currentDate)
   }
 
   return (
@@ -150,7 +146,7 @@ const InputContentStyled = styled.textarea`
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;
-  height: 250px;
+  height: 200px;
   padding: 10px;
   word-wrap: break-word;
   font-size: 16px;
@@ -174,7 +170,7 @@ const InputRecordStyled = styled.input`
 const SelectLabelStyled = styled.label`
   justify-self: left;
   opacity: 0.7;
-  height: 10px;
+  height: auto;
   padding-left: 10px;
   font-size: 14px;
   color: grey;
@@ -188,7 +184,7 @@ const SelectTagStyled = styled.select`
   border: 1px solid lightgrey;
   border-radius: 7px;
   width: 100%;
-  line-height: 1.3;
+  line-height: 0.8;
   padding: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -200,17 +196,12 @@ const ButtonStyled = styled.button`
   box-shadow: 0 2px 5px #0002;
   border: none;
   border-radius: 7px;
-  width: auto;
   height: 30px;
+  margin: 0 auto;
   padding: 2px 15px;
   font-weight: bold;
+  width: ${props => (props.secondary ? '100px' : 'auto')};
   background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
   color: ${props => (props.secondary ? 'grey' : '#54abbc')};
-
-  & .small {
-    color: black;
-    background: none;
-    font-size: 14px;
-  }
 `
