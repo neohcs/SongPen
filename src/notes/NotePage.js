@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import Note from './Note'
@@ -38,8 +38,8 @@ export default function NotePage({ onSelectTag, notes, tags, selectedTag }) {
               .map(line =>
                 line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
               )}
-            tag={note.tag}
             recording={note.recording}
+            tag={note.tag}
           />
         ))}
       </ScrollerStyled>

@@ -16,7 +16,7 @@ Note.propTypes = {
   // id, too?
 }
 
-export default function Note({ title, date, content, tag, recording, _id }) {
+export default function Note({ title, date, content, tag, recording, key }) {
   const [isNoteExpanded, setIsNoteExpanded] = useState(false)
 
   function toggleExpandNote() {
@@ -44,12 +44,12 @@ export default function Note({ title, date, content, tag, recording, _id }) {
             to={{
               pathname: '/edit',
               editNoteData: {
-                date,
+                key,
                 title,
+                date,
                 content,
                 recording,
-                tag,
-                id: _id
+                tag
               }
             }}
           >

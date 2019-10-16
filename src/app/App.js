@@ -74,9 +74,9 @@ export default function App(editNoteData) {
           />
           <Route
             path="/edit"
-            render={() => (
+            render={props => (
               <EditPage
-                editNoteData={editNoteData}
+                editNoteData={props.location.editNoteData}
                 onSelectTag={selectTag}
                 selectedTag={selectedTag}
                 onSubmit={editNote}

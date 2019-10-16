@@ -24,9 +24,7 @@ const FilterButtonStyled = styled.button`
   border-radius: 7px;
   width: 100px;
   padding: 2px;
-  background: #e4f2f0;
   font-size: 14px;
-  color: #54abbc;
   background: ${props => (props.selected ? '#4db5bf' : '#ecf7f8')};
   font-weight: ${props => (props.selected ? 'bold' : 'normal')};
   color: ${props => (props.selected ? '#f5f8f8' : '#54abbc')};

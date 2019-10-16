@@ -10,39 +10,43 @@ EditPage.propTypes = {
 }
 
 export default function EditPage({ onSubmit, editNoteData }) {
-  const currentDay = new Date().getDate()
-  const currentMonth = new Date().getMonth() + 1
-  const currentYear = new Date().getFullYear()
-  const currentHours = new Date().getHours()
-  const currentMinutes = new Date().getMinutes()
-
-  const currentDate =
-    currentDay +
-    '/' +
-    currentMonth +
-    '/' +
-    currentYear +
-    ' ' +
-    currentHours +
-    ':' +
-    currentMinutes
-
-  const [changedTitle, setChangedTitle] = useState(editNoteData.title)
-  const [changedContent, setChangedContent] = useState(editNoteData.content)
-  const [changedLabel, setChangedLabel] = useState(editNoteData.label)
-  const [changedRecording, setChangedRecording] = useState([
-    editNoteData.recording
-  ])
+  const [title, setTitle] = useState(editNoteData.title)
+  const [content, setContent] = useState(editNoteData.content.toString())
+  const [label, setLabel] = useState(editNoteData.label)
+  const [recording, setRecording] = useState([editNoteData.recording])
+  const [date, setDate] = useState(editNoteData.date)
 
   function handleSubmit(event) {
     event.preventDefault()
+    updateDate()
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
     const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-    const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
+    let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+    // data = {...data, newDate} brauch ich das auch?
+    onSubmit(editNoteData.id, data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
     //   form.reset() //dies leert die Felder der Form automatisch
     //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
     //
+  }
+
+  function updateDate() {
+    const currentDay = new Date().getDate()
+    const currentMonth = new Date().getMonth() + 1
+    const currentYear = new Date().getFullYear()
+    const currentHours = new Date().getHours()
+    const currentMinutes = new Date().getMinutes()
+    console.log(editNoteData)
+    const currentDate =
+      currentDay +
+      '/' +
+      currentMonth +
+      '/' +
+      currentYear +
+      ' ' +
+      currentHours +
+      ':' +
+      currentMinutes
+    setDate(currentDate)
   }
 
   return (
@@ -50,25 +54,25 @@ export default function EditPage({ onSubmit, editNoteData }) {
       <Header></Header>
       <Navigation></Navigation>
       <FormStyled onSubmit={handleSubmit}>
-        <InputDateStyled name="date" value={currentDate}></InputDateStyled>
+        <InputDateStyled name="date" value={date}></InputDateStyled>
         <InputTitleStyled
           name="title"
-          value={changedTitle}
-          onChange={event => setChangedTitle(event.target.value)}
+          value={title}
+          onChange={event => setTitle(event.target.value)}
           maxLength="20"
           required
           autoFocus
         ></InputTitleStyled>
         <InputContentStyled
           name="content"
-          value={changedContent}
-          onChange={event => setChangedContent(event.target.value)}
+          value={content}
+          onChange={event => setContent(event.target.value)}
         ></InputContentStyled>
         <InputRecordStyled
           name="recording"
-          value={changedRecording}
+          value={recording}
           onChange={event =>
-            setChangedRecording([editNoteData.recording, event.target.value])
+            setRecording([editNoteData.recording, event.target.value])
           }
         ></InputRecordStyled>
         <SelectLabelStyled>
@@ -76,8 +80,8 @@ export default function EditPage({ onSubmit, editNoteData }) {
         </SelectLabelStyled>
         <SelectTagStyled
           name="tag"
-          value={changedLabel}
-          onChange={event => setChangedLabel(event.target.value)}
+          value={label}
+          onChange={event => setLabel(event.target.value)}
         >
           <option name="tag" value="started">
             started
@@ -96,14 +100,15 @@ export default function EditPage({ onSubmit, editNoteData }) {
         >
           Save changes
         </ButtonStyled>
-        <ButtonStyled
-          onClick={() => {
-            window.location = 'http://localhost:3000/'
-          }}
-        >
-          Abort
-        </ButtonStyled>
       </FormStyled>
+      <ButtonStyled
+        secondary
+        onClick={() => {
+          window.location = 'http://localhost:3000/'
+        }}
+      >
+        Abort
+      </ButtonStyled>
     </Page>
   )
 }
@@ -120,7 +125,7 @@ const FormStyled = styled.form`
 const InputDateStyled = styled.input`
   border: 1px solid lightgrey;
   border-radius: 3px;
-  width: 95px;
+  width: 125px;
   height: 20px;
   padding: 10px;
   color: lightgrey;
@@ -183,7 +188,7 @@ const SelectTagStyled = styled.select`
   border: 1px solid lightgrey;
   border-radius: 7px;
   width: 100%;
-  line-height: 0.8;
+  line-height: 1.3;
   padding: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -198,8 +203,14 @@ const ButtonStyled = styled.button`
   width: auto;
   height: 30px;
   padding: 2px 15px;
-  background: #ecf7f8;
-  font-size: 18px;
   font-weight: bold;
-  color: #54abbc;
+  background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
+  font-size: ${props => (props.secondary ? '14px' : '18px')};
+  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
+
+  & .small {
+    color: black;
+    background: none;
+    font-size: 14px;
+  }
 `
