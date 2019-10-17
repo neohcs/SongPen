@@ -16,7 +16,15 @@ Note.propTypes = {
   // id, too?
 }
 
-export default function Note({ title, date, content, tag, recording, key }) {
+export default function Note({
+  title,
+  date,
+  content,
+  tag,
+  recording,
+  _id,
+  handleDeleteClick
+}) {
   const [isNoteExpanded, setIsNoteExpanded] = useState(false)
 
   function toggleExpandNote() {
@@ -44,7 +52,7 @@ export default function Note({ title, date, content, tag, recording, key }) {
             to={{
               pathname: '/edit',
               editNoteData: {
-                key,
+                _id,
                 title,
                 date,
                 content,
@@ -55,7 +63,7 @@ export default function Note({ title, date, content, tag, recording, key }) {
           >
             <NoteEditIconStyled />
           </LinkStyled>
-          <NoteDeleteIconStyled></NoteDeleteIconStyled>
+          <NoteDeleteIconStyled onClick={handleDeleteClick}></NoteDeleteIconStyled>
         </>
       ) : (
         <>

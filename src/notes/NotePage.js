@@ -16,7 +16,13 @@ NotePage.propTypes = {
   isRecordingIncluded: PropTypes.bool
 }
 
-export default function NotePage({ onSelectTag, notes, tags, selectedTag }) {
+export default function NotePage({
+  onSelectTag,
+  notes,
+  tags,
+  selectedTag,
+  onDeleteClick
+}) {
   return (
     <Page title={'NotePage'}>
       <Header></Header>
@@ -30,14 +36,18 @@ export default function NotePage({ onSelectTag, notes, tags, selectedTag }) {
         />
         {notes.map(note => (
           <Note
+            handleDeleteClick={() => onDeleteClick(note)}
             key={note._id}
+            _id={note._id}
             title={note.title}
             date={note.date}
-            content={note.content
-              .split('\n')
-              .map(line =>
-                line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
-              )}
+            content={
+              note.content
+              // .split('\n')
+              // .map(line =>
+              //   line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
+              // )
+            }
             recording={note.recording}
             tag={note.tag}
           />

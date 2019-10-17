@@ -44,6 +44,14 @@ export default function App(editNoteData) {
     })
   }
 
+  function deleteNoteOnClick(note) {
+    console.log('note 2', note)
+    deleteNote(note._id).then(deletedNote => {
+      const index = noteList.findIndex(note => note._id === deletedNote._id)
+      setNoteList([...noteList.slice(0, index), ...noteList.slice(index + 1)])
+    })
+  }
+
   return (
     <Router>
       <AppStyled>
@@ -58,6 +66,7 @@ export default function App(editNoteData) {
                   onSelectTag={selectTag}
                   notes={filteredNotes}
                   selectedTag={selectedTag}
+                  onDeleteClick={deleteNoteOnClick}
                 ></NotePage>
               </>
             )}
@@ -74,14 +83,16 @@ export default function App(editNoteData) {
           />
           <Route
             path="/edit"
-            render={props => (
-              <EditPage
-                editNoteData={props.location.editNoteData}
-                onSelectTag={selectTag}
-                selectedTag={selectedTag}
-                onSubmit={editNote}
-              ></EditPage>
-            )}
+            render={props => {
+              return (
+                <EditPage
+                  editNoteData={props.location.editNoteData}
+                  onSelectTag={selectTag}
+                  selectedTag={selectedTag}
+                  onSubmit={editNote}
+                ></EditPage>
+              )
+            }}
           />
         </Switch>
       </AppStyled>
