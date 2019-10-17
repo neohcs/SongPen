@@ -1,68 +1,84 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
 
-CreatePage.propTypes = {
+EditPage.propTypes = {
   onSubmit: PropTypes.func
 }
 
-export default function CreatePage({ onSubmit }) {
-  const currentDay = new Date().getDate()
-  const currentMonth = new Date().getMonth() + 1
-  const currentYear = new Date().getFullYear()
-  const currentHours = new Date().getHours()
-  const currentMinutes = new Date().getMinutes()
-
-  const currentDate =
-    currentDay +
-    '/' +
-    currentMonth +
-    '/' +
-    currentYear +
-    ' ' +
-    currentHours +
-    ':' +
-    currentMinutes
+export default function EditPage({ onSubmit, editNoteData, notes }) {
+  const [title, setTitle] = useState(editNoteData.title)
+  const [content, setContent] = useState(editNoteData.content.toString())
+  const [label, setLabel] = useState(editNoteData.label)
+  const [recording, setRecording] = useState([editNoteData.recording])
+  const [date, setDate] = useState(editNoteData.date)
 
   function handleSubmit(event) {
     event.preventDefault()
+    updateDate()
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
     const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-    const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
-    //   form.reset() //dies leert die Felder der Form automatisch
-    //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
-    // }
+    let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+    data = { ...data, date }
+    onSubmit(editNoteData._id, data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
+  }
+
+  function updateDate() {
+    const currentDay = new Date().getDate()
+    const currentMonth = new Date().getMonth() + 1
+    const currentYear = new Date().getFullYear()
+    const currentHours = new Date().getHours()
+    const currentMinutes = new Date().getMinutes()
+    const currentDate =
+      currentDay +
+      '/' +
+      currentMonth +
+      '/' +
+      currentYear +
+      ' ' +
+      currentHours +
+      ':' +
+      currentMinutes
+    return setDate(currentDate)
   }
 
   return (
-    <Page title={'CreatePage'}>
+    <Page title={'EditPage'}>
       <Header></Header>
       <Navigation></Navigation>
       <FormStyled onSubmit={handleSubmit}>
-        <InputDateStyled name="date" value={currentDate}></InputDateStyled>
+        <InputDateStyled name="date" value={date}></InputDateStyled>
         <InputTitleStyled
-          autoFocus
           name="title"
-          placeholder={'Insert title here...'}
+          value={title}
+          onChange={event => setTitle(event.target.value)}
           maxLength="20"
           required
+          autoFocus
         ></InputTitleStyled>
         <InputContentStyled
           name="content"
-          placeholder={'Express your creative genius here...'}
+          value={content}
+          onChange={event => setContent(event.target.value)}
         ></InputContentStyled>
         <InputRecordStyled
           name="recording"
-          placeholder={'Insert URL to your song here...'}
+          value={recording}
+          onChange={event =>
+            setRecording([editNoteData.recording, event.target.value])
+          }
         ></InputRecordStyled>
         <SelectLabelStyled>
           Please select a tag for your note...
         </SelectLabelStyled>
-        <SelectTagStyled name="tag">
+        <SelectTagStyled
+          name="tag"
+          value={label}
+          onChange={event => setLabel(event.target.value)}
+        >
           <option name="tag" value="started">
             started
           </option>
@@ -78,9 +94,17 @@ export default function CreatePage({ onSubmit }) {
             window.location = 'http://localhost:3000/'
           }}
         >
-          Save note
+          Save changes
         </ButtonStyled>
       </FormStyled>
+      <ButtonStyled
+        secondary
+        onClick={() => {
+          window.location = 'http://localhost:3000/'
+        }}
+      >
+        Abort
+      </ButtonStyled>
     </Page>
   )
 }
@@ -122,7 +146,7 @@ const InputContentStyled = styled.textarea`
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;
-  height: 250px;
+  height: 200px;
   padding: 10px;
   word-wrap: break-word;
   font-size: 16px;
@@ -146,7 +170,7 @@ const InputRecordStyled = styled.input`
 const SelectLabelStyled = styled.label`
   justify-self: left;
   opacity: 0.7;
-  height: 10px;
+  height: auto;
   padding-left: 10px;
   font-size: 14px;
   color: grey;
@@ -172,11 +196,12 @@ const ButtonStyled = styled.button`
   box-shadow: 0 2px 5px #0002;
   border: none;
   border-radius: 7px;
-  width: auto;
   height: 30px;
+  margin: 0 auto;
   padding: 2px 15px;
-  background: #ecf7f8;
-  font-size: 18px;
   font-weight: bold;
-  color: #54abbc;
+  width: ${props => (props.secondary ? '100px' : 'auto')};
+  background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
+  font-size: ${props => (props.secondary ? '14px' : '18px')};
+  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
 `

@@ -1,7 +1,7 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 import Navigation from './Navigation'
-import LinkStyled from './Navigation'
+import LinkStyled from '../app/Navigation'
 
 export default {
   LinkStyled: 'Navigation'

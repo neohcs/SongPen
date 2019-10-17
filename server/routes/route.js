@@ -3,13 +3,19 @@ const Note = require('../models/Note')
 
 router.get('/', (req, res) => {
   Note.find()
+    .sort({ date: -1 }) // updaten, sodass erst Jahr, dann Monat, dann Tag gecheckt wird
     .then(notes => res.json(notes))
     .catch(err => res.json(err))
 })
 
 router.get('/:id', (req, res) => {
-  Note.find({ id: req.params.id })
-    .then(notes => res.json(notes))
+  //   .catch(err => res.json(err))
+  console.log(req.params.id)
+  Note.findOne({ _id: req.params.id })
+    .then(notes => {
+      console.log('NOTES', notes)
+      res.json(notes)
+    })
     .catch(err => res.json(err))
 })
 

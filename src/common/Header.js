@@ -11,15 +11,15 @@ export default function Header() {
 }
 
 const HeaderStyled = styled.header`
-  background-color: #4db5bf;
-  color: #f5f8f8;
   display: block;
+  text-align: center;
+  width: 100vw;
+  height: 60px;
+  padding: 10px;
+  background: #4db5bf;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 36px;
   font-weight: bold;
-  height: 60px;
   letter-spacing: 3px;
-  padding: 10px;
-  text-align: center;
-  width: 100vw;
+  color: #f5f8f8;
 `

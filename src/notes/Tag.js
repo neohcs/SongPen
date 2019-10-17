@@ -12,9 +12,9 @@ export default function Tag({ tag }) {
 
 const TagStyled = styled.div`
   display: inline-block;
+  border-radius: 7px;
   padding: 2px 15px;
   background: #e4f2f0;
   font-size: 14px;
   color: #54abbc;
-  border-radius: 7px;
 `

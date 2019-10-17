@@ -5,7 +5,7 @@ import Note, {
   ContentStyled,
   Tag,
   NoteViewIconStyled
-} from './Note'
+} from '../notes/Note'
 
 export default {
   title: 'Note'

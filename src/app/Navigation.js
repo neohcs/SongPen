@@ -25,11 +25,11 @@ const NavigationStyled = styled.nav`
 `
 
 const LinkStyled = styled(NavLink)`
-  color: #ffc187;
-  text-decoration: none;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  text-decoration: none;
+  color: #ffc187;
   &.active {
     color: #4db5bf;
   }

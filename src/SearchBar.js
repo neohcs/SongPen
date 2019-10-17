@@ -12,12 +12,11 @@ export default function SearchBar() {
 
 const SearchBarStyled = styled.input`
   position: relative;
-  width: 100%;
-  width: 100px;
-  background-color: #f1f1f1;
-  padding-left: 5px;
-  color: grey;
-  border-radius: 7px;
   border: none;
+  border-radius: 7px;
+  width: 100px;
   height: 20px;
+  padding-left: 5px;
+  background: #f1f1f1;
+  color: grey;
 `
