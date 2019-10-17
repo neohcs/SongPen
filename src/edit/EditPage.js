@@ -9,13 +9,12 @@ EditPage.propTypes = {
   onSubmit: PropTypes.func
 }
 
-export default function EditPage({ onSubmit, editNoteData }) {
+export default function EditPage({ onSubmit, editNoteData, notes }) {
   const [title, setTitle] = useState(editNoteData.title)
   const [content, setContent] = useState(editNoteData.content.toString())
   const [label, setLabel] = useState(editNoteData.label)
   const [recording, setRecording] = useState([editNoteData.recording])
   const [date, setDate] = useState(editNoteData.date)
-  console.log(editNoteData._id)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -23,8 +22,7 @@ export default function EditPage({ onSubmit, editNoteData }) {
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
     const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
     let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    data = { ...data, date}
-    console.log(data)
+    data = { ...data, date }
     onSubmit(editNoteData._id, data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
   }
 
@@ -92,18 +90,18 @@ export default function EditPage({ onSubmit, editNoteData }) {
           </option>
         </SelectTagStyled>
         <ButtonStyled
-        // onClick={() => {
-        //   window.location = 'http://localhost:3000/'
-        // }}
+          onClick={() => {
+            window.location = 'http://localhost:3000/'
+          }}
         >
           Save changes
         </ButtonStyled>
       </FormStyled>
       <ButtonStyled
-      // secondary
-      // onClick={() => {
-      //   window.location = 'http://localhost:3000/'
-      // }}
+        secondary
+        onClick={() => {
+          window.location = 'http://localhost:3000/'
+        }}
       >
         Abort
       </ButtonStyled>

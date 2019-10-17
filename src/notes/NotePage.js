@@ -41,13 +41,11 @@ export default function NotePage({
             _id={note._id}
             title={note.title}
             date={note.date}
-            content={
-              note.content
-              // .split('\n')
-              // .map(line =>
-              //   line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
-              // )
-            }
+            content={note.content
+              .split('\n')
+              .map(line =>
+                line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
+              )}
             recording={note.recording}
             tag={note.tag}
           />

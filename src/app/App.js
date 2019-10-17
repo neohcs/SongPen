@@ -45,7 +45,6 @@ export default function App(editNoteData) {
   }
 
   function deleteNoteOnClick(note) {
-    console.log('note 2', note)
     deleteNote(note._id).then(deletedNote => {
       const index = noteList.findIndex(note => note._id === deletedNote._id)
       setNoteList([...noteList.slice(0, index), ...noteList.slice(index + 1)])
@@ -87,6 +86,7 @@ export default function App(editNoteData) {
               return (
                 <EditPage
                   editNoteData={props.location.editNoteData}
+                  notes={filteredNotes}
                   onSelectTag={selectTag}
                   selectedTag={selectedTag}
                   onSubmit={editNote}
