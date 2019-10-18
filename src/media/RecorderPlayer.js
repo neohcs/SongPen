@@ -1,115 +1,87 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
 export default function RecorderPlayer(audioURL, clipName, handleDeleteCLick) {
   const [isDisabled, setIsDisabled] = useState(true)
 
-  // const audioCtx = new (window.AudioContext || webkitAudioContext)();
-  // const canvasCtx = canvas.getContext("2d"); nur für Visualisierung?
-  navigator.mediaDevices.getUserMedia({ audio: true})
-  console.log('getUserMedia is supported.')
+  const chunks = []
+  const mediaRecorder = new MediaRecorder(stream)
 
+  async function handleRecordClick() {
+    const stream = await getMedia({ audio: true })
+    return record(stream)
+  }
 
-  // if (navigator.mediaDevices.getUserMedia) {
-  //   console.log('getUserMedia is supported.')
-
-    const constraints = { audio: true }
-    const chunks = []
-    
-
-    function onSuccess(stream) {
-      const mediaRecorder = new MediaRecorder(stream)
-
-      // visualize(stream)
-
-      function handleRecordClick() {
-        mediaRecorder.start()
-        console.log(mediaRecorder.state)
-        console.log('recorder started')
-        // record.style.background = 'red'
-        setIsDisabled(!isDisabled)
-
-        // stop.disabled = false;
-        // record.disabled = true; umschreiben in toggle/state?
-      }
-
-      function handleStopClick() {
-        mediaRecorder.stop()
-        console.log(mediaRecorder.state)
-        console.log('recorder stopped')
-        // record.style.background = ''
-        // record.style.color = ''
-        // mediaRecorder.requestData(); im Beispiel auskommentiert
-
-        setIsDisabled(!isDisabled)
-        // stop.disabled = true;
-        // record.disabled = false; s.o.
-      }
-
-      function handleDeleteClick(event) {
-        const evtTgt = event.target
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
-      }
-
-      mediaRecorder.ondataavailable = function(event) {
-        chunks.push(event.data)
-      }
-
-      mediaRecorder.onStop = function() {
-        console.log('data available after MediaRecorder.stop() called.')
-
-        const clipName = prompt(
-          'Enter a name for your recording',
-          'Unnamed recording'
-        )
-        console.log(clipName)
-
-        const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
-        chunks = []
-        const audioURL = window.URL.createObjectURL(blob)
-        console.log('recorder stopped')
-
-        // function handleLabelClick () {
-        //   const existingName = clipLabel.value;
-        //   const newClipName = prompt('Enter a new name for your sound clip?');
-        //   if (newClipName === null) {
-        //     clipLabel.textContent = existingName;
-        //   } else {
-        //     clipLabel.textContent = newClipName;
-        //   }
-        // }
-      }
-      const onError = function(err) {
-        console.log('The following error occured: ' + err)
-      }
-
-      navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError)
+  function getMedia(constraints) {
+    try {
+      return navigator.mediaDevices.getUserMedia(constraints)
+    } catch (err) {
+      alert('Fail')
     }
+  }
 
-    return (
-      <WrapperStyled>
-        <MainControlsStyled>
-          <VisualizerStyled></VisualizerStyled>
-          <ButtonBarStyled>
-            <RecordButtonStyled
-              disabled={!isDisabled}
-            // onClick={handleRecordClick}
-            >
-              Record
+  function record(stream) {
+    mediaRecorder.start()
+    console.log(mediaRecorder.state)
+    console.log('recorder started')
+    setIsDisabled(!isDisabled)
+  }
+
+  function handleStopClick() {
+    mediaRecorder.stop()
+    console.log(mediaRecorder.state)
+    console.log('recorder stopped')
+    setIsDisabled(!isDisabled)
+  }
+
+  function onError(err) {
+    console.log('The following error occured: ' + err)
+  }
+
+  function handleDeleteClick(event) {
+    const evtTgt = event.target
+    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
+  }
+
+  mediaRecorder.ondataavailable = function(event) {
+    chunks.push(event.data)
+  }
+
+  mediaRecorder.onStop = function() {
+    console.log('data available after MediaRecorder.stop() called.')
+
+    const clipName = prompt(
+      'Enter a name for your recording',
+      'Unnamed recording'
+    )
+    console.log(clipName)
+
+    const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
+    chunks = []
+    const audioURL = window.URL.createObjectURL(blob)
+    console.log('recorder stopped')
+  }
+
+  return (
+    <WrapperStyled>
+      <MainControlsStyled>
+        <VisualizerStyled></VisualizerStyled>
+        <ButtonBarStyled>
+          <RecordButtonStyled
+            disabled={!isDisabled}
+            onClick={handleRecordClick}
+          >
+            Record
           </RecordButtonStyled>
-            <StopButtonStyled
-              disabled={isDisabled}
-            // onClick={handleStopClick}
-            >
-              Stop
+          <StopButtonStyled disabled={isDisabled} onClick={handleStopClick}>
+            Stop
           </StopButtonStyled>
-          </ButtonBarStyled>
-        </MainControlsStyled>
-        <SoundClipsStyled>
-          <ClipContainerStyled>
-            <AudioStyled src={audioURL} controls=""></AudioStyled>
-            {/* {clipName === null ? (
+        </ButtonBarStyled>
+      </MainControlsStyled>
+      <SoundClipsStyled>
+        <ClipContainerStyled>
+          <AudioStyled src={audioURL} controls=""></AudioStyled>
+          {/* {clipName === null ? (
             <ClipLabelStyled
             // onClick={handleLabelClick}
             >
@@ -122,78 +94,14 @@ export default function RecorderPlayer(audioURL, clipName, handleDeleteCLick) {
               {clipName}
             </ClipLabelStyled>
           )} */}
-            <DeleteButtonStyled
-            // onClick={handleDeleteClick}
-            >
-              Delete
+          <DeleteButtonStyled onClick={handleDeleteClick}>
+            Delete
           </DeleteButtonStyled>
-          </ClipContainerStyled>
-        </SoundClipsStyled>
-      </WrapperStyled>
-    )
-
-  // } else {
-  //   console.log('getUserMedia not supported on your browser')
-  // }
+        </ClipContainerStyled>
+      </SoundClipsStyled>
+    </WrapperStyled>
+  )
 }
-/*
-Brauch ich nur zum Visualisieren, ne?
-function visualize(stream) {
-  var source = audioCtx.createMediaStreamSource(stream)
-
-  var analyser = audioCtx.createAnalyser()
-  analyser.fftSize = 2048
-  var bufferLength = analyser.frequencyBinCount
-  var dataArray = new Uint8Array(bufferLength)
-
-  source.connect(analyser)
-  //analyser.connect(audioCtx.destination);
-
-  draw()
-
-  function draw() {
-    WIDTH = canvas.width
-    HEIGHT = canvas.height
-
-    requestAnimationFrame(draw)
-
-    analyser.getByteTimeDomainData(dataArray)
-
-    canvasCtx.fillStyle = 'rgb(200, 200, 200)'
-    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT)
-
-    canvasCtx.lineWidth = 2
-    canvasCtx.strokeStyle = 'rgb(0, 0, 0)'
-
-    canvasCtx.beginPath()
-
-    var sliceWidth = (WIDTH * 1.0) / bufferLength
-    var x = 0
-
-    for (var i = 0; i < bufferLength; i++) {
-      var v = dataArray[i] / 128.0
-      var y = (v * HEIGHT) / 2
-
-      if (i === 0) {
-        canvasCtx.moveTo(x, y)
-      } else {
-        canvasCtx.lineTo(x, y)
-      }
-
-      x += sliceWidth
-    }
-
-    canvasCtx.lineTo(canvas.width, canvas.height / 2)
-    canvasCtx.stroke()
-  }
-}
-*/
-
-// window.onresize = function () {
-//   canvas.width = mainSection.offsetWidth;
-// }
-
-// window.onresize(); brauch ich nicht bei fixer Screengröße, oder?
 
 const WrapperStyled = styled.div`
   height: 100%;
