@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
+import RecorderPlayer from '../media/RecorderPlayer'
 
 EditPage.propTypes = {
   onSubmit: PropTypes.func
@@ -64,6 +65,7 @@ export default function EditPage({ onSubmit, editNoteData, notes }) {
           value={content}
           onChange={event => setContent(event.target.value)}
         ></InputContentStyled>
+        <RecorderPlayer></RecorderPlayer>
         <InputRecordStyled
           name="recording"
           value={recording}
@@ -103,7 +105,7 @@ export default function EditPage({ onSubmit, editNoteData, notes }) {
           window.location = 'http://localhost:3000/'
         }}
       >
-        Abort
+        Cancel
       </ButtonStyled>
     </Page>
   )

@@ -5,6 +5,7 @@ import { getNotes, postNote, patchNote, deleteNote } from '../notes/services'
 import NotePage from '../notes/NotePage'
 import CreatePage from '../create/CreatePage'
 import EditPage from '../edit/EditPage'
+import RecorderPlayer from '../media/RecorderPlayer'
 
 export default function App(editNoteData) {
   const [selectedTag, setSelectedTag] = useState('')
@@ -92,6 +93,12 @@ export default function App(editNoteData) {
                   onSubmit={editNote}
                 ></EditPage>
               )
+            }}
+          />
+          <Route
+            path="/media"
+            render={props => {
+              return <RecorderPlayer></RecorderPlayer>
             }}
           />
         </Switch>

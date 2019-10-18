@@ -81,6 +81,14 @@ export default function CreatePage({ onSubmit }) {
           Save note
         </ButtonStyled>
       </FormStyled>
+      <ButtonStyled
+        secondary
+        onClick={() => {
+          window.location = 'http://localhost:3000/'
+        }}
+      >
+        Cancel
+      </ButtonStyled>
     </Page>
   )
 }
@@ -172,11 +180,11 @@ const ButtonStyled = styled.button`
   box-shadow: 0 2px 5px #0002;
   border: none;
   border-radius: 7px;
-  width: auto;
   height: 30px;
   padding: 2px 15px;
-  background: #ecf7f8;
-  font-size: 18px;
   font-weight: bold;
-  color: #54abbc;
+  width: ${props => (props.secondary ? '100px' : 'auto')};
+  background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
+  font-size: ${props => (props.secondary ? '14px' : '18px')};
+  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
 `
