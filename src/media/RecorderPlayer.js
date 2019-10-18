@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 export default function RecorderPlayerTest() {
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  const [isAudioVisible, setIsAudioVisible] = useState(false)
+
   const chunks = []
   let mediaRecorder
 
@@ -29,22 +31,25 @@ export default function RecorderPlayerTest() {
     // setIsButtonDisabled(!isButtonDisabled)
   }
 
+  function handleStopClick() {
+    mediaRecorder.stop()
+    mediaRecorder.onstop = handleStop
+  }
+
   function handleDataAvailable(event) {
     if (event.data.size > 0) {
+      console.log(event.data)
       chunks.push(event.data)
+      // const chunks = [...chunks, event.data]
+      console.log('oldchunks:', chunks)
     } else {
       alert('No media there.')
     }
   }
 
-  function handleStopClick() {
-    mediaRecorder.stop()
-    console.log('stopped')
-    mediaRecorder.onStop = handleStop
-  }
-
   function handleStop() {
     console.log('data available after MediaRecorder.stop() called.')
+    setIsAudioVisible(!isAudioVisible)
 
     const clipName = prompt(
       'Enter a name for your recording',
@@ -53,10 +58,11 @@ export default function RecorderPlayerTest() {
     console.log(clipName)
 
     const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
-    chunks = []
-    const audioURL = window.URL.createObjectURL(blob)
+    // chunks = []
     console.log('recorder stopped')
     console.log(mediaRecorder.state)
+    console.log('newchunks:', chunks)
+    const audioUrl = window.URL.createObjectURL(blob)
     // setIsButtonDisabled(!isButtonDisabled)
   }
 
@@ -65,41 +71,55 @@ export default function RecorderPlayerTest() {
     evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
   }
 
-  // function handleStop() {
-  //   mediaRecorder.onStop()
-  //   console.log('data available after MediaRecorder.stop() called.')
-
-  //   const clipName = prompt(
-  //     'Enter a name for your recording',
-  //     'Unnamed recording'
-  //   )
-  //   console.log(clipName)
-
-  //   const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
-  //   chunks = []
-  //   const audioURL = window.URL.createObjectURL(blob)
-  //   console.log('recorder stopped')
-  // }
-
   return (
     <WrapperStyled>
       <MainControlsStyled>
         <VisualizerStyled></VisualizerStyled>
         <ButtonBarStyled>
           <RecordButtonStyled
-            disabled={!isButtonDisabled}
+            // disabled={!isButtonDisabled}
             onClick={handleRecordClick}
           >
             Record
           </RecordButtonStyled>
           <StopButtonStyled
-            disabled={!isButtonDisabled}
+            // disabled={isButtonDisabled}
             onClick={handleStopClick}
           >
             Stop
           </StopButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
+       
+      <SoundClipsStyled visible={isAudioVisible}>
+                
+        <ClipContainerStyled>
+                    
+          <AudioStyled
+            // src={audioUrl}
+            controls=""
+          ></AudioStyled>
+                   
+          {/* {clipName === null ? (
+            <ClipLabelStyled // onClick={handleLabelClick}
+            >
+                            'My unnamed clip'             
+            </ClipLabelStyled>
+          ) : (
+            <ClipLabelStyled // onClick={handleLabelClick}
+            >
+                            {clipName}
+                          
+            </ClipLabelStyled>
+          )}
+                       */}
+          <DeleteButtonStyled onClick={handleDeleteClick}>
+                        Delete           
+          </DeleteButtonStyled>
+                  
+        </ClipContainerStyled>
+              
+      </SoundClipsStyled>
     </WrapperStyled>
   )
 }
@@ -172,7 +192,7 @@ const StopButtonStyled = styled.button`
 `
 
 const SoundClipsStyled = styled.section`
-  display: block;
+  display: ${props => (props.visible ? 'block' : 'none')};
   flex: 1;
   overflow: auto;
 `
