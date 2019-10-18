@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
-export default function RecorderPlayer(audioURL, clipName, handleDeleteCLick) {
-  const [isDisabled, setIsDisabled] = useState(true)
-
+export default function RecorderPlayerTest() {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const chunks = []
-  const mediaRecorder = new MediaRecorder(stream)
+  let mediaRecorder
 
   async function handleRecordClick() {
     const stream = await getMedia({ audio: true })
@@ -14,40 +13,37 @@ export default function RecorderPlayer(audioURL, clipName, handleDeleteCLick) {
 
   function getMedia(constraints) {
     try {
-      return navigator.mediaDevices.getUserMedia(constraints)
+      const stream = navigator.mediaDevices.getUserMedia(constraints)
+      return stream
     } catch (err) {
       alert('Fail')
     }
   }
 
   function record(stream) {
+    mediaRecorder = new MediaRecorder(stream)
+    mediaRecorder.ondataavailable = handleDataAvailable
     mediaRecorder.start()
-    console.log(mediaRecorder.state)
     console.log('recorder started')
-    setIsDisabled(!isDisabled)
+    console.log(mediaRecorder.state)
+    // setIsButtonDisabled(!isButtonDisabled)
+  }
+
+  function handleDataAvailable(event) {
+    if (event.data.size > 0) {
+      chunks.push(event.data)
+    } else {
+      alert('No media there.')
+    }
   }
 
   function handleStopClick() {
     mediaRecorder.stop()
-    console.log(mediaRecorder.state)
-    console.log('recorder stopped')
-    setIsDisabled(!isDisabled)
+    console.log('stopped')
+    mediaRecorder.onStop = handleStop
   }
 
-  function onError(err) {
-    console.log('The following error occured: ' + err)
-  }
-
-  function handleDeleteClick(event) {
-    const evtTgt = event.target
-    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
-  }
-
-  mediaRecorder.ondataavailable = function(event) {
-    chunks.push(event.data)
-  }
-
-  mediaRecorder.onStop = function() {
+  function handleStop() {
     console.log('data available after MediaRecorder.stop() called.')
 
     const clipName = prompt(
@@ -60,7 +56,30 @@ export default function RecorderPlayer(audioURL, clipName, handleDeleteCLick) {
     chunks = []
     const audioURL = window.URL.createObjectURL(blob)
     console.log('recorder stopped')
+    console.log(mediaRecorder.state)
+    // setIsButtonDisabled(!isButtonDisabled)
   }
+
+  function handleDeleteClick(event) {
+    const evtTgt = event.target
+    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
+  }
+
+  // function handleStop() {
+  //   mediaRecorder.onStop()
+  //   console.log('data available after MediaRecorder.stop() called.')
+
+  //   const clipName = prompt(
+  //     'Enter a name for your recording',
+  //     'Unnamed recording'
+  //   )
+  //   console.log(clipName)
+
+  //   const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
+  //   chunks = []
+  //   const audioURL = window.URL.createObjectURL(blob)
+  //   console.log('recorder stopped')
+  // }
 
   return (
     <WrapperStyled>
@@ -68,37 +87,19 @@ export default function RecorderPlayer(audioURL, clipName, handleDeleteCLick) {
         <VisualizerStyled></VisualizerStyled>
         <ButtonBarStyled>
           <RecordButtonStyled
-            disabled={!isDisabled}
+            disabled={!isButtonDisabled}
             onClick={handleRecordClick}
           >
             Record
           </RecordButtonStyled>
-          <StopButtonStyled disabled={isDisabled} onClick={handleStopClick}>
+          <StopButtonStyled
+            disabled={!isButtonDisabled}
+            onClick={handleStopClick}
+          >
             Stop
           </StopButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
-      <SoundClipsStyled>
-        <ClipContainerStyled>
-          <AudioStyled src={audioURL} controls=""></AudioStyled>
-          {/* {clipName === null ? (
-            <ClipLabelStyled
-            // onClick={handleLabelClick}
-            >
-              'My unnamed clip'
-            </ClipLabelStyled>
-          ) : (
-            <ClipLabelStyled
-            // onClick={handleLabelClick}
-            >
-              {clipName}
-            </ClipLabelStyled>
-          )} */}
-          <DeleteButtonStyled onClick={handleDeleteClick}>
-            Delete
-          </DeleteButtonStyled>
-        </ClipContainerStyled>
-      </SoundClipsStyled>
     </WrapperStyled>
   )
 }
