@@ -10,7 +10,7 @@ EditPage.propTypes = {
   onSubmit: PropTypes.func
 }
 
-export default function EditPage({ onSubmit, editNoteData, notes }) {
+export default function EditPage({ onSubmit, editNoteData }) {
   const [title, setTitle] = useState(editNoteData.title)
   const [content, setContent] = useState(editNoteData.content.toString())
   const [label, setLabel] = useState(editNoteData.label)

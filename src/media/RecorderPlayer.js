@@ -4,8 +4,9 @@ import styled from 'styled-components/macro'
 export default function RecorderPlayerTest() {
   // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [isAudioVisible, setIsAudioVisible] = useState(false)
+  const [audioData, setAudioData] = useState([])
 
-  const chunks = []
+  let chunks = []
   let mediaRecorder
 
   async function handleRecordClick() {
@@ -25,6 +26,7 @@ export default function RecorderPlayerTest() {
   function record(stream) {
     mediaRecorder = new MediaRecorder(stream)
     mediaRecorder.ondataavailable = handleDataAvailable
+    mediaRecorder.onstop = () => handleAudioAfterStop(stream)
     mediaRecorder.start()
     console.log('recorder started')
     console.log(mediaRecorder.state)
@@ -33,7 +35,7 @@ export default function RecorderPlayerTest() {
 
   function handleStopClick() {
     mediaRecorder.stop()
-    mediaRecorder.onstop = handleStop
+    // mediaRecorder.onstop = handleStop
   }
 
   function handleDataAvailable(event) {
@@ -47,7 +49,8 @@ export default function RecorderPlayerTest() {
     }
   }
 
-  function handleStop() {
+  function handleAudioAfterStop(stream) {
+    stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
     setIsAudioVisible(!isAudioVisible)
 
@@ -57,13 +60,15 @@ export default function RecorderPlayerTest() {
     )
     console.log(clipName)
 
-    const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
-    // chunks = []
+    const blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
     console.log(mediaRecorder.state)
-    console.log('newchunks:', chunks)
-    const audioUrl = window.URL.createObjectURL(blob)
+    const blobUrl = URL.createObjectURL(blob)
     // setIsButtonDisabled(!isButtonDisabled)
+    // chunks = []
+    setAudioData([{ clipName, blobUrl }, ...audioData])
+    console.log(chunks)
+    console.log(audioData)
   }
 
   function handleDeleteClick(event) {
@@ -90,35 +95,22 @@ export default function RecorderPlayerTest() {
           </StopButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
-       
       <SoundClipsStyled visible={isAudioVisible}>
-                
-        <ClipContainerStyled>
-                    
-          <AudioStyled
-            // src={audioUrl}
-            controls=""
-          ></AudioStyled>
-                   
-          {/* {clipName === null ? (
-            <ClipLabelStyled // onClick={handleLabelClick}
+        {audioData.map(blob => (
+          <ClipContainerStyled key={blob.index}>
+                    
+            <AudioStyled src={blob.blobUrl} controls></AudioStyled>
+            <ClipLabelStyled
+            // onClick={handleLabelClick}
             >
-                            'My unnamed clip'             
+                       {blob.clipName}                 
             </ClipLabelStyled>
-          ) : (
-            <ClipLabelStyled // onClick={handleLabelClick}
-            >
-                            {clipName}
-                          
-            </ClipLabelStyled>
-          )}
-                       */}
-          <DeleteButtonStyled onClick={handleDeleteClick}>
-                        Delete           
-          </DeleteButtonStyled>
-                  
-        </ClipContainerStyled>
-              
+            <DeleteButtonStyled onClick={handleDeleteClick}>
+                          Delete           
+            </DeleteButtonStyled>
+             
+          </ClipContainerStyled>
+        ))}
       </SoundClipsStyled>
     </WrapperStyled>
   )
