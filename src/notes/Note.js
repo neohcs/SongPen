@@ -63,7 +63,9 @@ export default function Note({
           >
             <NoteEditIconStyled />
           </LinkStyled>
-          <NoteDeleteIconStyled onClick={handleDeleteClick}></NoteDeleteIconStyled>
+          <NoteDeleteIconStyled
+            onClick={handleDeleteClick}
+          ></NoteDeleteIconStyled>
         </>
       ) : (
         <>

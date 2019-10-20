@@ -65,14 +65,20 @@ export default function EditPage({ onSubmit, editNoteData }) {
           value={content}
           onChange={event => setContent(event.target.value)}
         ></InputContentStyled>
-        <RecorderPlayer></RecorderPlayer>
-        <InputRecordStyled
+        <RecorderPlayer
+          name="recording"
+          // value={recording}
+          // onChange={event =>
+          //   setRecording([editNoteData.recording, event.target.value])
+          // }
+        ></RecorderPlayer>
+        {/* <InputRecordStyled
           name="recording"
           value={recording}
           onChange={event =>
             setRecording([editNoteData.recording, event.target.value])
           }
-        ></InputRecordStyled>
+        ></InputRecordStyled> */}
         <SelectLabelStyled>
           Please select a tag for your note...
         </SelectLabelStyled>
@@ -206,4 +212,8 @@ const ButtonStyled = styled.button`
   background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
   color: ${props => (props.secondary ? 'grey' : '#54abbc')};
+
+  :active {
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
 `

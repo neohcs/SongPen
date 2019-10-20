@@ -4,12 +4,13 @@ import PropTypes from 'prop-types'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
+import RecorderPlayer from '../media/RecorderPlayer'
 
 CreatePage.propTypes = {
   onSubmit: PropTypes.func
 }
 
-export default function CreatePage({ onSubmit }) {
+export default function CreatePage({ onSubmit, mediaRecorder }) {
   const currentDay = new Date().getDate()
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear()
@@ -55,10 +56,14 @@ export default function CreatePage({ onSubmit }) {
           name="content"
           placeholder={'Express your creative genius here...'}
         ></InputContentStyled>
-        <InputRecordStyled
+        <RecorderPlayer
+          name="recording"
+          // value={value}
+        ></RecorderPlayer>
+        {/* <InputRecordStyled
           name="recording"
           placeholder={'Insert URL to your song here...'}
-        ></InputRecordStyled>
+        ></InputRecordStyled> */}
         <SelectLabelStyled>
           Please select a tag for your note...
         </SelectLabelStyled>
@@ -187,4 +192,8 @@ const ButtonStyled = styled.button`
   background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
   color: ${props => (props.secondary ? 'grey' : '#54abbc')};
+
+  :active {
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
 `

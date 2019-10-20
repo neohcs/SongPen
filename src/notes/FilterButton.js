@@ -30,7 +30,7 @@ const FilterButtonStyled = styled.button`
   color: ${props => (props.selected ? '#f5f8f8' : '#54abbc')};
 
   :active {
-    box-shadow: none;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
     background: '#48c0cb';
     font-weight: 'bold';
     color: 'white';

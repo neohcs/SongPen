@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
-export default function RecorderPlayerTest() {
+export default function RecorderPlayer({ title, id }) {
   // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-  const [isAudioVisible, setIsAudioVisible] = useState(false)
+  const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [audioData, setAudioData] = useState([])
-
+  // const [clickCount, setClickCount] = useState(0)
   let chunks = []
   let mediaRecorder
 
   async function handleRecordClick() {
+    // setClickCount(clickCount + 1)
+    // clickCount > 1 ||
+    // toggleButton()
     const stream = await getMedia({ audio: true })
     return record(stream)
   }
@@ -33,11 +36,6 @@ export default function RecorderPlayerTest() {
     // setIsButtonDisabled(!isButtonDisabled)
   }
 
-  function handleStopClick() {
-    mediaRecorder.stop()
-    // mediaRecorder.onstop = handleStop
-  }
-
   function handleDataAvailable(event) {
     if (event.data.size > 0) {
       console.log(event.data)
@@ -49,15 +47,25 @@ export default function RecorderPlayerTest() {
     }
   }
 
+  function handleStopClick() {
+    // setIsButtonVisible(!isButtonVisible)
+    mediaRecorder.stop()
+    toggleButton()
+    // mediaRecorder.onstop = handleStop
+  }
+
+  function toggleButton() {
+    setIsButtonVisible(!isButtonVisible)
+  }
+
   function handleAudioAfterStop(stream) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
-    setIsAudioVisible(!isAudioVisible)
-
-    const clipName = prompt(
-      'Enter a name for your recording',
-      'Unnamed recording'
-    )
+    const clipName = title
+    // const clipName = prompt(
+    //   'Enter a name for your recording',
+    //   'Unnamed recording'
+    // )
     console.log(clipName)
 
     const blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
@@ -65,7 +73,7 @@ export default function RecorderPlayerTest() {
     console.log(mediaRecorder.state)
     const blobUrl = URL.createObjectURL(blob)
     // setIsButtonDisabled(!isButtonDisabled)
-    // chunks = []
+    chunks = []
     setAudioData([{ clipName, blobUrl }, ...audioData])
     console.log(chunks)
     console.log(audioData)
@@ -76,28 +84,41 @@ export default function RecorderPlayerTest() {
     evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
   }
 
+  function handleRecordChange() {
+    console.log('ähm')
+  }
+
   return (
-    <WrapperStyled>
+    <MediaWrapperStyled>
       <MainControlsStyled>
         <VisualizerStyled></VisualizerStyled>
         <ButtonBarStyled>
-          <RecordButtonStyled
+          <ButtonStyled
+            visible
+            // visible={isButtonVisible}
             // disabled={!isButtonDisabled}
             onClick={handleRecordClick}
           >
             Record
-          </RecordButtonStyled>
-          <StopButtonStyled
+          </ButtonStyled>
+          <ButtonStyled
+            visible
+            // visible={!isButtonVisible}
             // disabled={isButtonDisabled}
             onClick={handleStopClick}
           >
             Stop
-          </StopButtonStyled>
+          </ButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
-      <SoundClipsStyled visible={isAudioVisible}>
+      <SoundClipsStyled
+      // onChange={handleRecordChange}
+      >
         {audioData.map(blob => (
-          <ClipContainerStyled key={blob.index}>
+          <ClipContainerStyled
+            key={blob.index}
+            // value={blob.clipName + blob.index + id}
+          >
                     
             <AudioStyled src={blob.blobUrl} controls></AudioStyled>
             <ClipLabelStyled
@@ -105,21 +126,21 @@ export default function RecorderPlayerTest() {
             >
                        {blob.clipName}                 
             </ClipLabelStyled>
-            <DeleteButtonStyled onClick={handleDeleteClick}>
+            <ButtonStyled visible secondary onClick={handleDeleteClick}>
                           Delete           
-            </DeleteButtonStyled>
+            </ButtonStyled>
              
           </ClipContainerStyled>
         ))}
       </SoundClipsStyled>
-    </WrapperStyled>
+    </MediaWrapperStyled>
   )
 }
 
-const WrapperStyled = styled.div`
-  height: 100%;
+const MediaWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 const MainControlsStyled = styled.section`
@@ -139,54 +160,60 @@ const ButtonBarStyled = styled.div`
   justify-content: space-between;
 `
 
-const RecordButtonStyled = styled.button`
-  transition: all 0.2s;
-  text-align: center;
-  width: calc(50% - 0.25rem);
-  border: none;
-  padding: 0.5rem;
-  background: #0088cc;
-  font-size: 1rem;
-  color: white;
+// const RecordButtonStyled = styled.button`
+//   transition: all 0.2s;
+//   text-align: center;
+//   width: calc(50% - 0.25rem);
+//   border: none;
+//   padding: 0.5rem;
+//   background: #0088cc;
+//   font-size: 1rem;
+//   color: white;
 
-  :hover,
-  :focus {
-    box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
-    background: #0ae;
-  }
+//   :hover,
+//   :focus {
+//     box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
+//     background: #0ae;
+//   }
 
-  :active {
-    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
-  }
-`
+//   :active {
+//     box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.5);
+//     transform: translateY(2px);
+//   }
+// `
 
-const StopButtonStyled = styled.button`
-  transition: all 0.2s;
-  text-align: center;
-  width: calc(50% - 0.25rem);
-  border: none;
-  padding: 0.5rem;
-  background: #0088cc;
-  font-size: 1rem;
-  color: white;
+// const StopButtonStyled = styled.button`
+//   transition: all 0.2s;
+//   text-align: center;
+//   width: calc(50% - 0.25rem);
+//   border: none;
+//   padding: 0.5rem;
+//   background: #0088cc;
+//   font-size: 1rem;
+//   color: white;
 
-  :hover,
-  :focus {
-    box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
-    background: #0ae;
-  }
+//   :hover,
+//   :focus {
+//     box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
+//     background: #0ae;
+//   }
 
-  :active {
-    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
-  }
-`
+//   :active {
+//     box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.5);
+//     transform: translateY(2px);
+//   }
+// `
 
 const SoundClipsStyled = styled.section`
-  display: ${props => (props.visible ? 'block' : 'none')};
-  flex: 1;
-  overflow: auto;
+  /* display: ${props => (props.visible ? 'block' : 'none')}; */
+  display: grid;
+  /* gap: 20px; */
+  /* justify-items: left; */
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  max-width: 100%;
+  /* padding: 5px 20px; */
 `
 
 const ClipContainerStyled = styled.article`
@@ -194,20 +221,47 @@ const ClipContainerStyled = styled.article`
 `
 
 const AudioStyled = styled.audio`
-  width: 100%;
   display: block;
   margin: 1rem auto 0.5rem;
+  width: 100%;
 `
 
 const ClipLabelStyled = styled.p`
   display: inline-block;
   font-size: 1rem;
-  cursor: pointer;
+  /* cursor: pointer; */
 `
 
-const DeleteButtonStyled = styled.button`
-  float: right;
-  padding: 0.5rem 0.75rem;
-  background: #f00;
-  font-size: 0.8rem;
+// const DeleteButtonStyled = styled.button`
+//   float: right;
+//   padding: 0.5rem 0.75rem;
+//   background: #f00;
+//   font-size: 0.8rem;
+// `
+
+const ButtonStyled = styled.button`
+  box-shadow: 0 2px 5px #0002;
+  border: none;
+  border-radius: 7px;
+  height: 30px;
+  padding: 2px 15px;
+  font-weight: bold;
+  display: ${props => (props.visible ? 'inline-block' : 'none')};
+  width: ${props => (props.secondary ? '100px' : 'auto')};
+  background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
+  font-size: ${props => (props.secondary ? '14px' : '18px')};
+  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
+
+  :hover,
+  :focus {
+    /* box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1); */
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+    /* background: #0ae; */
+  }
+
+  :active {
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(2px);
+  }
 `
