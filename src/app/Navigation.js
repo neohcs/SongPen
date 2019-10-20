@@ -29,9 +29,9 @@ const LinkStyled = styled(NavLink)`
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  color: #ffc187;
+  color: #f19bb1;
   &.active {
-    color: #4db5bf;
+    color: #e86082;
   }
 `
 

@@ -31,19 +31,20 @@ export default function EditPage({ onSubmit, editNoteData }) {
     const currentDay = new Date().getDate()
     const currentMonth = new Date().getMonth() + 1
     const currentYear = new Date().getFullYear()
-    const currentHours = new Date().getHours()
-    const currentMinutes = new Date().getMinutes()
+    // const currentHours = new Date().getHours()
+    // const currentMinutes = new Date().getMinutes()
     const currentDate =
       currentDay +
       '/' +
       currentMonth +
       '/' +
       currentYear +
-      ' ' +
-      currentHours +
-      ':' +
-      currentMinutes
-    return setDate(currentDate)
+      // ' ' +
+      // currentHours +
+      // ':' +
+      // currentMinutes
+
+      setDate(currentDate)
   }
 
   return (

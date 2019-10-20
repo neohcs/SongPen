@@ -84,7 +84,7 @@ const NoteStyled = styled.section`
   box-shadow: 0 5px 10px #0002;
   width: 90vw;
   padding: 10px 20px 20px;
-  background: #f8f8f8;
+  background: #fcfcfc;
   font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana,
     sans-serif;
 `
@@ -94,12 +94,12 @@ const DateStyled = styled.div`
   display: block;
   margin-right: -10px;
   font-size: 12px;
-  color: #3997a0;
+  color: #050102;
 `
 
 const TitleStyled = styled.h1`
   font-size: 18px;
-  color: #3997a0;
+  color: #050102;
 `
 
 const ContentStyled = styled.p`
@@ -109,7 +109,7 @@ const ContentStyled = styled.p`
   overflow: hidden;
   height: 60px;
   font-size: 16px;
-  color: #54abbc;
+  color: #130307;
   word-wrap: break-word;
 
   &.expanded {
@@ -145,7 +145,7 @@ const NoteViewIconStyled = styled(ArrowSortedDown)`
   bottom: 5px;
   display: inline-block;
   height: 50px;
-  color: #ffc187;
+  color: #e86082;
 `
 
 const NoteCollapseIconStyled = styled(ArrowSortedUp)`
@@ -154,7 +154,7 @@ const NoteCollapseIconStyled = styled(ArrowSortedUp)`
   bottom: 5px;
   display: block;
   height: 50px;
-  color: #ffc187;
+  color: #e86082;
 `
 
 const LinkStyled = styled(NavLink)`
@@ -162,7 +162,7 @@ const LinkStyled = styled(NavLink)`
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  color: #ffc187;
+  color: #e86082;
   &.active {
     color: #4db5bf;
   }
@@ -174,7 +174,7 @@ const NoteEditIconStyled = styled(EditAlt)`
   right: 50px;
   display: inline-block;
   height: 25px;
-  color: #ffc187;
+  color: #e86082;
 `
 
 const NoteDeleteIconStyled = styled(Trash)`
@@ -183,5 +183,5 @@ const NoteDeleteIconStyled = styled(Trash)`
   right: 10px;
   display: inline-block;
   height: 25px;
-  color: #ffc187;
+  color: #e86082;
 `

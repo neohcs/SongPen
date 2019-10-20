@@ -16,7 +16,7 @@ const HeaderStyled = styled.header`
   width: 100vw;
   height: 60px;
   padding: 10px;
-  background: #4db5bf;
+  background: #e86082;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 36px;
   font-weight: bold;

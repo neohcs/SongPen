@@ -14,8 +14,8 @@ export default function CreatePage({ onSubmit, mediaRecorder }) {
   const currentDay = new Date().getDate()
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear()
-  const currentHours = new Date().getHours()
-  const currentMinutes = new Date().getMinutes()
+  // const currentHours = new Date().getHours()
+  // const currentMinutes = new Date().getMinutes()
 
   const currentDate =
     currentDay +
@@ -23,21 +23,21 @@ export default function CreatePage({ onSubmit, mediaRecorder }) {
     currentMonth +
     '/' +
     currentYear +
-    ' ' +
-    currentHours +
-    ':' +
-    currentMinutes
+    // ' ' +
+    // currentHours +
+    // ':' +
+    // currentMinutes
 
-  function handleSubmit(event) {
-    event.preventDefault()
-    const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
-    const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-    const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
-    //   form.reset() //dies leert die Felder der Form automatisch
-    //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
-    // }
-  }
+    function handleSubmit(event) {
+      event.preventDefault()
+      const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
+      const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
+      const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+      onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
+      //   form.reset() //dies leert die Felder der Form automatisch
+      //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
+      // }
+    }
 
   return (
     <Page title={'CreatePage'}>
