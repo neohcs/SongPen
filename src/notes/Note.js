@@ -12,7 +12,7 @@ Note.propTypes = {
   date: PropTypes.string, //update this to dynamic date
   content: PropTypes.string,
   tag: PropTypes.string,
-  recording: PropTypes.string //or array? -> arrayOf(PropTypes.string)
+  recordings: PropTypes.arrayOf(PropTypes.string) //or array? -> arrayOf(PropTypes.string)
   // id, too?
 }
 
@@ -21,7 +21,7 @@ export default function Note({
   date,
   content,
   tag,
-  recording,
+  recordings,
   _id,
   handleDeleteClick
 }) {
@@ -39,12 +39,17 @@ export default function Note({
         <>
           <ContentStyled className={'expanded'}>
             {content}
-            {recording && (
-              // <audio src="https://res.cloudinary.com/dym5cwcpv/video/upload/v1571060556/big-buck-bunny_trailer_dyjwks.webm"></audio> TBC
-              <PlayBarStyled>
-                <PlayIconStyled></PlayIconStyled>
-              </PlayBarStyled>
-            )}
+            {recordings !== [] &&
+              recordings.map(recording => (
+                <AudioStyled src={recording} controls>
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </AudioStyled>
+              ))
+            // <PlayBarStyled>
+            //   <PlayIconStyled></PlayIconStyled>
+            // </PlayBarStyled>
+            }
           </ContentStyled>
           <NoteCollapseIconStyled
             onClick={toggleExpandNote}
@@ -57,7 +62,7 @@ export default function Note({
                 title,
                 date,
                 content,
-                recording,
+                recordings,
                 tag
               }
             }}
@@ -75,7 +80,7 @@ export default function Note({
         </>
       )}
       <Tag tag={tag}></Tag>
-      {recording && <RecordingIconStyled></RecordingIconStyled>}
+      {recordings !== [] && <RecordingIconStyled></RecordingIconStyled>}
     </NoteStyled>
   )
 }
@@ -126,6 +131,12 @@ const RecordingIconStyled = styled(Notes)`
   margin-left: 7px;
   height: 25px;
   fill: #17e2cc;
+`
+
+const AudioStyled = styled.audio`
+  margin-top: 15px;
+  height: 30px;
+  width: 100%;
 `
 
 const PlayBarStyled = styled.div`

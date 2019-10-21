@@ -41,11 +41,11 @@ export default function CreatePage({ onSubmit }) {
           placeholder={'Express your creative genius here...'}
         ></InputContentStyled>
         <RecorderPlayer
-          name="recording"
+          name="recordings"
           // value={value}
         ></RecorderPlayer>
         {/* <InputRecordStyled
-          name="recording"
+          name="recordings"
           placeholder={'Insert URL to your song here...'}
         ></InputRecordStyled> */}
         <div>
@@ -90,7 +90,8 @@ const FormStyled = styled.form`
   justify-items: center;
   overflow-y: auto;
   scroll-behavior: smooth;
-  padding: 20px;
+  margin-bottom: 20px;
+  padding: 0 20px 20px;
 `
 
 const InputTitleStyled = styled.input`

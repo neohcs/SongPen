@@ -15,7 +15,7 @@ export default function EditPage({ onSubmit, editNoteData }) {
   const [title, setTitle] = useState(editNoteData.title)
   const [content, setContent] = useState(editNoteData.content.toString())
   const [label, setLabel] = useState(editNoteData.label)
-  const [recording, setRecording] = useState([editNoteData.recording])
+  const [recordings, setRecording] = useState([editNoteData.recording])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -46,17 +46,17 @@ export default function EditPage({ onSubmit, editNoteData }) {
           onChange={event => setContent(event.target.value)}
         ></InputContentStyled>
         <RecorderPlayer
-          name="recording"
-          // value={recording}
+          name="recordings"
+          // value={recordings}
           // onChange={event =>
-          //   setRecording([editNoteData.recording, event.target.value])
+          //   setRecordings([editNoteData.recordings, event.target.value])
           // }
         ></RecorderPlayer>
         {/* <InputRecordStyled
-          name="recording"
-          value={recording}
+          name="recordings"
+          value={recordings}
           onChange={event =>
-            setRecording([editNoteData.recording, event.target.value])
+            setRecordings([editNoteData.recordings, event.target.value])
           }
         ></InputRecordStyled> */}
         <div>
@@ -103,7 +103,8 @@ const FormStyled = styled.form`
   justify-items: center;
   overflow-y: auto;
   scroll-behavior: smooth;
-  padding: 20px;
+  margin-bottom: 20px;
+  padding: 0 20px 20px;
 `
 
 const InputTitleStyled = styled.input`

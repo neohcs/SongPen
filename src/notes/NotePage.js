@@ -46,7 +46,7 @@ export default function NotePage({
               .map(line =>
                 line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
               )}
-            recording={note.recording}
+            recordings={note.recordings.map(recording => note.recording)}
             tag={note.tag}
           />
         ))}

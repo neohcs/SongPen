@@ -20,8 +20,9 @@ export default function Navigation() {
 const NavigationStyled = styled.nav`
   display: flex;
   justify-content: space-between;
+  margin: 0 30px 40px;
   height: 50px;
-  padding: 30px;
+  padding-top: 50px;
 `
 
 const LinkStyled = styled(NavLink)`
@@ -40,11 +41,11 @@ const LinkStyled = styled(NavLink)`
 const ListIconStyled = styled(ListUl)`
   display: inline-block;
   justify-content: flex-start;
-  height: 30px;
+  height: 40px;
 `
 
 const CreateIconStyled = styled(FileAlt)`
   display: inline-block;
   justify-content: flex-end;
-  height: 30px;
+  height: 40px;
 `

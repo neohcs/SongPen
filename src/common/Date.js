@@ -24,7 +24,6 @@ const DateStyled = styled.input`
   width: 95px;
   height: 20px;
   padding: 10px;
-  padding-top: 15px;
   opacity: 0.3;
   font-size: 14px;
   color: #130307;

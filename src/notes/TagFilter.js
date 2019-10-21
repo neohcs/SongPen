@@ -27,6 +27,5 @@ const TagFilterStyled = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 0;
   width: 100%;
 `

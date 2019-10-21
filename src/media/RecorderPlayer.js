@@ -10,9 +10,9 @@ export default function RecorderPlayer({ title, id }) {
   let chunks = []
 
   async function handleRecordClick() {
-    console.log('Recording pressed')
+    console.log('Recording clicked')
     const stream = await getMedia({ audio: true })
-    console.log('Gettet stream: ', stream)
+    console.log('Received stream: ', stream)
     return record(stream)
   }
 
@@ -69,8 +69,9 @@ export default function RecorderPlayer({ title, id }) {
     console.log('recorder stopped')
     //  console.log(mediaRecorder.state)
     const blobUrl = URL.createObjectURL(blob)
+    console.log(blobUrl)
     // setIsButtonDisabled(!isButtonDisabled)
-    chunks = []
+    // chunks = []
     setAudioData([{ clipName, blobUrl }, ...audioData])
     console.log(chunks)
     console.log(audioData)
@@ -114,7 +115,7 @@ export default function RecorderPlayer({ title, id }) {
             key={blob.index}
             // value={blob.clipName + blob.index + id}
           >
-                    
+                  
             <AudioStyled src={blob.blobUrl} controls></AudioStyled>
             {/* <ClipLabelStyled
             // onClick={handleLabelClick}
@@ -167,7 +168,7 @@ const SoundClipsStyled = styled.section`
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  max-width: 100%;
+  max-width: 90vw;
   padding: 5px 20px;
 `
 
@@ -179,15 +180,19 @@ const ClipContainerStyled = styled.article`
   padding: 5px 20px; */
   display: flex;
   flex-direction: row;
-  /* justify-content: center; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  gap: 10px;
   margin: 0;
+  padding: 10px;
   width: 100%;
 `
 
 const AudioStyled = styled.audio`
   display: inline-block;
-  margin: 1rem auto 0.5rem;
-  width: 100%;
+  align-self: left;
+  /* margin: 10px auto; */
+  width: auto;
 `
 
 const ClipLabelStyled = styled.p`
@@ -231,6 +236,8 @@ const MicrophoneStyled = styled(Microphone)`
 
 const DeleteAudioStyled = styled(Trash)`
   display: inline-block;
+  /* margin: 10px auto; */
+  width: 30px;
   height: 30px;
   color: grey;
 `
