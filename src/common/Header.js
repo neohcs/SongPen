@@ -16,10 +16,11 @@ const HeaderStyled = styled.header`
   width: 100vw;
   height: 60px;
   padding: 10px;
-  background: #e86082;
+  background: #17e2cc;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 36px;
   font-weight: bold;
   letter-spacing: 3px;
-  color: #f5f8f8;
+  color: #001d20;
+  /* color: #050102; */
 `

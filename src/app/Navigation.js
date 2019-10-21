@@ -29,9 +29,11 @@ const LinkStyled = styled(NavLink)`
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  color: #f19bb1;
+  color: #17e2cc;
+  opacity: 0.5;
   &.active {
-    color: #e86082;
+    color: #17e2cc;
+    opacity: 1;
   }
 `
 

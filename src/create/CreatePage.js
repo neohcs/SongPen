@@ -17,27 +17,23 @@ export default function CreatePage({ onSubmit, mediaRecorder }) {
   // const currentHours = new Date().getHours()
   // const currentMinutes = new Date().getMinutes()
 
-  const currentDate =
-    currentDay +
-    '/' +
-    currentMonth +
-    '/' +
-    currentYear +
-    // ' ' +
-    // currentHours +
-    // ':' +
-    // currentMinutes
+  const currentDate = currentDay + ' / ' + currentMonth + ' / ' + currentYear
+  // +
+  // ' ' +
+  // currentHours +
+  // ':' +
+  // currentMinutes
 
-    function handleSubmit(event) {
-      event.preventDefault()
-      const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
-      const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-      const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-      onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
-      //   form.reset() //dies leert die Felder der Form automatisch
-      //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
-      // }
-    }
+  function handleSubmit(event) {
+    event.preventDefault()
+    const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
+    const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
+    const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+    onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
+    //   form.reset() //dies leert die Felder der Form automatisch
+    //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
+    // }
+  }
 
   return (
     <Page title={'CreatePage'}>
@@ -85,15 +81,15 @@ export default function CreatePage({ onSubmit, mediaRecorder }) {
         >
           Save note
         </ButtonStyled>
+        <ButtonStyled
+          secondary
+          onClick={() => {
+            window.location = 'http://localhost:3000/'
+          }}
+        >
+          Cancel
+        </ButtonStyled>
       </FormStyled>
-      <ButtonStyled
-        secondary
-        onClick={() => {
-          window.location = 'http://localhost:3000/'
-        }}
-      >
-        Cancel
-      </ButtonStyled>
     </Page>
   )
 }
@@ -110,7 +106,7 @@ const FormStyled = styled.form`
 const InputDateStyled = styled.input`
   border: 1px solid lightgrey;
   border-radius: 3px;
-  width: 125px;
+  width: 90px;
   height: 20px;
   padding: 10px;
   color: lightgrey;
@@ -184,14 +180,14 @@ const ButtonStyled = styled.button`
   display: inline-block;
   box-shadow: 0 2px 5px #0002;
   border: none;
-  border-radius: 7px;
   height: 30px;
   padding: 2px 15px;
   font-weight: bold;
+  border-radius: ${props => (props.secondary ? '0' : '20px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
-  background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
+  background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
-  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
+  color: ${props => (props.secondary ? '#130307' : '#130307')};
 
   :active {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);

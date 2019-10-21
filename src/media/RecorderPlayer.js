@@ -240,17 +240,17 @@ const ClipLabelStyled = styled.p`
 // `
 
 const ButtonStyled = styled.button`
+  display: inline-block;
   box-shadow: 0 2px 5px #0002;
   border: none;
-  border-radius: 7px;
   height: 30px;
   padding: 2px 15px;
   font-weight: bold;
-  display: ${props => (props.visible ? 'inline-block' : 'none')};
+  border-radius: ${props => (props.secondary ? '0' : '20px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
-  background: ${props => (props.secondary ? 'white' : '#ecf7f8')};
+  background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
-  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
+  color: ${props => (props.secondary ? '#130307' : '#130307')};
 
   :hover,
   :focus {

@@ -40,6 +40,7 @@ export default function Note({
           <ContentStyled className={'expanded'}>
             {content}
             {recording && (
+              // <audio src="https://res.cloudinary.com/dym5cwcpv/video/upload/v1571060556/big-buck-bunny_trailer_dyjwks.webm"></audio> TBC
               <PlayBarStyled>
                 <PlayIconStyled></PlayIconStyled>
               </PlayBarStyled>
@@ -90,15 +91,17 @@ const NoteStyled = styled.section`
 `
 
 const DateStyled = styled.div`
-  float: right;
+  float: left;
   display: block;
-  margin-right: -10px;
+  opacity: 0.9;
   font-size: 12px;
   color: #050102;
 `
 
 const TitleStyled = styled.h1`
+  margin: 40px 0 20px;
   font-size: 18px;
+  opacity: 0.9;
   color: #050102;
 `
 
@@ -108,6 +111,7 @@ const ContentStyled = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   height: 60px;
+  opacity: 0.9;
   font-size: 16px;
   color: #130307;
   word-wrap: break-word;
@@ -120,7 +124,7 @@ const ContentStyled = styled.p`
 const RecordingIconStyled = styled(Notes)`
   display: inline-block;
   height: 25px;
-  fill: #54abbc;
+  fill: #17e2cc;
 `
 
 const PlayBarStyled = styled.div`
@@ -136,7 +140,7 @@ const PlayBarStyled = styled.div`
 const PlayIconStyled = styled(PlayCircle)`
   position: absolute;
   height: 20px;
-  color: #ffc187;
+  color: #17e2cc;
 `
 
 const NoteViewIconStyled = styled(ArrowSortedDown)`
@@ -145,7 +149,7 @@ const NoteViewIconStyled = styled(ArrowSortedDown)`
   bottom: 5px;
   display: inline-block;
   height: 50px;
-  color: #e86082;
+  color: #17e2cc;
 `
 
 const NoteCollapseIconStyled = styled(ArrowSortedUp)`
@@ -154,7 +158,7 @@ const NoteCollapseIconStyled = styled(ArrowSortedUp)`
   bottom: 5px;
   display: block;
   height: 50px;
-  color: #e86082;
+  color: #17e2cc;
 `
 
 const LinkStyled = styled(NavLink)`
@@ -162,7 +166,7 @@ const LinkStyled = styled(NavLink)`
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  color: #e86082;
+  color: #17e2cc;
   &.active {
     color: #4db5bf;
   }
@@ -170,18 +174,18 @@ const LinkStyled = styled(NavLink)`
 
 const NoteEditIconStyled = styled(EditAlt)`
   position: absolute;
-  top: 30px;
-  right: 50px;
+  top: 10px;
+  right: 60px;
   display: inline-block;
   height: 25px;
-  color: #e86082;
+  color: #17e2cc;
 `
 
 const NoteDeleteIconStyled = styled(Trash)`
   position: absolute;
-  top: 30px;
-  right: 10px;
+  top: 10px;
+  right: 15px;
   display: inline-block;
   height: 25px;
-  color: #e86082;
+  color: #17e2cc;
 `
