@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
-import { MicrophoneAlt } from 'styled-icons/fa-regular'
+import { Microphone } from 'styled-icons/typicons'
+import { Trash } from 'styled-icons/boxicons-regular'
 
 export default function RecorderPlayer({ title, id }) {
-  // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-  // const [isButtonVisible, setIsButtonVisible] = useState(true)
+  const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [audioData, setAudioData] = useState([])
-  // const [clickCount, setClickCount] = useState(0)
+  const [mediaRecorder, setMediaRecorder] = useState(null)
   let chunks = []
-  let mediaRecorder
 
   async function handleRecordClick() {
-    // setClickCount(clickCount + 1)
-    // clickCount > 1 ||
-    // toggleButton()
+    console.log('Recording pressed')
     const stream = await getMedia({ audio: true })
+    console.log('Gettet stream: ', stream)
     return record(stream)
   }
 
@@ -28,13 +26,14 @@ export default function RecorderPlayer({ title, id }) {
   }
 
   function record(stream) {
-    mediaRecorder = new MediaRecorder(stream)
+    const mediaRecorder = new MediaRecorder(stream)
     mediaRecorder.ondataavailable = handleDataAvailable
     mediaRecorder.onstop = () => handleAudioAfterStop(stream)
     mediaRecorder.start()
     console.log('recorder started')
     console.log(mediaRecorder.state)
-    // setIsButtonDisabled(!isButtonDisabled)
+    setIsButtonVisible(!isButtonVisible)
+    setMediaRecorder(mediaRecorder)
   }
 
   function handleDataAvailable(event) {
@@ -49,7 +48,7 @@ export default function RecorderPlayer({ title, id }) {
   }
 
   function handleStopClick() {
-    // setIsButtonVisible(!isButtonVisible)
+    setIsButtonVisible(!isButtonVisible)
     mediaRecorder.stop()
     // toggleButton()
     // mediaRecorder.onstop = handleStop
@@ -68,7 +67,7 @@ export default function RecorderPlayer({ title, id }) {
 
     const blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
-    console.log(mediaRecorder.state)
+    //  console.log(mediaRecorder.state)
     const blobUrl = URL.createObjectURL(blob)
     // setIsButtonDisabled(!isButtonDisabled)
     chunks = []
@@ -91,17 +90,15 @@ export default function RecorderPlayer({ title, id }) {
       <MainControlsStyled>
         {/* <VisualizerStyled></VisualizerStyled> */}
         <ButtonBarStyled>
-          <ButtonStyled
-            visible
-            // visible={isButtonVisible}
+          <MicrophoneStyled
+            // visible
+            visible={isButtonVisible}
             // disabled={!isButtonDisabled}
             onClick={handleRecordClick}
-          >
-            Record
-          </ButtonStyled>
+          ></MicrophoneStyled>
           <ButtonStyled
-            visible
-            // visible={!isButtonVisible}
+            // visible
+            visible={!isButtonVisible}
             // disabled={isButtonDisabled}
             onClick={handleStopClick}
           >
@@ -119,14 +116,16 @@ export default function RecorderPlayer({ title, id }) {
           >
                     
             <AudioStyled src={blob.blobUrl} controls></AudioStyled>
-            <ClipLabelStyled
+            {/* <ClipLabelStyled
             // onClick={handleLabelClick}
             >
                        {blob.clipName}                 
-            </ClipLabelStyled>
-            <ButtonStyled visible secondary onClick={handleDeleteClick}>
-                          Delete           
-            </ButtonStyled>
+            </ClipLabelStyled> */}
+            <DeleteAudioStyled
+              visible
+              secondary
+              onClick={handleDeleteClick}
+            ></DeleteAudioStyled>
              
           </ClipContainerStyled>
         ))}
@@ -143,6 +142,7 @@ const MediaWrapperStyled = styled.div`
 
 const MainControlsStyled = styled.section`
   display: block;
+  /* padding: 0.5rem 0; */
 `
 
 // const VisualizerStyled = styled.canvas`
@@ -154,56 +154,12 @@ const MainControlsStyled = styled.section`
 const ButtonBarStyled = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 `
 
-// const RecordButtonStyled = styled.button`
-//   transition: all 0.2s;
-//   text-align: center;
-//   width: calc(50% - 0.25rem);
-//   border: none;
-//   padding: 0.5rem;
-//   background: #0088cc;
-//   font-size: 1rem;
-//   color: white;
-
-//   :hover,
-//   :focus {
-//     box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
-//     background: #0ae;
-//   }
-
-//   :active {
-//     box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.5);
-//     transform: translateY(2px);
-//   }
-// `
-
-// const StopButtonStyled = styled.button`
-//   transition: all 0.2s;
-//   text-align: center;
-//   width: calc(50% - 0.25rem);
-//   border: none;
-//   padding: 0.5rem;
-//   background: #0088cc;
-//   font-size: 1rem;
-//   color: white;
-
-//   :hover,
-//   :focus {
-//     box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
-//     background: #0ae;
-//   }
-
-//   :active {
-//     box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.5);
-//     transform: translateY(2px);
-//   }
-// `
-
 const SoundClipsStyled = styled.section`
-  display: ${props => (props.visible ? 'block' : 'none')};
-  flex: 1;
+  /* display: ${props => (props.visible ? 'block' : 'none')}; */
+  /* flex: 1; */
   /* display: flex; */
   /* justify-content: space-between; */
   /* gap: 20px; */
@@ -212,20 +168,24 @@ const SoundClipsStyled = styled.section`
   overflow-y: auto;
   scroll-behavior: smooth;
   max-width: 100%;
-  /* padding: 5px 20px; */
+  padding: 5px 20px;
 `
 
 const ClipContainerStyled = styled.article`
+  /* overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  max-width: 100%;
+  padding: 5px 20px; */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  /* justify-content: center; */
   margin: 0;
   width: 100%;
-  /* padding-bottom: 1rem; */
 `
 
 const AudioStyled = styled.audio`
-  display: block;
+  display: inline-block;
   margin: 1rem auto 0.5rem;
   width: 100%;
 `
@@ -235,15 +195,8 @@ const ClipLabelStyled = styled.p`
   font-size: 14px;
 `
 
-// const DeleteButtonStyled = styled.button`
-//   float: right;
-//   padding: 0.5rem 0.75rem;
-//   background: #f00;
-//   font-size: 0.8rem;
-// `
-
 const ButtonStyled = styled.button`
-  display: inline-block;
+  display: ${props => (props.visible ? 'inline-block' : 'none')};
   box-shadow: 0 2px 5px #0002;
   border: none;
   height: 30px;
@@ -259,7 +212,6 @@ const ButtonStyled = styled.button`
   :focus {
     /* box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1); */
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
-
     /* background: #0ae; */
   }
 
@@ -268,7 +220,17 @@ const ButtonStyled = styled.button`
     transform: translateY(2px);
   }
 `
-// const MicrophoneStyled = styled(MicrophoneAlt)`
-//   height: 50px;
-//   color: #17e2cc;
-// `
+const MicrophoneStyled = styled(Microphone)`
+  display: ${props => (props.visible ? 'inline-block' : 'none')};
+  border: 5px solid #17e2cc;
+  height: 50px;
+  background: #17e2cc;
+  border-radius: 50%;
+  color: #130307;
+`
+
+const DeleteAudioStyled = styled(Trash)`
+  display: inline-block;
+  height: 30px;
+  color: grey;
+`

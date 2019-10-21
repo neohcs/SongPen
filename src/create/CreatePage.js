@@ -30,11 +30,11 @@ export default function CreatePage({ onSubmit }) {
       <FormStyled onSubmit={handleSubmit}>
         <Date name="date"></Date>
         <InputTitleStyled
-          autoFocus
           name="title"
           placeholder={'Insert title here...'}
-          maxLength="20"
+          maxLength="30"
           required
+          autoFocus
         ></InputTitleStyled>
         <InputContentStyled
           name="content"
@@ -48,20 +48,22 @@ export default function CreatePage({ onSubmit }) {
           name="recording"
           placeholder={'Insert URL to your song here...'}
         ></InputRecordStyled> */}
-        <SelectLabelStyled>
-          Please select a tag for your note...
-        </SelectLabelStyled>
-        <SelectTagStyled name="tag">
-          <option name="tag" value="started">
-            started
-          </option>
-          <option name="tag" value="advanced">
-            advanced
-          </option>
-          <option name="tag" value="completed">
-            completed
-          </option>
-        </SelectTagStyled>
+        <div>
+          <SelectLabelStyled>
+            Please select a tag for your note...
+          </SelectLabelStyled>
+          <SelectTagStyled name="tag">
+            <option name="tag" value="started">
+              started
+            </option>
+            <option name="tag" value="advanced">
+              advanced
+            </option>
+            <option name="tag" value="completed">
+              completed
+            </option>
+          </SelectTagStyled>
+        </div>
         <ButtonStyled
           onClick={() => {
             window.location = 'http://localhost:3000/'
@@ -91,15 +93,6 @@ const FormStyled = styled.form`
   padding: 20px;
 `
 
-const InputDateStyled = styled.input`
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  width: 90px;
-  height: 20px;
-  padding: 10px;
-  color: lightgrey;
-`
-
 const InputTitleStyled = styled.input`
   box-shadow: 0 5px 10px #0002;
   border: 1px solid lightgrey;
@@ -111,7 +104,7 @@ const InputTitleStyled = styled.input`
   word-wrap: break-word;
   font-size: 18px;
   font-weight: bold;
-  color: grey;
+  color: #130307;
 `
 
 const InputContentStyled = styled.textarea`
@@ -123,9 +116,9 @@ const InputContentStyled = styled.textarea`
   padding: 10px;
   word-wrap: break-word;
   font-size: 16px;
-  color: grey;
+  color: #130307;
 `
-
+// Falls ich doch uploads machen muss:
 // const InputRecordStyled = styled.input`
 //   box-shadow: 0 5px 10px #0002;
 //   border: 1px solid lightgrey;
@@ -142,26 +135,27 @@ const InputContentStyled = styled.textarea`
 
 const SelectLabelStyled = styled.label`
   justify-self: left;
-  opacity: 0.7;
-  height: 10px;
+  height: 15px;
   padding-left: 10px;
+  opacity: 0.5;
   font-size: 14px;
-  color: grey;
+  color: #130307;
 `
 
 const SelectTagStyled = styled.select`
   display: block;
-  opacity: 0.7;
   appearance: none;
   box-shadow: 0 1px 0 0.5px rgba(0, 0, 0, 0.04);
   border: 1px solid lightgrey;
   border-radius: 7px;
   width: 100%;
-  line-height: 0.8;
+  height: 40px;
   padding: 10px;
+  line-height: 0.8;
+  opacity: 0.5;
   font-size: 16px;
   font-weight: bold;
-  color: grey;
+  color: #130307;
 `
 
 const ButtonStyled = styled.button`

@@ -28,7 +28,7 @@ export default function NotePage({
       <Header></Header>
       <Navigation></Navigation>
       <ScrollerStyled>
-        <SearchBar></SearchBar>
+        {/* <SearchBar></SearchBar> */}
         <TagFilter
           tags={tags}
           onClick={onSelectTag}

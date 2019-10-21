@@ -19,12 +19,13 @@ export default function newDate() {
 }
 
 const DateStyled = styled.input`
-  justify-content: center;
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 95px;
   height: 20px;
   padding: 10px;
+  padding-top: 15px;
+  opacity: 0.3;
   font-size: 14px;
-  color: lightgrey;
+  color: #130307;
 `
