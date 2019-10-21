@@ -22,5 +22,4 @@ const HeaderStyled = styled.header`
   font-weight: bold;
   letter-spacing: 3px;
   color: #001d20;
-  /* color: #050102; */
 `

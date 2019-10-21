@@ -123,6 +123,7 @@ const ContentStyled = styled.p`
 `
 const RecordingIconStyled = styled(Notes)`
   display: inline-block;
+  margin-left: 7px;
   height: 25px;
   fill: #17e2cc;
 `

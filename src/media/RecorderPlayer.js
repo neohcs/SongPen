@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import { MicrophoneAlt } from 'styled-icons/fa-regular'
 
 export default function RecorderPlayer({ title, id }) {
   // const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-  const [isButtonVisible, setIsButtonVisible] = useState(true)
+  // const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [audioData, setAudioData] = useState([])
   // const [clickCount, setClickCount] = useState(0)
   let chunks = []
@@ -41,7 +42,7 @@ export default function RecorderPlayer({ title, id }) {
       console.log(event.data)
       chunks.push(event.data)
       // const chunks = [...chunks, event.data]
-      console.log('oldchunks:', chunks)
+      console.log('newchunks:', chunks)
     } else {
       alert('No media there.')
     }
@@ -50,22 +51,19 @@ export default function RecorderPlayer({ title, id }) {
   function handleStopClick() {
     // setIsButtonVisible(!isButtonVisible)
     mediaRecorder.stop()
-    toggleButton()
+    // toggleButton()
     // mediaRecorder.onstop = handleStop
   }
 
-  function toggleButton() {
-    setIsButtonVisible(!isButtonVisible)
-  }
+  // function toggleButton() {
+  //   // setIsButtonVisible(!isButtonVisible)
+  // }
 
   function handleAudioAfterStop(stream) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
-    const clipName = title
-    // const clipName = prompt(
-    //   'Enter a name for your recording',
-    //   'Unnamed recording'
-    // )
+    // const clipName = title
+    const clipName = prompt('Enter a name for your recording', title)
     console.log(clipName)
 
     const blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
@@ -84,14 +82,14 @@ export default function RecorderPlayer({ title, id }) {
     evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
   }
 
-  function handleRecordChange() {
-    console.log('ähm')
-  }
+  // function handleRecordChange() {
+  //   console.log('ähm')
+  // }
 
   return (
     <MediaWrapperStyled>
       <MainControlsStyled>
-        <VisualizerStyled></VisualizerStyled>
+        {/* <VisualizerStyled></VisualizerStyled> */}
         <ButtonBarStyled>
           <ButtonStyled
             visible
@@ -145,14 +143,13 @@ const MediaWrapperStyled = styled.div`
 
 const MainControlsStyled = styled.section`
   display: block;
-  padding: 0.5rem 0;
 `
 
-const VisualizerStyled = styled.canvas`
-  display: block;
-  margin-bottom: 0.5rem;
-  height: 60px;
-`
+// const VisualizerStyled = styled.canvas`
+//   display: block;
+//   margin-bottom: 0.5rem;
+//   height: 60px;
+// `
 
 const ButtonBarStyled = styled.div`
   display: flex;
@@ -205,8 +202,10 @@ const ButtonBarStyled = styled.div`
 // `
 
 const SoundClipsStyled = styled.section`
-  /* display: ${props => (props.visible ? 'block' : 'none')}; */
-  display: grid;
+  display: ${props => (props.visible ? 'block' : 'none')};
+  flex: 1;
+  /* display: flex; */
+  /* justify-content: space-between; */
   /* gap: 20px; */
   /* justify-items: left; */
   overflow-x: hidden;
@@ -217,7 +216,12 @@ const SoundClipsStyled = styled.section`
 `
 
 const ClipContainerStyled = styled.article`
-  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  width: 100%;
+  /* padding-bottom: 1rem; */
 `
 
 const AudioStyled = styled.audio`
@@ -228,8 +232,7 @@ const AudioStyled = styled.audio`
 
 const ClipLabelStyled = styled.p`
   display: inline-block;
-  font-size: 1rem;
-  /* cursor: pointer; */
+  font-size: 14px;
 `
 
 // const DeleteButtonStyled = styled.button`
@@ -246,7 +249,7 @@ const ButtonStyled = styled.button`
   height: 30px;
   padding: 2px 15px;
   font-weight: bold;
-  border-radius: ${props => (props.secondary ? '0' : '20px')};
+  border-radius: ${props => (props.secondary ? '3px' : '20px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
   background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
@@ -265,3 +268,7 @@ const ButtonStyled = styled.button`
     transform: translateY(2px);
   }
 `
+// const MicrophoneStyled = styled(MicrophoneAlt)`
+//   height: 50px;
+//   color: #17e2cc;
+// `

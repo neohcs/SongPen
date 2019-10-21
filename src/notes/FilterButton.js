@@ -23,7 +23,7 @@ const FilterButtonStyled = styled.button`
   border: none;
   border-radius: 7px;
   width: 100px;
-  padding: 3px;
+  padding: 7px;
   font-size: 14px;
   color: #130307;
   background: ${props => (props.selected ? '#17e2cc' : '#f0f0f0')};

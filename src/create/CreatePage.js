@@ -4,26 +4,14 @@ import PropTypes from 'prop-types'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
+import Date from '../common/Date'
 import RecorderPlayer from '../media/RecorderPlayer'
 
 CreatePage.propTypes = {
   onSubmit: PropTypes.func
 }
 
-export default function CreatePage({ onSubmit, mediaRecorder }) {
-  const currentDay = new Date().getDate()
-  const currentMonth = new Date().getMonth() + 1
-  const currentYear = new Date().getFullYear()
-  // const currentHours = new Date().getHours()
-  // const currentMinutes = new Date().getMinutes()
-
-  const currentDate = currentDay + ' / ' + currentMonth + ' / ' + currentYear
-  // +
-  // ' ' +
-  // currentHours +
-  // ':' +
-  // currentMinutes
-
+export default function CreatePage({ onSubmit }) {
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
@@ -40,7 +28,7 @@ export default function CreatePage({ onSubmit, mediaRecorder }) {
       <Header></Header>
       <Navigation></Navigation>
       <FormStyled onSubmit={handleSubmit}>
-        <InputDateStyled name="date" value={currentDate}></InputDateStyled>
+        <Date name="date"></Date>
         <InputTitleStyled
           autoFocus
           name="title"
@@ -138,19 +126,19 @@ const InputContentStyled = styled.textarea`
   color: grey;
 `
 
-const InputRecordStyled = styled.input`
-  box-shadow: 0 5px 10px #0002;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  width: 100%;
-  height: 30px;
-  padding: 10px;
-  word-break: break-all;
-  word-wrap: break-word;
-  font-size: 18px;
-  font-weight: bold;
-  color: grey;
-`
+// const InputRecordStyled = styled.input`
+//   box-shadow: 0 5px 10px #0002;
+//   border: 1px solid lightgrey;
+//   border-radius: 3px;
+//   width: 100%;
+//   height: 30px;
+//   padding: 10px;
+//   word-break: break-all;
+//   word-wrap: break-word;
+//   font-size: 18px;
+//   font-weight: bold;
+//   color: grey;
+// `
 
 const SelectLabelStyled = styled.label`
   justify-self: left;
@@ -183,11 +171,11 @@ const ButtonStyled = styled.button`
   height: 30px;
   padding: 2px 15px;
   font-weight: bold;
-  border-radius: ${props => (props.secondary ? '0' : '20px')};
+  color: #130307;
+  border-radius: ${props => (props.secondary ? '3px' : '20px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
   background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
-  color: ${props => (props.secondary ? '#130307' : '#130307')};
 
   :active {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);

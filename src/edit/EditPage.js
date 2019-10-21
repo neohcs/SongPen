@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
+import Date from '../common/Date'
 import RecorderPlayer from '../media/RecorderPlayer'
 
 EditPage.propTypes = {
@@ -15,46 +16,22 @@ export default function EditPage({ onSubmit, editNoteData }) {
   const [content, setContent] = useState(editNoteData.content.toString())
   const [label, setLabel] = useState(editNoteData.label)
   const [recording, setRecording] = useState([editNoteData.recording])
-  // const [date, setDate] = useState(editNoteData.date)
-
-  const currentDay = new Date().getDate()
-  const currentMonth = new Date().getMonth() + 1
-  const currentYear = new Date().getFullYear()
-  // const currentHours = new Date().getHours()
-  // const currentMinutes = new Date().getMinutes()
-  const newDate = currentDay + ' / ' + currentMonth + ' / ' + currentYear
 
   function handleSubmit(event) {
     event.preventDefault()
-    // updateDate()
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
     const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
     let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    data = { ...data, newDate }
+    data = { ...data }
     onSubmit(editNoteData._id, data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
   }
-
-  // function updateDate() {
-  //   const currentDay = new Date().getDate()
-  //   const currentMonth = new Date().getMonth() + 1
-  //   const currentYear = new Date().getFullYear()
-  //   // const currentHours = new Date().getHours()
-  //   // const currentMinutes = new Date().getMinutes()
-  //   const newDate = currentDay + '/' + currentMonth + '/' + currentYear
-  //   // +  ' ' +
-  //   // currentHours +
-  //   // ':' +
-  //   // currentMinutes
-
-  //   // setDate(currentDate)
-  // }
 
   return (
     <Page title={'EditPage'}>
       <Header></Header>
       <Navigation></Navigation>
       <FormStyled onSubmit={handleSubmit}>
-        <InputDateStyled name="date" value={newDate}></InputDateStyled>
+        <Date name="date"></Date>
         <InputTitleStyled
           name="title"
           value={title}
@@ -210,11 +187,11 @@ const ButtonStyled = styled.button`
   margin: 0 auto;
   padding: 2px 15px;
   font-weight: bold;
-  border-radius: ${props => (props.secondary ? '0' : '50px')};
+  color: #130307;
+  border-radius: ${props => (props.secondary ? '3px' : '50px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
-  background: ${props => (props.secondary ? 'white' : '#grey')};
+  background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
-  color: ${props => (props.secondary ? 'grey' : '#54abbc')};
 
   :active {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
