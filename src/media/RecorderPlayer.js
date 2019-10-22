@@ -6,6 +6,7 @@ import { Trash } from 'styled-icons/boxicons-regular'
 export default function RecorderPlayer({ title, id }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [audioData, setAudioData] = useState([])
+  const [audioUrl, setAudioUrl] = useState(null)
   const [mediaRecorder, setMediaRecorder] = useState(null)
   let chunks = []
 
@@ -76,7 +77,7 @@ export default function RecorderPlayer({ title, id }) {
       body: data,
     })
       .then(res => res.json())
-      .then(file => console.log('saved', file.path))
+      .then(file => setAudioUrl(file.path))
       .catch(err => console.log('ERROR', err))
 
     //  console.log(mediaRecorder.state)
@@ -170,6 +171,7 @@ export default function RecorderPlayer({ title, id }) {
           </ButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
+      {audioUrl && <a href={audioUrl}>FILE SAVED ON SERVER (click me)</a>}
       <SoundClipsStyled
       // onChange={handleRecordChange}
       >

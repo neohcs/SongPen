@@ -21,8 +21,7 @@ const upload = multer({ storage })
 
 router.post('/upload', upload.single('file'), async (req, res) => {
   const { destination, filename } = req.file
-
-  res.json({ path: destination + '/' + filename })
+  res.json({ path: destination.replace('public/', '') + '/' + filename })
 })
 
 router.get('/', (req, res) => {
