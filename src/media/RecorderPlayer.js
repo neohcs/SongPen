@@ -65,17 +65,68 @@ export default function RecorderPlayer({ title, id }) {
     const clipName = prompt('Enter a name for your recording', title)
     console.log(clipName)
 
-    const blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
+    let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
     //  console.log(mediaRecorder.state)
-    const blobUrl = URL.createObjectURL(blob)
+    chunks = []
+    let blobUrl = URL.createObjectURL(blob)
     console.log(blobUrl)
     // setIsButtonDisabled(!isButtonDisabled)
-    // chunks = []
     setAudioData([{ clipName, blobUrl }, ...audioData])
     console.log(chunks)
     console.log(audioData)
+    // vidSave.src = blobUrl -> wie übersetzt sich das für meinen Fall?
   }
+
+  /*
+  function handleAudioAfterSubmit() {
+    const buffer = []
+    function onDataAvailable(event) {
+      if (event.data) buffer.push(event.data)
+    }
+
+    function bufferToDataUrl(callback) {
+      const blob = new Blob(buffer, {
+        type: 'audio/wav'
+      })
+
+      const reader = new FileReader()
+      reader.onload = function() {
+        callback(reader.result)
+      }
+      reader.readAsDataURL(blob)
+    }
+
+    // returns file, that we can send to the server.
+    function dataUrlToFile(dataUrl) {
+      const binary = atob(dataUrl.split(',')[1]),
+        data = []
+
+      for (const i = 0; i < binary.length; i++) data.push(binary.charCodeAt(i))
+
+      return new File([new Uint8Array(data)], 'recorded-audio.wav', {
+        type: 'audio/wav'
+      })
+    }
+
+    // triggered by user.
+    function onStopButtonClick() {
+      try {
+        recorder.stop()
+        recorder.stream.getTracks().forEach(function(track) {
+          track.stop()
+        })
+      } catch (event) {}
+
+      bufferToDataUrl(function(dataUrl) {
+        const file = dataUrlToFile(dataUrl)
+        console.log(file)
+        // upload file to the server. -> muss ich das hinzufügen?
+      })
+    }
+  }
+  // von https://60devs.com/recording-videos-in-the-browser-using-media-recorder-api.html
+  */
 
   function handleDeleteClick(event) {
     const evtTgt = event.target
@@ -156,6 +207,8 @@ const ButtonBarStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
+  height: 50px;
 `
 
 const SoundClipsStyled = styled.section`
@@ -180,6 +233,8 @@ const ClipContainerStyled = styled.article`
   padding: 5px 20px; */
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   /* justify-content: space-between; */
   /* align-items: center; */
   gap: 10px;

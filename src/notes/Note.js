@@ -12,8 +12,9 @@ Note.propTypes = {
   date: PropTypes.string, //update this to dynamic date
   content: PropTypes.string,
   tag: PropTypes.string,
-  recordings: PropTypes.arrayOf(PropTypes.string) //or array? -> arrayOf(PropTypes.string)
+  recordings: PropTypes.arrayOf(PropTypes.string), //or array? -> arrayOf(PropTypes.string)
   // id, too?
+  handleDeleteClick: PropTypes.func
 }
 
 export default function Note({
