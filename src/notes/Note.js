@@ -29,6 +29,7 @@ export default function Note({
 
   function toggleExpandNote() {
     setIsNoteExpanded(!isNoteExpanded)
+    console.log(recordings)
   }
 
   return (
@@ -39,8 +40,8 @@ export default function Note({
         <>
           <ContentStyled className={'expanded'}>
             {content}
-            {recordings !== [] &&
-              recordings.map(recording => (
+            {recordings.length >= 1 &&
+              recordings.map((recording) => (
                 <AudioStyled src={recording} controls>
                   Your browser does not support the
                   <code>audio</code> element.
@@ -80,7 +81,7 @@ export default function Note({
         </>
       )}
       <Tag tag={tag}></Tag>
-      {recordings !== [] && <RecordingIconStyled></RecordingIconStyled>}
+      {recordings.length >= 1 && <RecordingIconStyled></RecordingIconStyled>}
     </NoteStyled>
   )
 }
