@@ -67,6 +67,18 @@ export default function RecorderPlayer({ title, id }) {
 
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
+
+    const data = new FormData()
+    data.append('file', blob)
+
+    fetch('/notes/upload/', {
+      method: 'POST',
+      body: data,
+    })
+      .then(res => res.json())
+      .then(file => console.log('saved', file.path))
+      .catch(err => console.log('ERROR', err))
+
     //  console.log(mediaRecorder.state)
     chunks = []
     let blobUrl = URL.createObjectURL(blob)
@@ -173,12 +185,7 @@ export default function RecorderPlayer({ title, id }) {
             >
                        {blob.clipName}                 
             </ClipLabelStyled> */}
-            <DeleteAudioStyled
-              visible
-              secondary
-              onClick={handleDeleteClick}
-            ></DeleteAudioStyled>
-             
+            <DeleteAudioStyled visible secondary onClick={handleDeleteClick}></DeleteAudioStyled> 
           </ClipContainerStyled>
         ))}
       </SoundClipsStyled>
