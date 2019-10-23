@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import Page from '../common/Page'
@@ -12,11 +12,17 @@ CreatePage.propTypes = {
 }
 
 export default function CreatePage({ onSubmit }) {
+  const [recordings, setRecordings] = useState([])
+
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
     const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-    const data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+    let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+    data = {
+      ...data,
+      recordings,
+    }
     onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
     //   form.reset() //dies leert die Felder der Form automatisch
     //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
@@ -42,6 +48,7 @@ export default function CreatePage({ onSubmit }) {
         ></InputContentStyled>
         <RecorderPlayer
           name="recordings"
+          recordingsState={[recordings, setRecordings]}
           // value={value}
         ></RecorderPlayer>
         {/* <InputRecordStyled

@@ -3,11 +3,10 @@ import styled from 'styled-components/macro'
 import { Microphone } from 'styled-icons/typicons'
 import { Trash } from 'styled-icons/boxicons-regular'
 
-export default function RecorderPlayer({ title, id }) {
+export default function RecorderPlayer({ title, id, recordingsState }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
-  const [audioData, setAudioData] = useState([])
-  const [audioUrl, setAudioUrl] = useState(null)
   const [mediaRecorder, setMediaRecorder] = useState(null)
+  const [recordings, setRecordings] = recordingsState
   let chunks = []
 
   async function handleRecordClick() {
@@ -63,8 +62,8 @@ export default function RecorderPlayer({ title, id }) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
     // const clipName = title
-    const clipName = prompt('Enter a name for your recording', title)
-    console.log(clipName)
+    // const clipName = prompt('Enter a name for your recording', title)
+    // console.log(clipName)
 
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
@@ -74,20 +73,20 @@ export default function RecorderPlayer({ title, id }) {
 
     fetch('/notes/upload/', {
       method: 'POST',
-      body: data,
+      body: data
     })
       .then(res => res.json())
-      .then(file => setAudioUrl(file.path))
+      .then(file => setRecordings([...recordings, file.path]))
       .catch(err => console.log('ERROR', err))
 
     //  console.log(mediaRecorder.state)
-    chunks = []
-    let blobUrl = URL.createObjectURL(blob)
-    console.log(blobUrl)
-    // setIsButtonDisabled(!isButtonDisabled)
-    setAudioData([{ clipName, blobUrl }, ...audioData])
-    console.log(chunks)
-    console.log(audioData)
+    // chunks = []
+    // let blobUrl = URL.createObjectURL(blob)
+    // console.log(blobUrl)
+    // // setIsButtonDisabled(!isButtonDisabled)
+    // setAudioData([{ clipName, blobUrl }, ...audioData])
+    // console.log(chunks)
+    // console.log(audioData)
     // vidSave.src = blobUrl -> wie übersetzt sich das für meinen Fall?
   }
 
@@ -166,28 +165,34 @@ export default function RecorderPlayer({ title, id }) {
             visible={!isButtonVisible}
             // disabled={isButtonDisabled}
             onClick={handleStopClick}
+            type="button"
           >
             Stop
           </ButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
-      {audioUrl && <a href={audioUrl}>FILE SAVED ON SERVER (click me)</a>}
+      {/* {audioUrl && <a href={audioUrl}>FILE SAVED ON SERVER (click me)</a>} */}
       <SoundClipsStyled
       // onChange={handleRecordChange}
       >
-        {audioData.map(blob => (
+        {recordings.map(url => (
           <ClipContainerStyled
-            key={blob.index}
+            key={url}
             // value={blob.clipName + blob.index + id}
           >
                   
-            <AudioStyled src={blob.blobUrl} controls></AudioStyled>
+            <AudioStyled src={url} controls></AudioStyled>
             {/* <ClipLabelStyled
             // onClick={handleLabelClick}
             >
                        {blob.clipName}                 
             </ClipLabelStyled> */}
-            <DeleteAudioStyled visible secondary onClick={handleDeleteClick}></DeleteAudioStyled> 
+            <DeleteAudioStyled
+              visible
+              secondary
+              onClick={handleDeleteClick}
+            ></DeleteAudioStyled>
+             
           </ClipContainerStyled>
         ))}
       </SoundClipsStyled>

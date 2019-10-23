@@ -15,7 +15,7 @@ export default function EditPage({ onSubmit, editNoteData }) {
   const [title, setTitle] = useState(editNoteData.title)
   const [content, setContent] = useState(editNoteData.content.toString())
   const [label, setLabel] = useState(editNoteData.label)
-  const [recordings, setRecording] = useState([editNoteData.recording])
+  const [recordings, setRecording] = useState(editNoteData.recordings)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -51,6 +51,7 @@ export default function EditPage({ onSubmit, editNoteData }) {
           // onChange={event =>
           //   setRecordings([editNoteData.recordings, event.target.value])
           // }
+          recordingsState={[recordings, setRecording]}
         ></RecorderPlayer>
         {/* <InputRecordStyled
           name="recordings"
