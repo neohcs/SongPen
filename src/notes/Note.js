@@ -42,7 +42,7 @@ export default function Note({
           <ContentStyled className={'expanded'}>
             {content}
             {recordings.length >= 1 &&
-              recordings.map((recording) => (
+              recordings.map(recording => (
                 <AudioStyled src={recording} controls>
                   Your browser does not support the
                   <code>audio</code> element.

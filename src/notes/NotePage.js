@@ -28,7 +28,6 @@ export default function NotePage({
       <Header></Header>
       <Navigation></Navigation>
       <ScrollerStyled>
-        {/* <SearchBar></SearchBar> */}
         <TagFilter
           tags={tags}
           onClick={onSelectTag}
@@ -62,7 +61,7 @@ const ScrollerStyled = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  max-width: 100%;
+  /* max-width: 100%; */
   padding: 5px 20px;
 `
 const LineBreakStyled = styled.p`

@@ -3,12 +3,7 @@ import styled from 'styled-components/macro'
 import { Microphone } from 'styled-icons/typicons'
 import { Trash, Download } from 'styled-icons/boxicons-regular'
 
-export default function RecorderPlayer({
-  recordingsState,
-  patchNote,
-  noteList,
-  setNoteList
-}) {
+export default function RecorderPlayer({ recordingsState }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [mediaRecorder, setMediaRecorder] = useState(null)
   const [recordings, setRecordings] = recordingsState
@@ -45,8 +40,6 @@ export default function RecorderPlayer({
     if (event.data.size > 0) {
       console.log(event.data)
       chunks.push(event.data)
-      // const chunks = [...chunks, event.data]
-      console.log('newchunks:', chunks)
     } else {
       alert('No media there.')
     }
@@ -55,20 +48,13 @@ export default function RecorderPlayer({
   function handleStopClick() {
     setIsButtonVisible(!isButtonVisible)
     mediaRecorder.stop()
-    // toggleButton()
-    // mediaRecorder.onstop = handleStop
   }
-
-  // function toggleButton() {
-  //   // setIsButtonVisible(!isButtonVisible)
-  // }
 
   function handleAudioAfterStop(stream) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
-    // const clipName = title
-    // const clipName = prompt('Enter a name for your recording', title)
-    // console.log(clipName)
+
+    chunks = []
 
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
@@ -83,42 +69,18 @@ export default function RecorderPlayer({
       .then(res => res.json())
       .then(file => setRecordings([...recordings, file.path]))
       .catch(err => console.log('ERROR', err))
-
-    //  console.log(mediaRecorder.state)
-    // chunks = []
-    // HALLO MAX! SECRET MESSAGE: DIE SONNE SCHEINT DURCHS FENSTERLOCH – MENSCH, LASSE DOCH!
-    // let blobUrl = URL.createObjectURL(blob)
-    // console.log(blobUrl)
-    // // setIsButtonDisabled(!isButtonDisabled)
-    // setAudioData([{ clipName, blobUrl }, ...audioData])
-    // console.log(chunks)
-    // console.log(audioData)
-    // vidSave.src = blobUrl -> wie übersetzt sich das für meinen Fall?
   }
 
-  function handleDeleteClick(event, index) {
- //   const evtTgt = event.target
-  //  console.log(evtTgt)
-//    evtTgt.parentNode.remove()
+  function handleDeleteClick(index) {
     setRecordings([
       ...recordings.slice(0, index),
       ...recordings.slice(index + 1)
     ])
-    // let index = recordings.indexOf(evtTgt.parentNode)
-    // onDelete(note, index)
   }
-
-  // function onDelete(note, index) {
-  //   patchNote(note._id, { recordings: newRecordings }).then(updatedNote => {
-  //     const index = noteList.findIndex(note => note._id === updatedNote._id)
-  //     setNoteList([...noteList.slice(0, index), ...noteList.slice(index + 1)])
-  //   })
-  // }
 
   return (
     <MediaWrapperStyled>
       <MainControlsStyled>
-        {/* <VisualizerStyled></VisualizerStyled> */}
         <ButtonBarStyled>
           <MicrophoneStyled
             visible={isButtonVisible}

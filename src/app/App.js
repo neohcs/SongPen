@@ -14,14 +14,7 @@ export default function App(editNoteData) {
     getNotes().then(setNoteList)
   }, [])
 
-  const allNoteTags = Array.from(
-    noteList.reduce((prev, note) => {
-      prev.add(note.tag)
-      return prev
-    }, new Set())
-  )
-
-  // const allNoteTags = ['started', 'advanced', 'completed']
+  const allNoteTags = ['started', 'advanced', 'completed']
   const filteredNotes = noteList.filter(note => note.tag.includes(selectedTag))
 
   function selectTag(clickedTag) {
