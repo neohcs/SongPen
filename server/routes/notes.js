@@ -1,6 +1,29 @@
 const router = require('express').Router()
 const Note = require('../models/Note')
 
+const path = require('path')
+const fs = require('fs')
+const uid = require('uid')
+const multer = require('multer')
+const uploadPath = 'public/uploads'
+try {
+  fs.mkdirSync(uploadPath, { recursive: true })
+} catch (error) {
+  console.log(`${uploadPath} does exist.`)
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => callback(null, uploadPath),
+  filename: (req, file, callback) => callback(null, Date.now() + '_' + uid() + '.wav'),
+})
+
+const upload = multer({ storage })
+
+router.post('/upload', upload.single('file'), async (req, res) => {
+  const { destination, filename } = req.file
+  res.json({ path: destination.replace('public/', '') + '/' + filename })
+})
+
 router.get('/', (req, res) => {
   Note.find()
     .sort({ date: -1 }) // updaten, sodass erst Jahr, dann Monat, dann Tag gecheckt wird

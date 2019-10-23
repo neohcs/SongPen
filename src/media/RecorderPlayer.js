@@ -6,6 +6,7 @@ import { Trash } from 'styled-icons/boxicons-regular'
 export default function RecorderPlayer({ title, id }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [audioData, setAudioData] = useState([])
+  const [audioUrl, setAudioUrl] = useState(null)
   const [mediaRecorder, setMediaRecorder] = useState(null)
   let chunks = []
 
@@ -67,6 +68,18 @@ export default function RecorderPlayer({ title, id }) {
 
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
+
+    const data = new FormData()
+    data.append('file', blob)
+
+    fetch('/notes/upload/', {
+      method: 'POST',
+      body: data,
+    })
+      .then(res => res.json())
+      .then(file => setAudioUrl(file.path))
+      .catch(err => console.log('ERROR', err))
+
     //  console.log(mediaRecorder.state)
     chunks = []
     let blobUrl = URL.createObjectURL(blob)
@@ -158,6 +171,7 @@ export default function RecorderPlayer({ title, id }) {
           </ButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
+      {audioUrl && <a href={audioUrl}>FILE SAVED ON SERVER (click me)</a>}
       <SoundClipsStyled
       // onChange={handleRecordChange}
       >
@@ -173,12 +187,7 @@ export default function RecorderPlayer({ title, id }) {
             >
                        {blob.clipName}                 
             </ClipLabelStyled> */}
-            <DeleteAudioStyled
-              visible
-              secondary
-              onClick={handleDeleteClick}
-            ></DeleteAudioStyled>
-             
+            <DeleteAudioStyled visible secondary onClick={handleDeleteClick}></DeleteAudioStyled> 
           </ClipContainerStyled>
         ))}
       </SoundClipsStyled>
