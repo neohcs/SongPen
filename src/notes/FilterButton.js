@@ -23,14 +23,15 @@ const FilterButtonStyled = styled.button`
   border: none;
   border-radius: 7px;
   width: 100px;
-  padding: 2px;
+  padding: 7px;
   font-size: 14px;
-  background: ${props => (props.selected ? '#4db5bf' : '#ecf7f8')};
+  color: #130307;
+  background: ${props => (props.selected ? '#17e2cc' : '#f0f0f0')};
   font-weight: ${props => (props.selected ? 'bold' : 'normal')};
-  color: ${props => (props.selected ? '#f5f8f8' : '#54abbc')};
+  /* color: ${props => (props.selected ? '#130307' : '#130307')}; */
 
   :active {
-    box-shadow: none;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
     background: '#48c0cb';
     font-weight: 'bold';
     color: 'white';

@@ -14,12 +14,12 @@ export function deleteNote(id) {
   return fetchNotes({ method: 'DELETE', id })
 }
 
-function fetchNotes({ method = 'GET', id = '', data } = {}) {
+function fetchNotes({ method = 'GET', id = '', data, file = null } = {}) {
   return fetch('/notes/' + id, {
     method,
-    body: JSON.stringify(data),
+    body: data ? JSON.stringify(data) : file,
     headers: {
-      'content-type': 'application/json'
-    }
+      'content-type': 'application/json',
+    },
   }).then(res => res.json())
 }

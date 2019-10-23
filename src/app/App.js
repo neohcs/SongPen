@@ -5,6 +5,7 @@ import { getNotes, postNote, patchNote, deleteNote } from '../notes/services'
 import NotePage from '../notes/NotePage'
 import CreatePage from '../create/CreatePage'
 import EditPage from '../edit/EditPage'
+import RecorderPlayer from '../media/RecorderPlayer'
 
 export default function App(editNoteData) {
   const [selectedTag, setSelectedTag] = useState('')
@@ -13,13 +14,7 @@ export default function App(editNoteData) {
     getNotes().then(setNoteList)
   }, [])
 
-  const allNoteTags = Array.from(
-    noteList.reduce((prev, note) => {
-      prev.add(note.tag)
-      return prev
-    }, new Set())
-  )
-
+  const allNoteTags = ['started', 'advanced', 'completed']
   const filteredNotes = noteList.filter(note => note.tag.includes(selectedTag))
 
   function selectTag(clickedTag) {
@@ -77,6 +72,7 @@ export default function App(editNoteData) {
                 onSelectTag={selectTag}
                 selectedTag={selectedTag}
                 onSubmit={createNote}
+                setNoteList={setNoteList}
               ></CreatePage>
             )}
           />
@@ -90,8 +86,15 @@ export default function App(editNoteData) {
                   onSelectTag={selectTag}
                   selectedTag={selectedTag}
                   onSubmit={editNote}
+                  setNoteList={setNoteList}
                 ></EditPage>
               )
+            }}
+          />
+          <Route
+            path="/media"
+            render={props => {
+              return <RecorderPlayer></RecorderPlayer>
             }}
           />
         </Switch>

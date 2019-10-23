@@ -5,7 +5,7 @@ const Note = mongoose.model('Note', {
   title: String,
   content: String,
   tag: String,
-  recording: String
+  recordings: Array
 })
 
 module.exports = Note

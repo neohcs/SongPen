@@ -12,8 +12,9 @@ Note.propTypes = {
   date: PropTypes.string, //update this to dynamic date
   content: PropTypes.string,
   tag: PropTypes.string,
-  recording: PropTypes.string //or array? -> arrayOf(PropTypes.string)
+  recordings: PropTypes.arrayOf(PropTypes.string), //or array? -> arrayOf(PropTypes.string)
   // id, too?
+  handleDeleteClick: PropTypes.func
 }
 
 export default function Note({
@@ -21,7 +22,7 @@ export default function Note({
   date,
   content,
   tag,
-  recording,
+  recordings,
   _id,
   handleDeleteClick
 }) {
@@ -29,6 +30,7 @@ export default function Note({
 
   function toggleExpandNote() {
     setIsNoteExpanded(!isNoteExpanded)
+    console.log(recordings)
   }
 
   return (
@@ -39,11 +41,17 @@ export default function Note({
         <>
           <ContentStyled className={'expanded'}>
             {content}
-            {recording && (
-              <PlayBarStyled>
-                <PlayIconStyled></PlayIconStyled>
-              </PlayBarStyled>
-            )}
+            {recordings.length >= 1 &&
+              recordings.map(recording => (
+                <AudioStyled src={recording} controls>
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </AudioStyled>
+              ))
+            // <PlayBarStyled>
+            //   <PlayIconStyled></PlayIconStyled>
+            // </PlayBarStyled>
+            }
           </ContentStyled>
           <NoteCollapseIconStyled
             onClick={toggleExpandNote}
@@ -56,14 +64,16 @@ export default function Note({
                 title,
                 date,
                 content,
-                recording,
+                recordings,
                 tag
               }
             }}
           >
             <NoteEditIconStyled />
           </LinkStyled>
-          <NoteDeleteIconStyled onClick={handleDeleteClick}></NoteDeleteIconStyled>
+          <NoteDeleteIconStyled
+            onClick={handleDeleteClick}
+          ></NoteDeleteIconStyled>
         </>
       ) : (
         <>
@@ -72,7 +82,7 @@ export default function Note({
         </>
       )}
       <Tag tag={tag}></Tag>
-      {recording && <RecordingIconStyled></RecordingIconStyled>}
+      {recordings.length >= 1 && <RecordingIconStyled></RecordingIconStyled>}
     </NoteStyled>
   )
 }
@@ -82,22 +92,24 @@ const NoteStyled = styled.section`
   box-shadow: 0 5px 10px #0002;
   width: 90vw;
   padding: 10px 20px 20px;
-  background: #f8f8f8;
+  background: #fcfcfc;
   font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana,
     sans-serif;
 `
 
 const DateStyled = styled.div`
-  float: right;
+  float: left;
   display: block;
-  margin-right: -10px;
+  opacity: 0.9;
   font-size: 12px;
-  color: #3997a0;
+  color: #050102;
 `
 
 const TitleStyled = styled.h1`
+  margin: 40px 0 20px;
   font-size: 18px;
-  color: #3997a0;
+  opacity: 0.9;
+  color: #050102;
 `
 
 const ContentStyled = styled.p`
@@ -106,8 +118,9 @@ const ContentStyled = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   height: 60px;
+  opacity: 0.9;
   font-size: 16px;
-  color: #54abbc;
+  color: #130307;
   word-wrap: break-word;
 
   &.expanded {
@@ -117,8 +130,15 @@ const ContentStyled = styled.p`
 `
 const RecordingIconStyled = styled(Notes)`
   display: inline-block;
+  margin-left: 7px;
   height: 25px;
-  fill: #54abbc;
+  fill: #17e2cc;
+`
+
+const AudioStyled = styled.audio`
+  margin-top: 15px;
+  height: 30px;
+  width: 100%;
 `
 
 const PlayBarStyled = styled.div`
@@ -134,7 +154,7 @@ const PlayBarStyled = styled.div`
 const PlayIconStyled = styled(PlayCircle)`
   position: absolute;
   height: 20px;
-  color: #ffc187;
+  color: #17e2cc;
 `
 
 const NoteViewIconStyled = styled(ArrowSortedDown)`
@@ -143,7 +163,7 @@ const NoteViewIconStyled = styled(ArrowSortedDown)`
   bottom: 5px;
   display: inline-block;
   height: 50px;
-  color: #ffc187;
+  color: #17e2cc;
 `
 
 const NoteCollapseIconStyled = styled(ArrowSortedUp)`
@@ -152,7 +172,7 @@ const NoteCollapseIconStyled = styled(ArrowSortedUp)`
   bottom: 5px;
   display: block;
   height: 50px;
-  color: #ffc187;
+  color: #17e2cc;
 `
 
 const LinkStyled = styled(NavLink)`
@@ -160,7 +180,7 @@ const LinkStyled = styled(NavLink)`
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  color: #ffc187;
+  color: #17e2cc;
   &.active {
     color: #4db5bf;
   }
@@ -168,18 +188,18 @@ const LinkStyled = styled(NavLink)`
 
 const NoteEditIconStyled = styled(EditAlt)`
   position: absolute;
-  top: 30px;
-  right: 50px;
+  top: 10px;
+  right: 60px;
   display: inline-block;
   height: 25px;
-  color: #ffc187;
+  color: #17e2cc;
 `
 
 const NoteDeleteIconStyled = styled(Trash)`
   position: absolute;
-  top: 30px;
-  right: 10px;
+  top: 10px;
+  right: 15px;
   display: inline-block;
   height: 25px;
-  color: #ffc187;
+  color: #17e2cc;
 `

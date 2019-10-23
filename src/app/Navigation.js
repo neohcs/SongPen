@@ -20,8 +20,9 @@ export default function Navigation() {
 const NavigationStyled = styled.nav`
   display: flex;
   justify-content: space-between;
+  margin: 0 30px 40px;
   height: 50px;
-  padding: 30px;
+  padding-top: 50px;
 `
 
 const LinkStyled = styled(NavLink)`
@@ -29,20 +30,22 @@ const LinkStyled = styled(NavLink)`
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  color: #ffc187;
+  color: #17e2cc;
+  opacity: 0.5;
   &.active {
-    color: #4db5bf;
+    color: #17e2cc;
+    opacity: 1;
   }
 `
 
 const ListIconStyled = styled(ListUl)`
   display: inline-block;
   justify-content: flex-start;
-  height: 30px;
+  height: 40px;
 `
 
 const CreateIconStyled = styled(FileAlt)`
   display: inline-block;
   justify-content: flex-end;
-  height: 30px;
+  height: 40px;
 `
