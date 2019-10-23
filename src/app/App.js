@@ -79,6 +79,7 @@ export default function App(editNoteData) {
                 onSelectTag={selectTag}
                 selectedTag={selectedTag}
                 onSubmit={createNote}
+                setNoteList={setNoteList}
               ></CreatePage>
             )}
           />
@@ -92,6 +93,7 @@ export default function App(editNoteData) {
                   onSelectTag={selectTag}
                   selectedTag={selectedTag}
                   onSubmit={editNote}
+                  setNoteList={setNoteList}
                 ></EditPage>
               )
             }}

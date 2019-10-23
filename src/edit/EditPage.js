@@ -15,15 +15,15 @@ export default function EditPage({ onSubmit, editNoteData }) {
   const [title, setTitle] = useState(editNoteData.title)
   const [content, setContent] = useState(editNoteData.content.toString())
   const [label, setLabel] = useState(editNoteData.label)
-  const [recordings, setRecording] = useState(editNoteData.recordings)
+  const [recordings, setRecordings] = useState(editNoteData.recordings)
 
   function handleSubmit(event) {
     event.preventDefault()
-    const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
-    const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-    let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
-    data = { ...data }
-    onSubmit(editNoteData._id, data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
+    const form = event.target
+    const formData = new FormData(form)
+    let data = Object.fromEntries(formData)
+    data = { ...data, recordings }
+    onSubmit(editNoteData._id, data)
   }
 
   return (
@@ -47,19 +47,8 @@ export default function EditPage({ onSubmit, editNoteData }) {
         ></InputContentStyled>
         <RecorderPlayer
           name="recordings"
-          // value={recordings}
-          // onChange={event =>
-          //   setRecordings([editNoteData.recordings, event.target.value])
-          // }
-          recordingsState={[recordings, setRecording]}
+          recordingsState={[recordings, setRecordings]}
         ></RecorderPlayer>
-        {/* <InputRecordStyled
-          name="recordings"
-          value={recordings}
-          onChange={event =>
-            setRecordings([editNoteData.recordings, event.target.value])
-          }
-        ></InputRecordStyled> */}
         <div>
           <SelectLabelStyled>Fancy to change the tag?</SelectLabelStyled>
           <SelectTagStyled
@@ -133,20 +122,6 @@ const InputContentStyled = styled.textarea`
   font-size: 16px;
   color: #130307;
 `
-
-// const InputRecordStyled = styled.input`
-//   box-shadow: 0 5px 10px #0002;
-//   border: 1px solid lightgrey;
-//   border-radius: 3px;
-//   width: 100%;
-//   height: 30px;
-//   padding: 10px;
-//   word-break: break-all;
-//   word-wrap: break-word;
-//   font-size: 18px;
-//   font-weight: bold;
-//   color: #130307;
-// `
 
 const SelectLabelStyled = styled.label`
   justify-self: left;

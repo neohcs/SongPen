@@ -16,17 +16,14 @@ export default function CreatePage({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const form = event.target // hier halte ich fest, wo das Event passiert: auf der form
-    const formData = new FormData(form) // hier gebe ich der FormData diese form mit, damit aus ihren Daten Key-Value-Pairs erstellt werden
-    let data = Object.fromEntries(formData) // hier werden mit der Object.fromEntries-Methode die Key-Value-Paare in ein Objekt umgewandelt
+    const form = event.target
+    const formData = new FormData(form)
+    let data = Object.fromEntries(formData)
     data = {
       ...data,
-      recordings,
+      recordings
     }
-    onSubmit(data) // hier wird onSubmit aufgerufen und das neue Objekt übergeben. Die Funktion wird der CreatePage in der App mit dem Argument createPage (Funktion) besetzt. Dort wird dann createPage ausgeführt
-    //   form.reset() //dies leert die Felder der Form automatisch
-    //   form.title.focus() // dies setzt den Fokus automatisch wieder ins Titel-Input-Feld
-    // }
+    onSubmit(data)
   }
 
   return (
@@ -49,12 +46,7 @@ export default function CreatePage({ onSubmit }) {
         <RecorderPlayer
           name="recordings"
           recordingsState={[recordings, setRecordings]}
-          // value={value}
         ></RecorderPlayer>
-        {/* <InputRecordStyled
-          name="recordings"
-          placeholder={'Insert URL to your song here...'}
-        ></InputRecordStyled> */}
         <div>
           <SelectLabelStyled>
             Please select a tag for your note...
@@ -126,20 +118,6 @@ const InputContentStyled = styled.textarea`
   font-size: 16px;
   color: #130307;
 `
-// Falls ich doch uploads machen muss:
-// const InputRecordStyled = styled.input`
-//   box-shadow: 0 5px 10px #0002;
-//   border: 1px solid lightgrey;
-//   border-radius: 3px;
-//   width: 100%;
-//   height: 30px;
-//   padding: 10px;
-//   word-break: break-all;
-//   word-wrap: break-word;
-//   font-size: 18px;
-//   font-weight: bold;
-//   color: grey;
-// `
 
 const SelectLabelStyled = styled.label`
   justify-self: left;

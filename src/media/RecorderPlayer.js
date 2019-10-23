@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { Microphone } from 'styled-icons/typicons'
-import { Trash } from 'styled-icons/boxicons-regular'
+import { Trash, Download } from 'styled-icons/boxicons-regular'
 
-export default function RecorderPlayer({ title, id, recordingsState }) {
+export default function RecorderPlayer({
+  recordingsState,
+  patchNote,
+  noteList,
+  setNoteList
+}) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
   const [mediaRecorder, setMediaRecorder] = useState(null)
   const [recordings, setRecordings] = recordingsState
@@ -81,6 +86,7 @@ export default function RecorderPlayer({ title, id, recordingsState }) {
 
     //  console.log(mediaRecorder.state)
     // chunks = []
+    // HALLO MAX! SECRET MESSAGE: DIE SONNE SCHEINT DURCHS FENSTERLOCH – MENSCH, LASSE DOCH!
     // let blobUrl = URL.createObjectURL(blob)
     // console.log(blobUrl)
     // // setIsButtonDisabled(!isButtonDisabled)
@@ -90,63 +96,23 @@ export default function RecorderPlayer({ title, id, recordingsState }) {
     // vidSave.src = blobUrl -> wie übersetzt sich das für meinen Fall?
   }
 
-  /*
-  function handleAudioAfterSubmit() {
-    const buffer = []
-    function onDataAvailable(event) {
-      if (event.data) buffer.push(event.data)
-    }
-
-    function bufferToDataUrl(callback) {
-      const blob = new Blob(buffer, {
-        type: 'audio/wav'
-      })
-
-      const reader = new FileReader()
-      reader.onload = function() {
-        callback(reader.result)
-      }
-      reader.readAsDataURL(blob)
-    }
-
-    // returns file, that we can send to the server.
-    function dataUrlToFile(dataUrl) {
-      const binary = atob(dataUrl.split(',')[1]),
-        data = []
-
-      for (const i = 0; i < binary.length; i++) data.push(binary.charCodeAt(i))
-
-      return new File([new Uint8Array(data)], 'recorded-audio.wav', {
-        type: 'audio/wav'
-      })
-    }
-
-    // triggered by user.
-    function onStopButtonClick() {
-      try {
-        recorder.stop()
-        recorder.stream.getTracks().forEach(function(track) {
-          track.stop()
-        })
-      } catch (event) {}
-
-      bufferToDataUrl(function(dataUrl) {
-        const file = dataUrlToFile(dataUrl)
-        console.log(file)
-        // upload file to the server. -> muss ich das hinzufügen?
-      })
-    }
-  }
-  // von https://60devs.com/recording-videos-in-the-browser-using-media-recorder-api.html
-  */
-
-  function handleDeleteClick(event) {
-    const evtTgt = event.target
-    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
+  function handleDeleteClick(event, index) {
+ //   const evtTgt = event.target
+  //  console.log(evtTgt)
+//    evtTgt.parentNode.remove()
+    setRecordings([
+      ...recordings.slice(0, index),
+      ...recordings.slice(index + 1)
+    ])
+    // let index = recordings.indexOf(evtTgt.parentNode)
+    // onDelete(note, index)
   }
 
-  // function handleRecordChange() {
-  //   console.log('ähm')
+  // function onDelete(note, index) {
+  //   patchNote(note._id, { recordings: newRecordings }).then(updatedNote => {
+  //     const index = noteList.findIndex(note => note._id === updatedNote._id)
+  //     setNoteList([...noteList.slice(0, index), ...noteList.slice(index + 1)])
+  //   })
   // }
 
   return (
@@ -155,15 +121,11 @@ export default function RecorderPlayer({ title, id, recordingsState }) {
         {/* <VisualizerStyled></VisualizerStyled> */}
         <ButtonBarStyled>
           <MicrophoneStyled
-            // visible
             visible={isButtonVisible}
-            // disabled={!isButtonDisabled}
             onClick={handleRecordClick}
           ></MicrophoneStyled>
           <ButtonStyled
-            // visible
             visible={!isButtonVisible}
-            // disabled={isButtonDisabled}
             onClick={handleStopClick}
             type="button"
           >
@@ -171,30 +133,20 @@ export default function RecorderPlayer({ title, id, recordingsState }) {
           </ButtonStyled>
         </ButtonBarStyled>
       </MainControlsStyled>
-      {/* {audioUrl && <a href={audioUrl}>FILE SAVED ON SERVER (click me)</a>} */}
-      <SoundClipsStyled
-      // onChange={handleRecordChange}
-      >
-        {recordings.map(url => (
-          <ClipContainerStyled
-            key={url}
-            // value={blob.clipName + blob.index + id}
-          >
-                  
-            <AudioStyled src={url} controls></AudioStyled>
-            {/* <ClipLabelStyled
-            // onClick={handleLabelClick}
-            >
-                       {blob.clipName}                 
-            </ClipLabelStyled> */}
-            <DeleteAudioStyled
-              visible
-              secondary
-              onClick={handleDeleteClick}
-            ></DeleteAudioStyled>
-             
-          </ClipContainerStyled>
-        ))}
+      <SoundClipsStyled>
+        {recordings &&
+          recordings.map((recording, index) => (
+            <ClipContainerStyled key={recording}>
+              <AudioStyled src={recording} controls></AudioStyled>
+              <DeleteAudioStyled
+                visible
+                onClick={event => handleDeleteClick(event, index)}
+              ></DeleteAudioStyled>
+              <a href={recording}>
+                <DownloadAudioStyled />
+              </a>
+            </ClipContainerStyled>
+          ))}
       </SoundClipsStyled>
     </MediaWrapperStyled>
   )
@@ -210,12 +162,6 @@ const MainControlsStyled = styled.section`
   display: block;
   /* padding: 0.5rem 0; */
 `
-
-// const VisualizerStyled = styled.canvas`
-//   display: block;
-//   margin-bottom: 0.5rem;
-//   height: 60px;
-// `
 
 const ButtonBarStyled = styled.div`
   display: flex;
@@ -264,11 +210,6 @@ const AudioStyled = styled.audio`
   width: auto;
 `
 
-const ClipLabelStyled = styled.p`
-  display: inline-block;
-  font-size: 14px;
-`
-
 const ButtonStyled = styled.button`
   display: ${props => (props.visible ? 'inline-block' : 'none')};
   box-shadow: 0 2px 5px #0002;
@@ -305,7 +246,12 @@ const MicrophoneStyled = styled(Microphone)`
 
 const DeleteAudioStyled = styled(Trash)`
   display: inline-block;
-  /* margin: 10px auto; */
+  width: 30px;
+  height: 30px;
+  color: grey;
+`
+const DownloadAudioStyled = styled(Download)`
+  display: inline-block;
   width: 30px;
   height: 30px;
   color: grey;

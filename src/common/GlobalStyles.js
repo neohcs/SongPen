@@ -11,8 +11,18 @@ export default createGlobalStyle`
 }
 
 body {
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh;
+  width: 100vw; */
   margin: 0;
+@media (min-width: 900px) {
+      width: 375px;
+      height: 667px;
+      border: 30px solid black;
+      border-width: 60px 20px;
+      border-radius: 20px;
+      box-shadow: 30px 40px 30px #2264;
+      margin: 40px auto;
 }
+}
+
 `
