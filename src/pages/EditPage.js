@@ -8,13 +8,14 @@ import Date from '../common/Date'
 import RecorderPlayer from '../media/RecorderPlayer'
 
 EditPage.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  editNoteDate: PropTypes.object
 }
 
 export default function EditPage({ onSubmit, editNoteData }) {
   const [title, setTitle] = useState(editNoteData.title)
   const [content, setContent] = useState(editNoteData.content)
-  const [label, setLabel] = useState(editNoteData.label)
+  const [label, setLabel] = useState(editNoteData.tag)
   const [recordings, setRecordings] = useState(editNoteData.recordings)
 
   function handleSubmit(event) {
@@ -33,11 +34,11 @@ export default function EditPage({ onSubmit, editNoteData }) {
       <FormStyled onSubmit={handleSubmit}>
         <Date name="date"></Date>
         <InputTitleStyled
+          required
           name="title"
           value={title}
           onChange={event => setTitle(event.target.value)}
           maxLength="20"
-          required
           autoFocus
         ></InputTitleStyled>
         <InputContentStyled

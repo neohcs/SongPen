@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
 FilterButton.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string),
+  tag: PropTypes.string,
+  selectedTag: PropTypes.string,
   onClick: PropTypes.func
 }
 
-export default function FilterButton({ onClick, tag, selectedTag }) {
+export default function FilterButton({ tag, selectedTag, onClick }) {
   return (
     <FilterButtonStyled
       onClick={() => onClick(tag)}
@@ -28,7 +29,6 @@ const FilterButtonStyled = styled.button`
   color: #130307;
   background: ${props => (props.selected ? '#17e2cc' : '#f0f0f0')};
   font-weight: ${props => (props.selected ? 'bold' : 'normal')};
-  /* color: ${props => (props.selected ? '#130307' : '#130307')}; */
 
   :active {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);

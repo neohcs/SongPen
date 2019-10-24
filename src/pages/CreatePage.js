@@ -33,10 +33,10 @@ export default function CreatePage({ onSubmit }) {
       <FormStyled onSubmit={handleSubmit}>
         <Date name="date"></Date>
         <InputTitleStyled
+          required
           name="title"
           placeholder={'Insert title here...'}
           maxLength="30"
-          required
           autoFocus
         ></InputTitleStyled>
         <InputContentStyled

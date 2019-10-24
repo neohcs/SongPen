@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 import { Microphone } from 'styled-icons/typicons'
 import { Trash, Download } from 'styled-icons/boxicons-regular'
+
+RecorderPlayer.propTypes = {
+  recordingsState: PropTypes.array
+}
 
 export default function RecorderPlayer({ recordingsState }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
@@ -11,6 +16,7 @@ export default function RecorderPlayer({ recordingsState }) {
 
   async function handleRecordClick() {
     console.log('Recording clicked')
+    console.log(recordingsState)
     const stream = await getMedia({ audio: true })
     console.log('Received stream: ', stream)
     return record(stream)

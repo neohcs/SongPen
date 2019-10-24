@@ -8,18 +8,18 @@ import Header from '../common/Header'
 import Navigation from '../app/Navigation'
 
 NotePage.propTypes = {
-  onSelectTag: PropTypes.func,
   notes: PropTypes.array,
   tags: PropTypes.array,
   selectedTag: PropTypes.string,
-  isRecordingIncluded: PropTypes.bool
+  onSelectTag: PropTypes.func,
+  onDeleteClick: PropTypes.func
 }
 
 export default function NotePage({
-  onSelectTag,
   notes,
   tags,
   selectedTag,
+  onSelectTag,
   onDeleteClick
 }) {
   return (

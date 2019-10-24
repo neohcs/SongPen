@@ -3,12 +3,12 @@ import styled from 'styled-components/macro'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { getNotes, postNote, patchNote, deleteNote } from '../notes/services'
 import NotePage from '../notes/NotePage'
-import CreatePage from '../create/CreatePage'
-import EditPage from '../edit/EditPage'
+import CreatePage from '../pages/CreatePage'
+import EditPage from '../pages/EditPage'
 import RecorderPlayer from '../media/RecorderPlayer'
 import GlobalStyles from '../common/GlobalStyles'
 
-export default function App(editNoteData) {
+export default function App() {
   const [selectedTag, setSelectedTag] = useState('')
   const [noteList, setNoteList] = useState([])
   useEffect(() => {

@@ -1,10 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
-
-Date.propTypes = {
-  date: PropTypes.string
-}
 
 export default function newDate() {
   let currentDay = new Date().getDate()
