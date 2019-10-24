@@ -11,17 +11,17 @@ export default createGlobalStyle`
 }
 
 body {
-  /* height: 100vh;
-  width: 100vw; */
   margin: 0;
-@media (min-width: 900px) {
-      width: 375px;
-      height: 667px;
+  height: 100vh;
+  width: 100vw;
+ @media (min-width: 900px) {
+      margin: 40px auto;
+      box-shadow: 30px 40px 30px #2264;
       border: 30px solid black;
       border-width: 60px 20px;
       border-radius: 20px;
-      box-shadow: 30px 40px 30px #2264;
-      margin: 40px auto;
+      width: 375px;
+      height: 667px;
 }
 }
 

@@ -31,10 +31,10 @@ const LinkStyled = styled(NavLink)`
   align-items: center;
   text-decoration: none;
   color: #17e2cc;
-  opacity: 0.5;
+  opacity: 1;
   &.active {
     color: #17e2cc;
-    opacity: 1;
+    opacity: 0.5;
   }
 `
 

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import Note from './Note'
 import TagFilter from './TagFilter'
-import SearchBar from '../SearchBar'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
@@ -40,11 +39,7 @@ export default function NotePage({
             _id={note._id}
             title={note.title}
             date={note.date}
-            content={note.content
-              .split('\n')
-              .map(line =>
-                line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
-              )}
+            content={note.content}
             recordings={note.recordings}
             tag={note.tag}
           />
@@ -63,7 +58,4 @@ const ScrollerStyled = styled.div`
   scroll-behavior: smooth;
   /* max-width: 100%; */
   padding: 5px 20px;
-`
-const LineBreakStyled = styled.p`
-  margin: 0px;
 `

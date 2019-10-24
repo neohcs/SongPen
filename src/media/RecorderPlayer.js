@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { Microphone } from 'styled-icons/typicons'
 import { Trash, Download } from 'styled-icons/boxicons-regular'
@@ -54,13 +54,14 @@ export default function RecorderPlayer({ recordingsState }) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
 
-    chunks = []
+    // chunks = []
 
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
 
     const data = new FormData()
     data.append('file', blob)
+    console.log(data)
 
     fetch('/notes/upload/', {
       method: 'POST',
@@ -71,11 +72,14 @@ export default function RecorderPlayer({ recordingsState }) {
       .catch(err => console.log('ERROR', err))
   }
 
-  function handleDeleteClick(index) {
+  function handleDeleteClick(event, index) {
+    console.log(index)
+    console.log('Recording before ', recordings)
     setRecordings([
       ...recordings.slice(0, index),
       ...recordings.slice(index + 1)
     ])
+    console.log('Recording before ', recordings)
   }
 
   return (
@@ -143,7 +147,7 @@ const SoundClipsStyled = styled.section`
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  max-width: 90vw;
+  max-width: 90%;
   padding: 5px 20px;
 `
 

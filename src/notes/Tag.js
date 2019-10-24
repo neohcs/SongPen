@@ -12,6 +12,7 @@ export default function Tag({ tag }) {
 
 const TagStyled = styled.div`
   display: inline-block;
+  margin-top: 10px;
   border: 1px solid lightgrey;
   border-radius: 7px;
   padding: 7px 15px;

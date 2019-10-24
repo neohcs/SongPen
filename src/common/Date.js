@@ -15,7 +15,7 @@ export default function newDate() {
 
   let currentDate = currentDay + '.' + currentMonth + '.' + currentYear
 
-  return <DateStyled name="date" value={currentDate}></DateStyled>
+  return <DateStyled name="date" value={currentDate} readOnly></DateStyled>
 }
 
 const DateStyled = styled.input`

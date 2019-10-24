@@ -6,6 +6,7 @@ import NotePage from '../notes/NotePage'
 import CreatePage from '../create/CreatePage'
 import EditPage from '../edit/EditPage'
 import RecorderPlayer from '../media/RecorderPlayer'
+import GlobalStyles from '../common/GlobalStyles'
 
 export default function App(editNoteData) {
   const [selectedTag, setSelectedTag] = useState('')
@@ -48,6 +49,7 @@ export default function App(editNoteData) {
 
   return (
     <Router>
+      <GlobalStyles />
       <AppStyled>
         <Switch>
           <Route
