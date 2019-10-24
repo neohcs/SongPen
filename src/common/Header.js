@@ -8,13 +8,14 @@ export default function Header() {
 const HeaderStyled = styled.header`
   display: block;
   text-align: center;
+  justify-items: center;
   width: 100vw;
-  height: 60px;
+  height: 50px;
   padding: 10px;
   background: #17e2cc;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 36px;
+  /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+  font-size: 30px;
   font-weight: bold;
-  letter-spacing: 3px;
-  color: #001d20;
+  letter-spacing: 2px;
+  color: #050102;
 `

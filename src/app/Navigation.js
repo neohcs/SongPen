@@ -1,15 +1,11 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { NavLink } from 'react-router-dom'
-import { ListUl } from 'styled-icons/fa-solid'
-import { FileAlt } from 'styled-icons/fa-regular'
+import { PlusCircle } from 'styled-icons/boxicons-solid'
 
 export default function Navigation() {
   return (
     <NavigationStyled>
-      <LinkStyled to="/" exact>
-        <ListIconStyled></ListIconStyled>
-      </LinkStyled>
       <LinkStyled to="/create">
         <CreateIconStyled></CreateIconStyled>
       </LinkStyled>
@@ -18,34 +14,27 @@ export default function Navigation() {
 }
 
 const NavigationStyled = styled.nav`
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  margin: 0 30px 40px;
-  height: 50px;
-  padding-top: 50px;
+  justify-content: center;
+  align-items: center;
+  border-top: 5px solid #17e2cc;
+  height: 35px;
+  padding: 10px 0;
 `
 
 const LinkStyled = styled(NavLink)`
+  position: absolute;
+  top: -33px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  box-shadow: 0 2px 5px #0002;
   text-decoration: none;
-  color: #17e2cc;
-  opacity: 1;
-  &.active {
-    color: #17e2cc;
-    opacity: 0.5;
-  }
+  border-radius: 50%;
+  background: #17e2cc;
+  color: #050102;
 `
 
-const ListIconStyled = styled(ListUl)`
+const CreateIconStyled = styled(PlusCircle)`
   display: inline-block;
-  justify-content: flex-start;
-  height: 40px;
-`
-
-const CreateIconStyled = styled(FileAlt)`
-  display: inline-block;
-  justify-content: flex-end;
-  height: 40px;
+  height: 60px;
 `

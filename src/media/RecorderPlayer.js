@@ -186,20 +186,17 @@ const ButtonStyled = styled.button`
   display: ${props => (props.visible ? 'inline-block' : 'none')};
   box-shadow: 0 2px 5px #0002;
   border: none;
+  border-radius: 20px;
+  width: auto;
   height: 30px;
   padding: 2px 15px;
+  background: #17e2cc;
+  font-size: 18px;
   font-weight: bold;
-  border-radius: ${props => (props.secondary ? '3px' : '20px')};
-  width: ${props => (props.secondary ? '100px' : 'auto')};
-  background: ${props => (props.secondary ? 'white' : '#17e2cc')};
-  font-size: ${props => (props.secondary ? '14px' : '18px')};
-  color: ${props => (props.secondary ? '#130307' : '#130307')};
+  color: #130307;
 
-  :hover,
   :focus {
-    /* box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1); */
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
-    /* background: #0ae; */
   }
 
   :active {
@@ -210,9 +207,9 @@ const ButtonStyled = styled.button`
 const MicrophoneStyled = styled(Microphone)`
   display: ${props => (props.visible ? 'inline-block' : 'none')};
   border: 5px solid #17e2cc;
+  border-radius: 50%;
   height: 50px;
   background: #17e2cc;
-  border-radius: 50%;
   color: #130307;
 `
 

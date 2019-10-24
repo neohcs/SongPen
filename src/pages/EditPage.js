@@ -30,7 +30,6 @@ export default function EditPage({ onSubmit, editNoteData }) {
   return (
     <Page title={'EditPage'}>
       <Header></Header>
-      <Navigation></Navigation>
       <FormStyled onSubmit={handleSubmit}>
         <Date name="date"></Date>
         <InputTitleStyled
@@ -94,7 +93,7 @@ const FormStyled = styled.form`
   justify-items: center;
   overflow-y: auto;
   scroll-behavior: smooth;
-  margin-bottom: 20px;
+  margin: 20px 0;
   padding: 0 20px 20px;
 `
 
@@ -153,15 +152,14 @@ const ButtonStyled = styled.button`
   display: inline-block;
   box-shadow: 0 2px 5px #0002;
   border: none;
-  height: 30px;
-  margin: 0 auto;
-  padding: 2px 15px;
-  font-weight: bold;
-  color: #130307;
   border-radius: ${props => (props.secondary ? '3px' : '50px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
+  height: 30px;
+  padding: 2px 15px;
   background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
+  font-weight: bold;
+  color: #130307;
 
   :active {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);

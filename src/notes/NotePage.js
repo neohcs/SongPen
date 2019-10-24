@@ -25,7 +25,6 @@ export default function NotePage({
   return (
     <Page title={'NotePage'}>
       <Header></Header>
-      <Navigation></Navigation>
       <ScrollerStyled>
         <TagFilter
           tags={tags}
@@ -45,6 +44,7 @@ export default function NotePage({
           />
         ))}
       </ScrollerStyled>
+      <Navigation></Navigation>
     </Page>
   )
 }
