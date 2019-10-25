@@ -12,7 +12,7 @@ export default function FilterButton({ tag, selectedTag, onClick }) {
   return (
     <FilterButtonStyled
       onClick={() => onClick(tag)}
-      selected={selectedTag === tag ? true : false}
+      selected={selectedTag === tag}
     >
       {tag}
     </FilterButtonStyled>
@@ -31,7 +31,7 @@ const FilterButtonStyled = styled.button`
   color: #130307;
 
   :active {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     background: '#48c0cb';
     font-weight: 'bold';
     color: 'white';

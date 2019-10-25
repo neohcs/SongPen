@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components/macro'
 import { NavLink } from 'react-router-dom'
 import { EditAlt, Trash } from 'styled-icons/boxicons-regular'
 import { ArrowSortedDown, ArrowSortedUp, Notes } from 'styled-icons/typicons'
-import PropTypes from 'prop-types'
-import styled from 'styled-components/macro'
 import Tag from './Tag'
 
 Note.propTypes = {
@@ -29,7 +29,18 @@ export default function Note({
 
   function toggleExpandNote() {
     setIsNoteExpanded(!isNoteExpanded)
-    console.log(recordings)
+  }
+
+  function renderAudio() {
+    return (
+      recordings.length >= 1 &&
+      recordings.map(recording => (
+        <AudioStyled src={recording} controls>
+          Your browser does not support the
+          <code>audio</code> element.
+        </AudioStyled>
+      ))
+    )
   }
 
   return (
@@ -40,13 +51,7 @@ export default function Note({
         <>
           <ContentStyled className={'expanded'}>
             {content}
-            {recordings.length >= 1 &&
-              recordings.map(recording => (
-                <AudioStyled src={recording} controls>
-                  Your browser does not support the
-                  <code>audio</code> element.
-                </AudioStyled>
-              ))}
+            {renderAudio()}
           </ContentStyled>
           <NoteCollapseIconStyled
             onClick={toggleExpandNote}
@@ -129,7 +134,6 @@ const RecordingIconStyled = styled(Notes)`
   display: inline-block;
   margin-left: 7px;
   height: 30px;
-  /* fill: #17e2cc; */
   border: 1px solid lightgrey;
   border-radius: 7px;
   padding: 5px;

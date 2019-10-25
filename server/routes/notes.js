@@ -14,7 +14,8 @@ try {
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => callback(null, uploadPath),
-  filename: (req, file, callback) => callback(null, Date.now() + '_' + uid() + '.wav'),
+  filename: (req, file, callback) =>
+    callback(null, Date.now() + '_' + uid() + '.wav')
 })
 
 const upload = multer({ storage })

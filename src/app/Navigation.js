@@ -15,7 +15,7 @@ export default function Navigation() {
 
 const NavigationStyled = styled.nav`
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;

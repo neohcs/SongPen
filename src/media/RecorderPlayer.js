@@ -10,15 +10,14 @@ RecorderPlayer.propTypes = {
 
 export default function RecorderPlayer({ recordingsState }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
+  const [isMicPulsing, setIsMicPulsing] = useState(false)
   const [mediaRecorder, setMediaRecorder] = useState(null)
   const [recordings, setRecordings] = recordingsState
   let chunks = []
 
   async function handleRecordClick() {
-    console.log('Recording clicked')
     console.log(recordingsState)
     const stream = await getMedia({ audio: true })
-    console.log('Received stream: ', stream)
     return record(stream)
   }
 
@@ -36,14 +35,14 @@ export default function RecorderPlayer({ recordingsState }) {
     mediaRecorder.ondataavailable = handleDataAvailable
     mediaRecorder.onstop = () => handleAudioAfterStop(stream)
     mediaRecorder.start()
-    console.log('recorder started')
     console.log(mediaRecorder.state)
     setIsButtonVisible(!isButtonVisible)
+    setIsMicPulsing(!isMicPulsing)
     setMediaRecorder(mediaRecorder)
   }
 
   function handleDataAvailable(event) {
-    if (event.data.size > 0) {
+    if (event.data.size) {
       console.log(event.data)
       chunks.push(event.data)
     } else {
@@ -53,6 +52,7 @@ export default function RecorderPlayer({ recordingsState }) {
 
   function handleStopClick() {
     setIsButtonVisible(!isButtonVisible)
+    setIsMicPulsing(!isMicPulsing)
     mediaRecorder.stop()
   }
 
@@ -60,14 +60,11 @@ export default function RecorderPlayer({ recordingsState }) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
 
-    // chunks = []
-
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
 
     const data = new FormData()
     data.append('file', blob)
-    console.log(data)
 
     fetch('/notes/upload/', {
       method: 'POST',
@@ -79,23 +76,24 @@ export default function RecorderPlayer({ recordingsState }) {
   }
 
   function handleDeleteClick(event, index) {
-    console.log(index)
-    console.log('Recording before ', recordings)
     setRecordings([
       ...recordings.slice(0, index),
       ...recordings.slice(index + 1)
     ])
-    console.log('Recording before ', recordings)
   }
 
   return (
     <MediaWrapperStyled>
       <MainControlsStyled>
         <ButtonBarStyled>
-          <MicrophoneStyled
-            visible={isButtonVisible}
+          <ButtonStyled
             onClick={handleRecordClick}
-          ></MicrophoneStyled>
+            visible={isButtonVisible}
+            type="button"
+          >
+            Record
+          </ButtonStyled>
+          <MicrophoneStyled pulsing={isMicPulsing}></MicrophoneStyled>
           <ButtonStyled
             visible={!isButtonVisible}
             onClick={handleStopClick}
@@ -140,40 +138,66 @@ const MainControlsStyled = styled.section`
 const ButtonBarStyled = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 50px;
+  gap: 10px;
+  height: 60px;
 `
 
 const MicrophoneStyled = styled(Microphone)`
-  display: ${props => (props.visible ? 'inline-block' : 'none')};
-  border: 5px solid #17e2cc;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
   border-radius: 50%;
-  height: 50px;
-  background: #17e2cc;
-  color: #130307;
+  height: 40px;
+  color: white;
+  /* color: #130307; */
+  border: ${props => (props.pulsing ? '5px solid red' : '5px solid grey')};
+  background: ${props => (props.pulsing ? 'red' : 'grey')};
+  transform: ${props => (props.pulsing ? 'scale(1)' : 'none')};
+  animation: ${props => (props.pulsing ? 'pulse-red 2s infinite' : 'none')};
+  @keyframes pulse-red {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+    }
+
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+    }
+  }
 `
 
 const ButtonStyled = styled.button`
-  display: ${props => (props.visible ? 'inline-block' : 'none')};
+  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  display: inline-block;
   box-shadow: 0 2px 5px #0032;
   border: none;
   border-radius: 20px;
   width: auto;
   height: 30px;
   padding: 2px 15px;
-  background: #17e2cc;
-  font-size: 18px;
+  background: #f0f3f5;
+  font-size: 16px;
   font-weight: bold;
   color: #130307;
 
   :focus {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   :active {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     transform: translateY(2px);
+  }
+
+  :disabled {
+    color: #130307;
   }
 `
 

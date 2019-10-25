@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/macro'
+import { Redirect } from 'react-router-dom'
 import Page from '../common/Page'
 import Header from '../common/Header'
-import Navigation from '../app/Navigation'
 import Date from '../common/Date'
 import RecorderPlayer from '../media/RecorderPlayer'
 
@@ -13,6 +13,7 @@ CreatePage.propTypes = {
 
 export default function CreatePage({ onSubmit }) {
   const [recordings, setRecordings] = useState([])
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -23,62 +24,67 @@ export default function CreatePage({ onSubmit }) {
       ...data,
       recordings
     }
+    setShouldRedirect(true)
     onSubmit(data)
   }
 
+  function renderSelectOptions() {
+    return (
+      <SelectTagStyled name="tag">
+        <option name="tag" value="started">
+          started
+        </option>
+        <option name="tag" value="advanced">
+          advanced
+        </option>
+        <option name="tag" value="completed">
+          completed
+        </option>
+      </SelectTagStyled>
+    )
+  }
+
   return (
-    <Page title={'CreatePage'}>
-      <Header></Header>
-      <FormStyled onSubmit={handleSubmit}>
-        <Date name="date"></Date>
-        <InputTitleStyled
-          required
-          name="title"
-          placeholder={'Insert title here...'}
-          maxLength="30"
-          // autoFocus
-        ></InputTitleStyled>
-        <InputContentStyled
-          name="content"
-          placeholder={'Express your creative genius here...'}
-        ></InputContentStyled>
-        <RecorderPlayer
-          name="recordings"
-          recordingsState={[recordings, setRecordings]}
-        ></RecorderPlayer>
-        <div>
-          <SelectLabelStyled>
-            Please select a tag for your note...
-          </SelectLabelStyled>
-          <SelectTagStyled name="tag">
-            <option name="tag" value="started">
-              started
-            </option>
-            <option name="tag" value="advanced">
-              advanced
-            </option>
-            <option name="tag" value="completed">
-              completed
-            </option>
-          </SelectTagStyled>
-        </div>
-        <ButtonStyled
-          onClick={() => {
-            window.location = 'http://localhost:3000/'
-          }}
-        >
-          Save note
-        </ButtonStyled>
-        <ButtonStyled
-          secondary
-          onClick={() => {
-            window.location = 'http://localhost:3000/'
-          }}
-        >
-          Cancel
-        </ButtonStyled>
-      </FormStyled>
-    </Page>
+    <>
+      {shouldRedirect && <Redirect to="/" />}
+      <Page title={'CreatePage'}>
+        <Header />
+        <FormStyled onSubmit={handleSubmit}>
+          <Date name="date"></Date>
+          <InputTitleStyled
+            required
+            name="title"
+            placeholder={'Insert title here...'}
+            maxLength="30"
+            // autoFocus
+          ></InputTitleStyled>
+          <InputContentStyled
+            name="content"
+            placeholder={'Express your creative genius here...'}
+          ></InputContentStyled>
+          <RecorderPlayer
+            name="recordings"
+            recordingsState={[recordings, setRecordings]}
+          ></RecorderPlayer>
+          <div>
+            <SelectLabelStyled>
+              Please select a tag for your note...
+            </SelectLabelStyled>
+            {renderSelectOptions()}
+          </div>
+          <ButtonStyled>Save note</ButtonStyled>
+          <ButtonStyled
+            type="button"
+            secondary
+            onClick={() => {
+              setShouldRedirect(true)
+            }}
+          >
+            Cancel
+          </ButtonStyled>
+        </FormStyled>
+      </Page>
+    </>
   )
 }
 
@@ -145,18 +151,18 @@ const SelectTagStyled = styled.select`
 
 const ButtonStyled = styled.button`
   display: inline-block;
-  box-shadow: 0 2px 5px #0002;
+  box-shadow: 0 2px 5px #0032;
   border: none;
-  border-radius: ${props => (props.secondary ? '3px' : '20px')};
+  border-radius: ${props => (props.secondary ? '3px' : '50px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
-  height: 30px;
-  padding: 2px 15px;
+  height: 40px;
+  padding: 0 30px;
   background: ${props => (props.secondary ? 'white' : '#17e2cc')};
-  font-size: ${props => (props.secondary ? '14px' : '18px')};
+  font-size: ${props => (props.secondary ? '14px' : '22px')};
   font-weight: bold;
   color: #130307;
 
   :active {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 `

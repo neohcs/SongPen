@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components/macro'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import GlobalStyles from '../common/GlobalStyles'
 import { getNotes, postNote, patchNote, deleteNote } from '../notes/services'
-import NotePage from '../notes/NotePage'
+import NotePage from '../pages/NotePage'
 import CreatePage from '../pages/CreatePage'
 import EditPage from '../pages/EditPage'
-import RecorderPlayer from '../media/RecorderPlayer'
-import GlobalStyles from '../common/GlobalStyles'
 
 export default function App() {
   const [selectedTag, setSelectedTag] = useState('')
@@ -19,10 +18,7 @@ export default function App() {
   const filteredNotes = noteList.filter(note => note.tag.includes(selectedTag))
 
   function selectTag(clickedTag) {
-    setSelectedTag(clickedTag)
-    return selectedTag === clickedTag
-      ? setSelectedTag('')
-      : setSelectedTag(clickedTag)
+    selectedTag === clickedTag ? setSelectedTag('') : setSelectedTag(clickedTag)
   }
 
   function createNote(newNoteData) {
@@ -49,22 +45,19 @@ export default function App() {
 
   return (
     <Router>
-      <GlobalStyles />
       <AppStyled>
         <Switch>
           <Route
             path="/"
             exact
             render={() => (
-              <>
-                <NotePage
-                  tags={allNoteTags}
-                  onSelectTag={selectTag}
-                  notes={filteredNotes}
-                  selectedTag={selectedTag}
-                  onDeleteClick={deleteNoteOnClick}
-                ></NotePage>
-              </>
+              <NotePage
+                tags={allNoteTags}
+                onSelectTag={selectTag}
+                notes={filteredNotes}
+                selectedTag={selectedTag}
+                onDeleteClick={deleteNoteOnClick}
+              ></NotePage>
             )}
           />
           <Route
@@ -93,12 +86,6 @@ export default function App() {
               )
             }}
           />
-          <Route
-            path="/media"
-            render={props => {
-              return <RecorderPlayer></RecorderPlayer>
-            }}
-          />
         </Switch>
       </AppStyled>
     </Router>
@@ -106,14 +93,6 @@ export default function App() {
 }
 
 const AppStyled = styled.div`
-  /* position: fixed; */
-  /* top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; */
-  /* display: grid; */
   width: 100%;
   height: inherit;
-
-  /* grid-template-rows: 50px auto 30px; */
 `

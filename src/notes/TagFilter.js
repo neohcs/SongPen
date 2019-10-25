@@ -28,6 +28,6 @@ const TagFilterStyled = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 15px auto;
-  padding: 0 auto;
-  width: 335px;
+  width: 100%;
+  padding: 0 20px;
 `

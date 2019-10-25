@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
+import styled from 'styled-components/macro'
+import { Redirect } from 'react-router-dom'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Date from '../common/Date'
@@ -16,6 +17,7 @@ export default function EditPage({ onSubmit, editNoteData }) {
   const [content, setContent] = useState(editNoteData.content)
   const [label, setLabel] = useState(editNoteData.tag)
   const [recordings, setRecordings] = useState(editNoteData.recordings)
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -23,66 +25,65 @@ export default function EditPage({ onSubmit, editNoteData }) {
     const formData = new FormData(form)
     let data = Object.fromEntries(formData)
     data = { ...data, recordings }
+    setShouldRedirect(true)
     onSubmit(editNoteData._id, data)
   }
 
   return (
-    <Page title={'EditPage'}>
-      <Header></Header>
-      <FormStyled onSubmit={handleSubmit}>
-        <Date name="date"></Date>
-        <InputTitleStyled
-          required
-          name="title"
-          value={title}
-          onChange={event => setTitle(event.target.value)}
-          maxLength="20"
-          autoFocus
-        ></InputTitleStyled>
-        <InputContentStyled
-          name="content"
-          value={content}
-          onChange={event => setContent(event.target.value)}
-        ></InputContentStyled>
-        <RecorderPlayer
-          name="recordings"
-          recordingsState={[recordings, setRecordings]}
-        ></RecorderPlayer>
-        <div>
-          <SelectLabelStyled>Fancy to change the tag?</SelectLabelStyled>
-          <SelectTagStyled
-            name="tag"
-            value={label}
-            onChange={event => setLabel(event.target.value)}
+    <>
+      {shouldRedirect && <Redirect to="/" />}
+      <Page title={'EditPage'}>
+        <Header></Header>
+        <FormStyled onSubmit={handleSubmit}>
+          <Date name="date"></Date>
+          <InputTitleStyled
+            required
+            name="title"
+            value={title}
+            onChange={event => setTitle(event.target.value)}
+            maxLength="20"
+            autoFocus
+          ></InputTitleStyled>
+          <InputContentStyled
+            name="content"
+            value={content}
+            onChange={event => setContent(event.target.value)}
+          ></InputContentStyled>
+          <RecorderPlayer
+            name="recordings"
+            recordingsState={[recordings, setRecordings]}
+          ></RecorderPlayer>
+          <div>
+            <SelectLabelStyled>Fancy to change the tag?</SelectLabelStyled>
+            <SelectTagStyled
+              name="tag"
+              value={label}
+              onChange={event => setLabel(event.target.value)}
+            >
+              <option name="tag" value="started">
+                started
+              </option>
+              <option name="tag" value="advanced">
+                advanced
+              </option>
+              <option name="tag" value="completed">
+                completed
+              </option>
+            </SelectTagStyled>
+          </div>
+          <ButtonStyled>Save changes</ButtonStyled>
+          <ButtonStyled
+            type="button"
+            secondary
+            onClick={() => {
+              setShouldRedirect(true)
+            }}
           >
-            <option name="tag" value="started">
-              started
-            </option>
-            <option name="tag" value="advanced">
-              advanced
-            </option>
-            <option name="tag" value="completed">
-              completed
-            </option>
-          </SelectTagStyled>
-        </div>
-        <ButtonStyled
-          onClick={() => {
-            window.location = 'http://localhost:3000/'
-          }}
-        >
-          Save changes
-        </ButtonStyled>
-        <ButtonStyled
-          secondary
-          onClick={() => {
-            window.location = 'http://localhost:3000/'
-          }}
-        >
-          Cancel
-        </ButtonStyled>
-      </FormStyled>
-    </Page>
+            Cancel
+          </ButtonStyled>
+        </FormStyled>
+      </Page>
+    </>
   )
 }
 
@@ -153,14 +154,14 @@ const ButtonStyled = styled.button`
   border: none;
   border-radius: ${props => (props.secondary ? '3px' : '50px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};
-  height: 30px;
-  padding: 2px 15px;
+  height: 40px;
+  padding: 0 30px;
   background: ${props => (props.secondary ? 'white' : '#17e2cc')};
   font-size: ${props => (props.secondary ? '14px' : '18px')};
   font-weight: bold;
   color: #130307;
 
   :active {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 `

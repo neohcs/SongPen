@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
-import Note from './Note'
-import TagFilter from './TagFilter'
+import Note from '../notes/Note'
+import TagFilter from '../notes/TagFilter'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
@@ -48,11 +48,10 @@ export default function NotePage({
 const ScrollerStyled = styled.div`
   display: grid;
   gap: 20px;
-  /* justify-items: center; */
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  padding: 5px 20px 100px 20px;
   width: 100%;
   height: 95%;
+  padding: 5px 20px 20px;
 `
