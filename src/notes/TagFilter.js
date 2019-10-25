@@ -27,5 +27,7 @@ export default function TagFilter({ tags, selectedTag, onClick }) {
 const TagFilterStyled = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90vw;
+  margin-top: 15px;
+  padding: 0 auto;
+  width: 335px;
 `

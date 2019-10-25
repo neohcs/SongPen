@@ -18,19 +18,21 @@ const NavigationStyled = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 5px solid #17e2cc;
-  height: 35px;
+  /* border-top: 5px solid white; */
+  background: #17e2cc;
+  width: 375px;
+  height: 30px;
   padding: 10px 0;
 `
 
 const LinkStyled = styled(NavLink)`
   position: absolute;
-  top: -33px;
+  top: -38px;
   display: flex;
-  box-shadow: 0 2px 5px #0002;
+  box-shadow: 0 3px 6px #0003;
   text-decoration: none;
   border-radius: 50%;
-  background: #17e2cc;
+  background: white;
   color: #050102;
 `
 

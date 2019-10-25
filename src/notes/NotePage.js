@@ -52,10 +52,10 @@ export default function NotePage({
 const ScrollerStyled = styled.div`
   display: grid;
   gap: 20px;
-  justify-items: center;
+  /* justify-items: center; */
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  /* max-width: 100%; */
+  width: 375px;
   padding: 5px 20px;
 `

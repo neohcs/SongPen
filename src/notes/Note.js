@@ -85,7 +85,7 @@ export default function Note({
 const NoteStyled = styled.section`
   position: relative;
   box-shadow: 0 5px 10px #0002;
-  width: 90vw;
+  width: 335px;
   padding: 10px 20px 20px;
   background: #fcfcfc;
   font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana,

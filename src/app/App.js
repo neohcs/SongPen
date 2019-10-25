@@ -112,5 +112,8 @@ const AppStyled = styled.div`
   bottom: 0;
   left: 0;
   display: grid;
-  height: 100%;
+  width: 375px;
+  height: 667px;
+
+  /* grid-template-rows: 50px auto 30px; */
 `

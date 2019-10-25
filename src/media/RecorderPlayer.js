@@ -127,7 +127,7 @@ export default function RecorderPlayer({ recordingsState }) {
 const MediaWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%; */
 `
 
 const MainControlsStyled = styled.section`
@@ -144,7 +144,8 @@ const ButtonBarStyled = styled.div`
 `
 
 const SoundClipsStyled = styled.section`
-  /* display: ${props => (props.visible ? 'block' : 'none')}; */
+  display: flex;
+  flex-direction: column;
   /* flex: 1; */
   /* display: flex; */
   /* justify-content: space-between; */
@@ -172,14 +173,14 @@ const ClipContainerStyled = styled.article`
   gap: 10px;
   margin: 0;
   padding: 10px;
-  width: 100%;
+  /* width: 100%; */
 `
 
 const AudioStyled = styled.audio`
-  display: inline-block;
+  display: block;
   align-self: left;
   /* margin: 10px auto; */
-  width: auto;
+  /* width: auto; */
 `
 
 const ButtonStyled = styled.button`

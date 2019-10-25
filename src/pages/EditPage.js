@@ -3,7 +3,6 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 import Page from '../common/Page'
 import Header from '../common/Header'
-import Navigation from '../app/Navigation'
 import Date from '../common/Date'
 import RecorderPlayer from '../media/RecorderPlayer'
 
