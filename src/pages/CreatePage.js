@@ -93,7 +93,7 @@ const FormStyled = styled.form`
 `
 
 const InputTitleStyled = styled.input`
-  box-shadow: 0 5px 10px #0002;
+  box-shadow: 0 5px 10px #0032;
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;
@@ -107,7 +107,7 @@ const InputTitleStyled = styled.input`
 `
 
 const InputContentStyled = styled.textarea`
-  box-shadow: 0 5px 10px #0002;
+  box-shadow: 0 5px 10px #0032;
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;

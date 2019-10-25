@@ -9,12 +9,12 @@ const HeaderStyled = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 375px;
+  width: 100%;
   height: 50px;
   background: #17e2cc;
-  /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
-  font-size: 30px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 32px;
   font-weight: bold;
-  letter-spacing: 2px;
-  color: #050102;
+  letter-spacing: 3px;
+  color: #08101f; 
 `

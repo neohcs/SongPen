@@ -93,11 +93,11 @@ const FormStyled = styled.form`
   overflow-y: auto;
   scroll-behavior: smooth;
   margin: 20px 0;
-  padding: 0 20px 20px;
+  padding: 0 20px;
 `
 
 const InputTitleStyled = styled.input`
-  box-shadow: 0 5px 10px #0002;
+  box-shadow: 0 5px 10px #0032;
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;
@@ -111,7 +111,7 @@ const InputTitleStyled = styled.input`
 `
 
 const InputContentStyled = styled.textarea`
-  box-shadow: 0 5px 10px #0002;
+  box-shadow: 0 5px 10px #0032;
   border: 1px solid lightgrey;
   border-radius: 3px;
   width: 100%;
@@ -149,7 +149,7 @@ const SelectTagStyled = styled.select`
 
 const ButtonStyled = styled.button`
   display: inline-block;
-  box-shadow: 0 2px 5px #0002;
+  box-shadow: 0 2px 5px #0032;
   border: none;
   border-radius: ${props => (props.secondary ? '3px' : '50px')};
   width: ${props => (props.secondary ? '100px' : 'auto')};

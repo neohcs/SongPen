@@ -110,13 +110,15 @@ export default function RecorderPlayer({ recordingsState }) {
           recordings.map((recording, index) => (
             <ClipContainerStyled key={recording}>
               <AudioStyled src={recording} controls></AudioStyled>
-              <DeleteAudioStyled
-                visible
-                onClick={event => handleDeleteClick(event, index)}
-              ></DeleteAudioStyled>
-              <a href={recording}>
-                <DownloadAudioStyled />
-              </a>
+              <div>
+                <DeleteAudioStyled
+                  visible
+                  onClick={event => handleDeleteClick(event, index)}
+                ></DeleteAudioStyled>
+                <a href={recording}>
+                  <DownloadAudioStyled />
+                </a>
+              </div>
             </ClipContainerStyled>
           ))}
       </SoundClipsStyled>
@@ -127,12 +129,12 @@ export default function RecorderPlayer({ recordingsState }) {
 const MediaWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 100%; */
+  align-items: center;
+  max-width: 95%;
 `
 
 const MainControlsStyled = styled.section`
   display: block;
-  /* padding: 0.5rem 0; */
 `
 
 const ButtonBarStyled = styled.div`
@@ -143,49 +145,18 @@ const ButtonBarStyled = styled.div`
   height: 50px;
 `
 
-const SoundClipsStyled = styled.section`
-  display: flex;
-  flex-direction: column;
-  /* flex: 1; */
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* gap: 20px; */
-  /* justify-items: left; */
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  max-width: 90%;
-  padding: 5px 20px;
-`
-
-const ClipContainerStyled = styled.article`
-  /* overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  max-width: 100%;
-  padding: 5px 20px; */
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  /* justify-content: space-between; */
-  /* align-items: center; */
-  gap: 10px;
-  margin: 0;
-  padding: 10px;
-  /* width: 100%; */
-`
-
-const AudioStyled = styled.audio`
-  display: block;
-  align-self: left;
-  /* margin: 10px auto; */
-  /* width: auto; */
+const MicrophoneStyled = styled(Microphone)`
+  display: ${props => (props.visible ? 'inline-block' : 'none')};
+  border: 5px solid #17e2cc;
+  border-radius: 50%;
+  height: 50px;
+  background: #17e2cc;
+  color: #130307;
 `
 
 const ButtonStyled = styled.button`
   display: ${props => (props.visible ? 'inline-block' : 'none')};
-  box-shadow: 0 2px 5px #0002;
+  box-shadow: 0 2px 5px #0032;
   border: none;
   border-radius: 20px;
   width: auto;
@@ -205,24 +176,36 @@ const ButtonStyled = styled.button`
     transform: translateY(2px);
   }
 `
-const MicrophoneStyled = styled(Microphone)`
-  display: ${props => (props.visible ? 'inline-block' : 'none')};
-  border: 5px solid #17e2cc;
-  border-radius: 50%;
-  height: 50px;
-  background: #17e2cc;
-  color: #130307;
+
+const SoundClipsStyled = styled.section`
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  max-width: 95%;
+`
+
+const ClipContainerStyled = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+`
+
+const AudioStyled = styled.audio`
+  display: block;
 `
 
 const DeleteAudioStyled = styled(Trash)`
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   color: grey;
 `
 const DownloadAudioStyled = styled(Download)`
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   color: grey;
 `

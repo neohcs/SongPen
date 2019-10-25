@@ -14,15 +14,16 @@ export default function Navigation() {
 }
 
 const NavigationStyled = styled.nav`
-  position: relative;
+  position: absolute;
+  bottom: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-top: 5px solid white; */
-  background: #17e2cc;
-  width: 375px;
-  height: 30px;
+  margin-top: 20px;
+  width: 100%;
+  height: 35px;
   padding: 10px 0;
+  background: #17e2cc;
 `
 
 const LinkStyled = styled(NavLink)`
@@ -33,7 +34,7 @@ const LinkStyled = styled(NavLink)`
   text-decoration: none;
   border-radius: 50%;
   background: white;
-  color: #050102;
+  color: #08101f;
 `
 
 const CreateIconStyled = styled(PlusCircle)`

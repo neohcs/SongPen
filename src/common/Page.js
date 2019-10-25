@@ -6,8 +6,10 @@ export default function Page({ children }) {
 }
 
 const PageStyled = styled.main`
+  position: relative;
   display: grid;
   grid-template-rows: auto;
   overflow: auto;
   align-content: flex-start;
+  height: 100%;
 `

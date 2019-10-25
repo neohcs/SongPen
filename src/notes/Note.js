@@ -84,10 +84,10 @@ export default function Note({
 
 const NoteStyled = styled.section`
   position: relative;
-  box-shadow: 0 5px 10px #0002;
+  box-shadow: 0 5px 10px #0032;
   width: 335px;
   padding: 10px 20px 20px;
-  background: #fcfcfc;
+  background: #fafcff;
   font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana,
     sans-serif;
 `
@@ -97,14 +97,14 @@ const DateStyled = styled.div`
   display: block;
   opacity: 0.9;
   font-size: 12px;
-  color: #050102;
+  color: #08101f;
 `
 
 const TitleStyled = styled.h1`
   margin: 40px 0 20px;
   font-size: 18px;
   opacity: 0.9;
-  color: #050102;
+  color: #08101f;
 `
 
 const ContentStyled = styled.span`
@@ -140,7 +140,7 @@ const RecordingIconStyled = styled(Notes)`
 const AudioStyled = styled.audio`
   margin-top: 15px;
   height: 30px;
-  width: 100%;
+  width: 90%;
 `
 
 const NoteViewIconStyled = styled(ArrowSortedDown)`

@@ -20,12 +20,12 @@ export default function FilterButton({ tag, selectedTag, onClick }) {
 }
 
 const FilterButtonStyled = styled.button`
-  box-shadow: 0 2px 5px #0002;
+  box-shadow: 0 2px 5px #0032;
   border: none;
   border-radius: 7px;
   width: 90px;
   padding: 7px;
-  background: ${props => (props.selected ? '#17e2cc' : '#f0f0f0')};
+  background: ${props => (props.selected ? '#17e2cc' : '#f0f3f5')};
   font-size: 14px;
   font-weight: ${props => (props.selected ? 'bold' : 'normal')};
   color: #130307;

@@ -106,14 +106,14 @@ export default function App() {
 }
 
 const AppStyled = styled.div`
-  position: fixed;
-  top: 0;
+  /* position: fixed; */
+  /* top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
-  display: grid;
-  width: 375px;
-  height: 667px;
+  left: 0; */
+  /* display: grid; */
+  width: 100%;
+  height: inherit;
 
   /* grid-template-rows: 50px auto 30px; */
 `

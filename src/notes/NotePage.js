@@ -25,12 +25,8 @@ export default function NotePage({
   return (
     <Page title={'NotePage'}>
       <Header></Header>
+      <TagFilter tags={tags} onClick={onSelectTag} selectedTag={selectedTag} />
       <ScrollerStyled>
-        <TagFilter
-          tags={tags}
-          onClick={onSelectTag}
-          selectedTag={selectedTag}
-        />
         {notes.map(note => (
           <Note
             handleDeleteClick={() => onDeleteClick(note)}
@@ -56,6 +52,7 @@ const ScrollerStyled = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  width: 375px;
-  padding: 5px 20px;
+  padding: 5px 20px 100px 20px;
+  width: 100%;
+  height: 95%;
 `

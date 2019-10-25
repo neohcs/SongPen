@@ -9,18 +9,34 @@ export default createGlobalStyle`
   }
 }
 
+#root {
+  width: 380px;
+  height: 677px;
+  background: #fdfeff;
+  @media (min-width: 500px){
+    width: 375px;
+    height: 667px;
+  }
+}
+
 body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-rows: 50px 40px auto 30px;
   margin: 0;
-  width: 375px;
-  height: 667px;
- /* @media (min-width: 900px) {
-      margin: 40px auto;
+  width: 100%;
+  height: 100%;
+  @media (min-width: 500px) {
+    box-sizing: content-box;
       box-shadow: 30px 40px 30px #2264;
+      margin: 40px 35%;
       border: 30px solid black;
       border-width: 60px 20px;
       border-radius: 20px;
       width: 375px;
       height: 667px;
-  } */
+  }
 }
 `
