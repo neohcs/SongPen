@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import GlobalStyles from '../common/GlobalStyles'
 import { getNotes, postNote, patchNote, deleteNote } from '../notes/services'
 import NotePage from '../pages/NotePage'
 import CreatePage from '../pages/CreatePage'

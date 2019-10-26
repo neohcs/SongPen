@@ -43,7 +43,6 @@ export default function RecorderPlayer({ recordingsState }) {
 
   function handleDataAvailable(event) {
     if (event.data.size) {
-      console.log(event.data)
       chunks.push(event.data)
     } else {
       alert('No media there.')
