@@ -5,10 +5,11 @@ import FilterButton from './FilterButton'
 
 TagFilter.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
+  selectedTag: PropTypes.string,
   onClick: PropTypes.func
 }
 
-export default function TagFilter({ onClick, tags, selectedTag }) {
+export default function TagFilter({ tags, selectedTag, onClick }) {
   return (
     <TagFilterStyled>
       {tags.map(tag => (
@@ -26,5 +27,7 @@ export default function TagFilter({ onClick, tags, selectedTag }) {
 const TagFilterStyled = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90vw;
+  margin: 15px auto;
+  width: 100%;
+  padding: 0 20px;
 `

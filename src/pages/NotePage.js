@@ -1,38 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
-import Note from './Note'
-import TagFilter from './TagFilter'
-import SearchBar from '../SearchBar'
+import Note from '../notes/Note'
+import TagFilter from '../notes/TagFilter'
 import Page from '../common/Page'
 import Header from '../common/Header'
 import Navigation from '../app/Navigation'
 
 NotePage.propTypes = {
-  onSelectTag: PropTypes.func,
   notes: PropTypes.array,
   tags: PropTypes.array,
   selectedTag: PropTypes.string,
-  isRecordingIncluded: PropTypes.bool
+  onSelectTag: PropTypes.func,
+  onDeleteClick: PropTypes.func
 }
 
 export default function NotePage({
-  onSelectTag,
   notes,
   tags,
   selectedTag,
+  onSelectTag,
   onDeleteClick
 }) {
   return (
     <Page title={'NotePage'}>
       <Header></Header>
-      <Navigation></Navigation>
+      <TagFilter tags={tags} onClick={onSelectTag} selectedTag={selectedTag} />
       <ScrollerStyled>
-        <TagFilter
-          tags={tags}
-          onClick={onSelectTag}
-          selectedTag={selectedTag}
-        />
         {notes.map(note => (
           <Note
             handleDeleteClick={() => onDeleteClick(note)}
@@ -40,16 +34,13 @@ export default function NotePage({
             _id={note._id}
             title={note.title}
             date={note.date}
-            content={note.content
-              .split('\n')
-              .map(line =>
-                line === '' ? <br /> : <LineBreakStyled>{line}</LineBreakStyled>
-              )}
+            content={note.content}
             recordings={note.recordings}
             tag={note.tag}
           />
         ))}
       </ScrollerStyled>
+      <Navigation></Navigation>
     </Page>
   )
 }
@@ -57,13 +48,10 @@ export default function NotePage({
 const ScrollerStyled = styled.div`
   display: grid;
   gap: 20px;
-  justify-items: center;
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  /* max-width: 100%; */
-  padding: 5px 20px;
-`
-const LineBreakStyled = styled.p`
-  margin: 0px;
+  width: 100%;
+  height: 95%;
+  padding: 5px 20px 20px;
 `

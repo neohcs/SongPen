@@ -1,21 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
-Date.propTypes = {
-  date: PropTypes.string
-}
-
 export default function newDate() {
-  let currentDay = new Date().getDate()
-  let currentMonth = new Date().getMonth() + 1
-  let currentYear = new Date().getFullYear()
-  // const currentHours = new Date().getHours()
-  // const currentMinutes = new Date().getMinutes()
+  const currentDate = new Date().toLocaleDateString('de')
 
-  let currentDate = currentDay + '.' + currentMonth + '.' + currentYear
-
-  return <DateStyled name="date" value={currentDate}></DateStyled>
+  return <DateStyled name="date" value={currentDate} readOnly></DateStyled>
 }
 
 const DateStyled = styled.input`

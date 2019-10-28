@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components/macro'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import styled from 'styled-components/macro'
 import { getNotes, postNote, patchNote, deleteNote } from '../notes/services'
-import NotePage from '../notes/NotePage'
-import CreatePage from '../create/CreatePage'
-import EditPage from '../edit/EditPage'
-import RecorderPlayer from '../media/RecorderPlayer'
+import NotePage from '../pages/NotePage'
+import CreatePage from '../pages/CreatePage'
+import EditPage from '../pages/EditPage'
 
-export default function App(editNoteData) {
+export default function App() {
   const [selectedTag, setSelectedTag] = useState('')
   const [noteList, setNoteList] = useState([])
   useEffect(() => {
@@ -18,10 +17,7 @@ export default function App(editNoteData) {
   const filteredNotes = noteList.filter(note => note.tag.includes(selectedTag))
 
   function selectTag(clickedTag) {
-    setSelectedTag(clickedTag)
-    return selectedTag === clickedTag
-      ? setSelectedTag('')
-      : setSelectedTag(clickedTag)
+    selectedTag === clickedTag ? setSelectedTag('') : setSelectedTag(clickedTag)
   }
 
   function createNote(newNoteData) {
@@ -54,15 +50,13 @@ export default function App(editNoteData) {
             path="/"
             exact
             render={() => (
-              <>
-                <NotePage
-                  tags={allNoteTags}
-                  onSelectTag={selectTag}
-                  notes={filteredNotes}
-                  selectedTag={selectedTag}
-                  onDeleteClick={deleteNoteOnClick}
-                ></NotePage>
-              </>
+              <NotePage
+                tags={allNoteTags}
+                onSelectTag={selectTag}
+                notes={filteredNotes}
+                selectedTag={selectedTag}
+                onDeleteClick={deleteNoteOnClick}
+              ></NotePage>
             )}
           />
           <Route
@@ -91,12 +85,6 @@ export default function App(editNoteData) {
               )
             }}
           />
-          <Route
-            path="/media"
-            render={props => {
-              return <RecorderPlayer></RecorderPlayer>
-            }}
-          />
         </Switch>
       </AppStyled>
     </Router>
@@ -104,11 +92,6 @@ export default function App(editNoteData) {
 }
 
 const AppStyled = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: grid;
-  height: 100%;
+  width: 100%;
+  height: inherit;
 `

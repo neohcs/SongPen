@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 import { Microphone } from 'styled-icons/typicons'
 import { Trash, Download } from 'styled-icons/boxicons-regular'
 
+RecorderPlayer.propTypes = {
+  recordingsState: PropTypes.array
+}
+
 export default function RecorderPlayer({ recordingsState }) {
   const [isButtonVisible, setIsButtonVisible] = useState(true)
+  const [isMicPulsing, setIsMicPulsing] = useState(false)
   const [mediaRecorder, setMediaRecorder] = useState(null)
   const [recordings, setRecordings] = recordingsState
   let chunks = []
 
   async function handleRecordClick() {
-    console.log('Recording clicked')
+    console.log(recordingsState)
     const stream = await getMedia({ audio: true })
-    console.log('Received stream: ', stream)
     return record(stream)
   }
 
@@ -30,15 +35,14 @@ export default function RecorderPlayer({ recordingsState }) {
     mediaRecorder.ondataavailable = handleDataAvailable
     mediaRecorder.onstop = () => handleAudioAfterStop(stream)
     mediaRecorder.start()
-    console.log('recorder started')
     console.log(mediaRecorder.state)
     setIsButtonVisible(!isButtonVisible)
+    setIsMicPulsing(!isMicPulsing)
     setMediaRecorder(mediaRecorder)
   }
 
   function handleDataAvailable(event) {
-    if (event.data.size > 0) {
-      console.log(event.data)
+    if (event.data.size) {
       chunks.push(event.data)
     } else {
       alert('No media there.')
@@ -47,14 +51,13 @@ export default function RecorderPlayer({ recordingsState }) {
 
   function handleStopClick() {
     setIsButtonVisible(!isButtonVisible)
+    setIsMicPulsing(!isMicPulsing)
     mediaRecorder.stop()
   }
 
   function handleAudioAfterStop(stream) {
     stream.getTracks().forEach(track => track.stop())
     console.log('data available after MediaRecorder.stop() called.')
-
-    chunks = []
 
     let blob = new Blob(chunks, { type: 'audio/wav; codecs=MS_PCM' })
     console.log('recorder stopped')
@@ -71,7 +74,7 @@ export default function RecorderPlayer({ recordingsState }) {
       .catch(err => console.log('ERROR', err))
   }
 
-  function handleDeleteClick(index) {
+  function handleDeleteClick(event, index) {
     setRecordings([
       ...recordings.slice(0, index),
       ...recordings.slice(index + 1)
@@ -82,10 +85,14 @@ export default function RecorderPlayer({ recordingsState }) {
     <MediaWrapperStyled>
       <MainControlsStyled>
         <ButtonBarStyled>
-          <MicrophoneStyled
-            visible={isButtonVisible}
+          <ButtonStyled
             onClick={handleRecordClick}
-          ></MicrophoneStyled>
+            visible={isButtonVisible}
+            type="button"
+          >
+            Record
+          </ButtonStyled>
+          <MicrophoneStyled pulsing={isMicPulsing}></MicrophoneStyled>
           <ButtonStyled
             visible={!isButtonVisible}
             onClick={handleStopClick}
@@ -100,13 +107,15 @@ export default function RecorderPlayer({ recordingsState }) {
           recordings.map((recording, index) => (
             <ClipContainerStyled key={recording}>
               <AudioStyled src={recording} controls></AudioStyled>
-              <DeleteAudioStyled
-                visible
-                onClick={event => handleDeleteClick(event, index)}
-              ></DeleteAudioStyled>
-              <a href={recording}>
-                <DownloadAudioStyled />
-              </a>
+              <div>
+                <DeleteAudioStyled
+                  visible
+                  onClick={event => handleDeleteClick(event, index)}
+                ></DeleteAudioStyled>
+                <a href={recording}>
+                  <DownloadAudioStyled />
+                </a>
+              </div>
             </ClipContainerStyled>
           ))}
       </SoundClipsStyled>
@@ -117,104 +126,108 @@ export default function RecorderPlayer({ recordingsState }) {
 const MediaWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  align-items: center;
+  max-width: 95%;
 `
 
 const MainControlsStyled = styled.section`
   display: block;
-  /* padding: 0.5rem 0; */
 `
 
 const ButtonBarStyled = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 50px;
-`
-
-const SoundClipsStyled = styled.section`
-  /* display: ${props => (props.visible ? 'block' : 'none')}; */
-  /* flex: 1; */
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* gap: 20px; */
-  /* justify-items: left; */
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  max-width: 90vw;
-  padding: 5px 20px;
-`
-
-const ClipContainerStyled = styled.article`
-  /* overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  max-width: 100%;
-  padding: 5px 20px; */
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  /* justify-content: space-between; */
-  /* align-items: center; */
   gap: 10px;
-  margin: 0;
-  padding: 10px;
-  width: 100%;
+  height: 60px;
 `
 
-const AudioStyled = styled.audio`
+const MicrophoneStyled = styled(Microphone)`
   display: inline-block;
-  align-self: left;
-  /* margin: 10px auto; */
-  width: auto;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  border-radius: 50%;
+  height: 40px;
+  color: white;
+  border: ${props => (props.pulsing ? '5px solid red' : '5px solid grey')};
+  background: ${props => (props.pulsing ? 'red' : 'grey')};
+  transform: ${props => (props.pulsing ? 'scale(1)' : 'none')};
+  animation: ${props => (props.pulsing ? 'pulse-red 2s infinite' : 'none')};
+  @keyframes pulse-red {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+    }
+
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+    }
+  }
 `
 
 const ButtonStyled = styled.button`
-  display: ${props => (props.visible ? 'inline-block' : 'none')};
-  box-shadow: 0 2px 5px #0002;
+  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  display: inline-block;
+  box-shadow: 0 2px 5px #0032;
   border: none;
+  border-radius: 20px;
+  width: auto;
   height: 30px;
   padding: 2px 15px;
+  background: #f0f3f5;
+  font-size: 16px;
   font-weight: bold;
-  border-radius: ${props => (props.secondary ? '3px' : '20px')};
-  width: ${props => (props.secondary ? '100px' : 'auto')};
-  background: ${props => (props.secondary ? 'white' : '#17e2cc')};
-  font-size: ${props => (props.secondary ? '14px' : '18px')};
-  color: ${props => (props.secondary ? '#130307' : '#130307')};
+  color: #130307;
 
-  :hover,
   :focus {
-    /* box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1); */
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
-    /* background: #0ae; */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   :active {
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     transform: translateY(2px);
   }
+
+  :disabled {
+    color: #130307;
+  }
 `
-const MicrophoneStyled = styled(Microphone)`
-  display: ${props => (props.visible ? 'inline-block' : 'none')};
-  border: 5px solid #17e2cc;
-  height: 50px;
-  background: #17e2cc;
-  border-radius: 50%;
-  color: #130307;
+
+const SoundClipsStyled = styled.section`
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  max-width: 95%;
+`
+
+const ClipContainerStyled = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+`
+
+const AudioStyled = styled.audio`
+  display: block;
 `
 
 const DeleteAudioStyled = styled(Trash)`
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   color: grey;
 `
 const DownloadAudioStyled = styled(Download)`
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   color: grey;
 `
