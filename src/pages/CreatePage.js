@@ -56,7 +56,6 @@ export default function CreatePage({ onSubmit }) {
             name="title"
             placeholder={'Insert title here...'}
             maxLength="30"
-            // autoFocus
           ></InputTitleStyled>
           <InputContentStyled
             name="content"

@@ -4,6 +4,7 @@ export default createGlobalStyle`
 * {
   box-sizing: border-box;
   font-family: 'Lato', sans-serif;
+  outline: none;
   &:focus {
     box-shadow: 0 0 1px 1px rgba(70, 220, 252, 0.7);
   }

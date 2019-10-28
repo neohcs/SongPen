@@ -42,7 +42,6 @@ export default function EditPage({ onSubmit, editNoteData }) {
             value={title}
             onChange={event => setTitle(event.target.value)}
             maxLength="20"
-            autoFocus
           ></InputTitleStyled>
           <InputContentStyled
             name="content"
