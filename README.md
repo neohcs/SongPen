@@ -48,4 +48,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<b
 Since the app was designed mobile-first it is recommended to switch the viewport to mobile view.
 
 
-Credit for thw texts used for illustrationgo to POEMPORTRAITS and Google AI.
+Credit for the texts used for illustration go to POEMPORTRAITS and Google AI.
