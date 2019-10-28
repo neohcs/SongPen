@@ -33,7 +33,7 @@ export default function Note({
 
   function renderAudio() {
     return (
-      recordings.length &&
+      recordings.length >= 0 &&
       recordings.map(recording => (
         <AudioStyled src={recording} key={recording} controls>
           Your browser does not support the

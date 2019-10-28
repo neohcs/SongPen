@@ -12,7 +12,7 @@ export default {
 }
 
 export const note = () => (
-  <Note date="1.1.2009" title="New SongNote" content="No notes here" tag="test">
+  <Note date="1.1.2009" title="New SongNote" content="No notes here" tag="test">
     <DateStyled></DateStyled>
     <TitleStyled></TitleStyled>
     <ContentStyled></ContentStyled>
