@@ -1,6 +1,40 @@
+### SongPen
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) as part of the WEB DEVELOPMENT bootcamp at neuefische GmbH in October 2019.
 
 SongPen was designed as a note-taking app that facilitates the creative process of writing a song. The user can take notes and make recordings that are then automatically saved in the same note. Each song project can be edited and both individual recordings as well as entire notes can be deleted. A label representing the stage each song is currently in makes it easy for the user to filter the notes and quickly find the projects that a) have just been ***started***, b) are already in an ***advanced*** state, or c) have been ***completed***.
+
+Tech stack
+
+## SongPen was built using the MERN Stack:
+
+    MongoDB
+    Express.js
+    React
+    Node.js
+    
+## Additional dependencies:
+
+    cors
+    mongoose
+    multer
+    nodemon
+    npm-run-all
+    react-router-dom
+    styled-components
+    styled-icons
+    
+## Requirements
+
+    Node.js
+    MongoDB running on localhost:27017
+    
+## Setup
+
+https://github.com/neohcs/SongPen
+
+cd songpen
+npm install
 
 ## Available Scripts
 
