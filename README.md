@@ -36,7 +36,7 @@ SongPen was designed as a note-taking app that facilitates the creative process 
     
 ## Setup
 
-    https://github.com/neohcs/SongPen
+    git clone git@github.com:neohcs/SongPen.git
     cd songpen
     npm install
 
