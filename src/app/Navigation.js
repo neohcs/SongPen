@@ -21,7 +21,7 @@ const NavigationStyled = styled.nav`
   align-items: center;
   margin-top: 20px;
   width: 100%;
-  height: 35px;
+  height: 40px;
   padding: 10px 0;
   background: #17e2cc;
 `

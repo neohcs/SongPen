@@ -33,9 +33,9 @@ export default function Note({
 
   function renderAudio() {
     return (
-      recordings.length >= 1 &&
+      recordings.length &&
       recordings.map(recording => (
-        <AudioStyled src={recording} controls>
+        <AudioStyled src={recording} key={recording} controls>
           Your browser does not support the
           <code>audio</code> element.
         </AudioStyled>

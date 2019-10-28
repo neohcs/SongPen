@@ -149,7 +149,6 @@ const MicrophoneStyled = styled(Microphone)`
   border-radius: 50%;
   height: 40px;
   color: white;
-  /* color: #130307; */
   border: ${props => (props.pulsing ? '5px solid red' : '5px solid grey')};
   background: ${props => (props.pulsing ? 'red' : 'grey')};
   transform: ${props => (props.pulsing ? 'scale(1)' : 'none')};

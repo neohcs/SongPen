@@ -10,13 +10,13 @@ export default createGlobalStyle`
 }
 
 #root {
-  width: 380px;
+  width: 375px;
   height: 677px;
   background: #fdfeff;
-  @media (min-width: 500px){
+  /* @media (min-width: 500px){
     width: 375px;
     height: 667px;
-  }
+  } */
 }
 
 body {
@@ -24,7 +24,7 @@ body {
   top: 0;
   left: 0;
   display: grid;
-  grid-template-rows: 50px 40px auto 30px;
+  grid-template-rows: 50px 40px auto 40px;
   margin: 0;
   width: 100%;
   height: 100%;
