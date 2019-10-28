@@ -1,4 +1,4 @@
-### SongPen
+# SongPen
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) as part of the WEB DEVELOPMENT bootcamp at neuefische GmbH in October 2019.
 
