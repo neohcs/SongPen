@@ -8,26 +8,26 @@ SongPen was designed as a note-taking app that facilitates the creative process 
 
 **SongPen** was built using the **MERN** Stack:
 
-    MongoDB
-    Express.js
-    React
-    Node.js
+- MongoDB
+- Express.js
+- React
+- Node.js
     
 ## Additional dependencies:
 
 - cors
 - mongoose
-    multer
-    nodemon
-    npm-run-all
-    react-router-dom
-    styled-components
-    styled-icons
+- multer
+- nodemon
+- npm-run-all
+- react-router-dom
+- styled-components
+- styled-icons
     
 ## Requirements
 
-    Node.js
-    MongoDB running on localhost:27017
+- Node.js
+- MongoDB running on localhost:27017
     
 ## Setup
 
@@ -42,4 +42,5 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser. Since the app was designed mobile-first it is recommended to switch the viewport to mobile view.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br>
+Since the app was designed mobile-first it is recommended to switch the viewport to mobile view.
