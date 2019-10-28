@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 SongPen was designed as a note-taking app that facilitates the creative process of writing a song. The user can take notes and make recordings that are then automatically saved in the same note. Each song project can be edited and both individual recordings as well as entire notes can be deleted. A label representing the stage each song is currently in makes it easy for the user to filter the notes and quickly find the projects that a) have just been ***started***, b) are already in an ***advanced*** state, or c) have been ***completed***.
 
+## Preview
+<img width="200" src="https://res.cloudinary.com/dym5cwcpv/image/upload/v1572264216/localhost_3000__iPhone_6_7_8_wsbjw0.png" alt="First screen of SongPen app"/> <img width="200" src="https://res.cloudinary.com/dym5cwcpv/image/upload/v1572264216/localhost_3000__iPhone_6_7_8_1_tinicg.png" alt="Create screen of SongPen app."/>
+
+
 ## Tech stack
 
 **SongPen** was built using the **MERN** Stack:
