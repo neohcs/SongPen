@@ -15,8 +15,8 @@ SongPen was designed as a note-taking app that facilitates the creative process 
     
 ## Additional dependencies:
 
-    cors
-    mongoose
+- cors
+- mongoose
     multer
     nodemon
     npm-run-all
@@ -31,10 +31,9 @@ SongPen was designed as a note-taking app that facilitates the creative process 
     
 ## Setup
 
-https://github.com/neohcs/SongPen
-
-cd songpen
-npm install
+    https://github.com/neohcs/SongPen
+    cd songpen
+    npm install
 
 ## Available Scripts
 
