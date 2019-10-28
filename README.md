@@ -28,12 +28,17 @@ SongPen was designed as a note-taking app that facilitates the creative process 
 
 - Node.js
 - MongoDB running on localhost:27017
+- MediaStream Recording API
     
 ## Setup
 
     https://github.com/neohcs/SongPen
     cd songpen
     npm install
+
+## MediaStream Recording
+
+The MediaStream Recording API was applied according to the instructions (e. g. https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API), using only audio input and output.
 
 ## You can run the project in development mode via:
 
