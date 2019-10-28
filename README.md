@@ -35,12 +35,9 @@ SongPen was designed as a note-taking app that facilitates the creative process 
     cd songpen
     npm install
 
-## Available Scripts
+## You can run the project in development mode via:
 
-In the project directory, you can run:
+   `npm start`
 
-### `npm start`
-
-Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br>
 Since the app was designed mobile-first it is recommended to switch the viewport to mobile view.
