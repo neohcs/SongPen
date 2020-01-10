@@ -17,7 +17,7 @@ SongPen was designed as a note-taking app that facilitates the creative process 
 - React
 - Node.js
     
-## Additional dependencies:
+## Additional dependencies
 
 - cors
 - mongoose
@@ -44,7 +44,7 @@ SongPen was designed as a note-taking app that facilitates the creative process 
 
 The MediaStream Recording API was applied according to the instructions (e. g. https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API), using only audio input and output.
 
-## You can run the project in development mode via:
+## You can run the project in development mode via
 
    `npm start`
 
